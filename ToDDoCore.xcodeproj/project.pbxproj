@@ -10,7 +10,6 @@
 		0FB9CB0C29962ED900AAA276 /* ToDDoCore.docc in Sources */ = {isa = PBXBuildFile; fileRef = 0FB9CB0B29962ED900AAA276 /* ToDDoCore.docc */; };
 		0FB9CB1229962ED900AAA276 /* ToDDoCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FB9CB0729962ED900AAA276 /* ToDDoCore.framework */; };
 		0FB9CB1829962ED900AAA276 /* ToDDoCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FB9CB0A29962ED900AAA276 /* ToDDoCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		0FB9CB23299635A400AAA276 /* ToDoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB9CB22299635A400AAA276 /* ToDoItem.swift */; };
 		0FB9CB252996409100AAA276 /* FeedLoaderUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB9CB242996409100AAA276 /* FeedLoaderUseCaseTests.swift */; };
 /* End PBXBuildFile section */
 
@@ -29,7 +28,6 @@
 		0FB9CB0A29962ED900AAA276 /* ToDDoCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ToDDoCore.h; sourceTree = "<group>"; };
 		0FB9CB0B29962ED900AAA276 /* ToDDoCore.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = ToDDoCore.docc; sourceTree = "<group>"; };
 		0FB9CB1129962ED900AAA276 /* ToDDoCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ToDDoCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		0FB9CB22299635A400AAA276 /* ToDoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDoItem.swift; sourceTree = "<group>"; };
 		0FB9CB242996409100AAA276 /* FeedLoaderUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedLoaderUseCaseTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -91,7 +89,6 @@
 		0FB9CB212996354700AAA276 /* Items */ = {
 			isa = PBXGroup;
 			children = (
-				0FB9CB22299635A400AAA276 /* ToDoItem.swift */,
 			);
 			path = Items;
 			sourceTree = "<group>";
@@ -206,7 +203,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0FB9CB23299635A400AAA276 /* ToDoItem.swift in Sources */,
 				0FB9CB0C29962ED900AAA276 /* ToDDoCore.docc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -409,7 +405,6 @@
 		0FB9CB1F29962ED900AAA276 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -433,7 +428,6 @@
 		0FB9CB2029962ED900AAA276 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
