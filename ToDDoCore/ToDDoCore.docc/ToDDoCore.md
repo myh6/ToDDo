@@ -12,6 +12,26 @@ Creating core domain for future TO-Do List project
 
 - <!--@START_MENU_TOKEN@-->``Symbol``<!--@END_MENU_TOKEN@-->
 
+
+## Requirement
+
+- Retrieve
+    - Empty Data
+    - Non-empty Database returns data
+    - Non-empty Database returns twice the same data (No side-effects)
+    - Error (If applicable, e.g. invalid data)
+
+- Insert
+    - To empty Database store data
+    - To non-empty Database check repeated data
+    - Error (If applicable, e.g. no write permission, not enough storage)
+
+- Delete
+    - Empty Database does nothing
+    - To non-empty Database with matched data remove selected data
+    - To non-empty Database with no matched data does nothing
+    - Error (If applicable, e.g. no delete permission)
+
 ## Model
 
 - Data Model
