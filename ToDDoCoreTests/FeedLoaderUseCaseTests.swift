@@ -13,7 +13,7 @@ struct Item {
 }
 
 protocol FeedStore {
-    typealias RetrievalResult = (Error?) -> Void
+    typealias RetrievalResult = (Result<Item?, Error>) -> Void
     func retrieve(completion: @escaping RetrievalResult)
 }
 
@@ -24,7 +24,7 @@ class FeedLoader {
         self.store = store
     }
     
-    func load(completion: @escaping (Error?) -> Void = { _ in }) {
+    func load(completion: @escaping FeedStore.RetrievalResult = { _ in }) {
         store.retrieve(completion: completion)
     }
 }
@@ -50,8 +50,10 @@ class FeedLoaderUserCaseTests: XCTestCase {
         
         let exp = expectation(description: "Wait for load completion")
         var receivedError: Error?
-        sut.load {
-            receivedError = $0
+        sut.load { result in
+            if case let .failure(error) = result {
+                receivedError = error
+            }
             exp.fulfill()
         }
         let error = NSError(domain: "any error", code: 0)
@@ -85,7 +87,7 @@ class FeedLoaderUserCaseTests: XCTestCase {
         }
         
         func completeRetrieval(with error: Error, at index: Int = 0) {
-            retrieveCompletion[index](error)
+            retrieveCompletion[index](.failure(error))
         }
     }
     
