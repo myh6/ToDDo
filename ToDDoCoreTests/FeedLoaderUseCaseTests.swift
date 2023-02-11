@@ -66,9 +66,11 @@ class FeedLoaderUserCaseTests: XCTestCase {
     
     //MARK: - Helpers
     
-    private func makeSUT() -> (sut: FeedLoader, store: FeedStoreSpy) {
+    private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: FeedLoader, store: FeedStoreSpy) {
         let store = FeedStoreSpy()
         let sut = FeedLoader(store: store)
+        trackForMemoryLeaks(store, file: file, line: line)
+        trackForMemoryLeaks(sut, file: file, line: line)
         return (sut, store)
     }
     
@@ -88,6 +90,12 @@ class FeedLoaderUserCaseTests: XCTestCase {
         
         func completeRetrieval(with error: Error, at index: Int = 0) {
             retrieveCompletion[index](.failure(error))
+        }
+    }
+    
+    func trackForMemoryLeaks(_ instance: AnyObject, file: StaticString = #filePath, line: UInt = #line) {
+        addTeardownBlock { [weak instance] in
+            XCTAssertNil(instance, "Instance should have been deallocaed, Potential memory leak", file: file, line: line)
         }
     }
     
