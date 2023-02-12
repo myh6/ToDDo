@@ -12,6 +12,10 @@
 		0FB9CB1829962ED900AAA276 /* ToDDoCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FB9CB0A29962ED900AAA276 /* ToDDoCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0FB9CB252996409100AAA276 /* FeedLoaderUseCaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB9CB242996409100AAA276 /* FeedLoaderUseCaseTests.swift */; };
 		0FB9CB272998E42C00AAA276 /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB9CB262998E42C00AAA276 /* XCTestCase+MemoryLeakTracking.swift */; };
+		0FB9CB292999015000AAA276 /* FeedListGroups.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB9CB282999015000AAA276 /* FeedListGroups.swift */; };
+		0FB9CB2B2999017600AAA276 /* ListGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB9CB2A2999017500AAA276 /* ListGroup.swift */; };
+		0FB9CB2D2999093300AAA276 /* FeedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB9CB2C2999093300AAA276 /* FeedItem.swift */; };
+		0FB9CB2F2999094300AAA276 /* SubTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB9CB2E2999094300AAA276 /* SubTask.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -31,6 +35,10 @@
 		0FB9CB1129962ED900AAA276 /* ToDDoCoreTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ToDDoCoreTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FB9CB242996409100AAA276 /* FeedLoaderUseCaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedLoaderUseCaseTests.swift; sourceTree = "<group>"; };
 		0FB9CB262998E42C00AAA276 /* XCTestCase+MemoryLeakTracking.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase+MemoryLeakTracking.swift"; sourceTree = "<group>"; };
+		0FB9CB282999015000AAA276 /* FeedListGroups.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedListGroups.swift; sourceTree = "<group>"; };
+		0FB9CB2A2999017500AAA276 /* ListGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListGroup.swift; sourceTree = "<group>"; };
+		0FB9CB2C2999093300AAA276 /* FeedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedItem.swift; sourceTree = "<group>"; };
+		0FB9CB2E2999094300AAA276 /* SubTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubTask.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +100,10 @@
 		0FB9CB212996354700AAA276 /* Items */ = {
 			isa = PBXGroup;
 			children = (
+				0FB9CB282999015000AAA276 /* FeedListGroups.swift */,
+				0FB9CB2A2999017500AAA276 /* ListGroup.swift */,
+				0FB9CB2C2999093300AAA276 /* FeedItem.swift */,
+				0FB9CB2E2999094300AAA276 /* SubTask.swift */,
 			);
 			path = Items;
 			sourceTree = "<group>";
@@ -206,7 +218,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0FB9CB2D2999093300AAA276 /* FeedItem.swift in Sources */,
+				0FB9CB2B2999017600AAA276 /* ListGroup.swift in Sources */,
 				0FB9CB0C29962ED900AAA276 /* ToDDoCore.docc in Sources */,
+				0FB9CB2F2999094300AAA276 /* SubTask.swift in Sources */,
+				0FB9CB292999015000AAA276 /* FeedListGroups.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -409,6 +425,7 @@
 		0FB9CB1F29962ED900AAA276 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -432,6 +449,7 @@
 		0FB9CB2029962ED900AAA276 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;

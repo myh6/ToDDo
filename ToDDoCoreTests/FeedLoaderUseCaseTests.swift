@@ -8,12 +8,8 @@
 import XCTest
 import ToDDoCore
 
-struct Item {
-    
-}
-
 protocol FeedStore {
-    typealias RetrievalResult = (Result<Item?, Error>) -> Void
+    typealias RetrievalResult = (Result<FeedListGroups?, Error>) -> Void
     func retrieve(completion: @escaping RetrievalResult)
 }
 
