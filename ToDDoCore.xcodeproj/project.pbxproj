@@ -91,8 +91,8 @@
 		0FB9CB1529962ED900AAA276 /* ToDDoCoreTests */ = {
 			isa = PBXGroup;
 			children = (
+				0FB9CB30299909A400AAA276 /* Helpers */,
 				0FB9CB242996409100AAA276 /* FeedLoaderUseCaseTests.swift */,
-				0FB9CB262998E42C00AAA276 /* XCTestCase+MemoryLeakTracking.swift */,
 			);
 			path = ToDDoCoreTests;
 			sourceTree = "<group>";
@@ -106,6 +106,14 @@
 				0FB9CB2E2999094300AAA276 /* SubTask.swift */,
 			);
 			path = Items;
+			sourceTree = "<group>";
+		};
+		0FB9CB30299909A400AAA276 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+				0FB9CB262998E42C00AAA276 /* XCTestCase+MemoryLeakTracking.swift */,
+			);
+			path = Helpers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
