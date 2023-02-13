@@ -8,7 +8,7 @@
 import XCTest
 import ToDDoCore
 
-class LoadFeedFromDatabaseUserCaseTests: XCTestCase {
+class LoadFeedFromDatabaseUseCasesTests: XCTestCase {
     
     func test_init_doesNotMessageStoreUponCreation() {
         let (_, store) = makeSUT()
