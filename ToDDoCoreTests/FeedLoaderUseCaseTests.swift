@@ -8,11 +8,6 @@
 import XCTest
 import ToDDoCore
 
-protocol FeedStore {
-    typealias RetrievalCompletion = (Result<[FeedListGroup]?, Error>) -> Void
-    func retrieve(completion: @escaping RetrievalCompletion)
-}
-
 class FeedLoader {
     let store: FeedStore
     
