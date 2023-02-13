@@ -51,6 +51,14 @@ class FeedLoaderUserCaseTests: XCTestCase {
         }
     }
     
+    func test_load_deliversNoItemOnEmptyDatabase() {
+        let (sut, store) = makeSUT()
+        
+        expect(sut, toCompleteWith: .success(.none)) {
+            store.completeRetrieval(with: nil)
+        }
+    }
+    
     //MARK: - Helpers
     
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: FeedLoader, store: FeedStoreSpy) {
@@ -98,6 +106,10 @@ class FeedLoaderUserCaseTests: XCTestCase {
         
         func completeRetrieval(with error: Error, at index: Int = 0) {
             retrieveCompletion[index](.failure(error))
+        }
+        
+        func completeRetrieval(with item: FeedListGroups?, at index: Int = 0) {
+            retrieveCompletion[index](.success(.none))
         }
     }
 }
