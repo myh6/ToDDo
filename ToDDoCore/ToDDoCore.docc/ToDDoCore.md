@@ -6,32 +6,37 @@ Creating core domain for future TO-Do List project
 
 <!--@START_MENU_TOKEN@-->Text<!--@END_MENU_TOKEN@-->
 
-## Topics
+## List Group
 
-### <!--@START_MENU_TOKEN@-->Group<!--@END_MENU_TOKEN@-->
+### Data: FeedListGroup
 
-- <!--@START_MENU_TOKEN@-->``Symbol``<!--@END_MENU_TOKEN@-->
+### Retrieve
 
+1. Empty database retrieve no list group
+2. Non-empty database returns list group
+3. Non-empty databse has no side-effects
+4. Error (If applicable, e.g. invalid data)
 
-## Requirement
+### Delete
 
-- Retrieve
-    - Empty Data
-    - Non-empty Database returns data
-    - Non-empty Database returns twice the same data (No side-effects)
-    - Error (If applicable, e.g. invalid data)
+1. Empty database does nothing
+2. To non-empty database with matched data removed selected data
+3. To non-empty database with no mathced data does nothing
+4. Error (If applicable, e.g. no delte permission)
 
-- Insert
-    - To empty Database store data insert data
-    - To non-empty Database with matched data update data with new one
-    - To non-empty Database with no matched data insert data to database
-    - Error (If applicable, e.g. no write permission, not enough storage)
+### Update
 
-- Delete
-    - Empty Database does nothing
-    - To non-empty Database with matched data remove selected data
-    - To non-empty Database with no matched data does nothing
-    - Error (If applicable, e.g. no delete permission)
+1. Empty database does nothing
+2. To non-empty database with matched data updata data
+3. To non-empty database with no matched data does nothing
+4. Error (If applicable, e.g. not enough storage)
+
+### Insert
+
+1. To empty database insert data
+2. To non-empty database with mathced data throw error
+3. To non-empty database with no matched data insrt data
+4. Error (e.g. not enough storage)
 
 ## Model
 
