@@ -9,8 +9,8 @@ import XCTest
 import ToDDoCore
 
 protocol FeedStore {
-    typealias RetrievalResult = (Result<FeedListGroups?, Error>) -> Void
-    func retrieve(completion: @escaping RetrievalResult)
+    typealias RetrievalCompletion = (Result<FeedListGroups?, Error>) -> Void
+    func retrieve(completion: @escaping RetrievalCompletion)
 }
 
 class FeedLoader {
@@ -20,7 +20,7 @@ class FeedLoader {
         self.store = store
     }
     
-    func load(completion: @escaping FeedStore.RetrievalResult = { _ in }) {
+    func load(completion: @escaping FeedStore.RetrievalCompletion = { _ in }) {
         store.retrieve(completion: completion)
     }
 }
@@ -73,13 +73,13 @@ class FeedLoaderUserCaseTests: XCTestCase {
     private class FeedStoreSpy: FeedStore {
         var receivedMessage = [ReceivedMessage]()
         
-        private var retrieveCompletion = [RetrievalResult]()
+        private var retrieveCompletion = [RetrievalCompletion]()
         
         enum ReceivedMessage: Equatable {
             case retrieve
         }
         
-        func retrieve(completion: @escaping RetrievalResult) {
+        func retrieve(completion: @escaping RetrievalCompletion) {
             receivedMessage.append(.retrieve)
             retrieveCompletion.append(completion)
         }
