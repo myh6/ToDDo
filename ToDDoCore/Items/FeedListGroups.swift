@@ -8,9 +8,9 @@
 import Foundation
 
 public struct FeedListGroups: Equatable {
-    public let listGroup: ListGroup
+    public let listGroup: [ListGroup]
     
-    public init(listGroup: ListGroup) {
+    public init(listGroup: [ListGroup]) {
         self.listGroup = listGroup
     }
 }

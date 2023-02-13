@@ -61,7 +61,8 @@ class FeedLoaderUserCaseTests: XCTestCase {
     
     func test_load_deliversItemOnNonEmptyDatabase() {
         let (sut, store) = makeSUT()
-        let feedListGroup = FeedListGroups(listGroup: ListGroup(title: "a title", titleImage: nil, items: FeedItem(id: UUID(), expectedDate: Date(), finishedDate: Date(), priority: 0, title: "a title", isDone: false, url: nil, note: nil, tag: nil, imageData: nil, subTasks: SubTask(id: UUID(), isDone: false, title: "another title"))))
+        let feedListGroup = makeFeedListGroups(listGroup: [makeListGroup(items: [makeFeedItem(subTasks: [makeSubTask()])])])
+        
         expect(sut, toCompleteWith: .success(feedListGroup)) {
             store.completeRetrieval(with: feedListGroup)
         }
@@ -75,6 +76,33 @@ class FeedLoaderUserCaseTests: XCTestCase {
         trackForMemoryLeaks(store, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
         return (sut, store)
+    }
+    
+    private func makeFeedListGroups(listGroup: [ListGroup]) -> FeedListGroups {
+        FeedListGroups(listGroup: listGroup)
+    }
+    
+    private func makeListGroup(title: String = "a title", items: [FeedItem]) -> ListGroup {
+        ListGroup(title: title, titleImage: nil, items: items)
+    }
+    
+    private func makeFeedItem(expectedDate: Date = Date(), finishedDate: Date = Date(), priority: Int = 0, title: String = "a title", isDone: Bool = false, subTasks: [SubTask]) -> FeedItem {
+        FeedItem(
+            id: UUID(),
+            expectedDate: expectedDate,
+            finishedDate: finishedDate,
+            priority: priority,
+            title: title,
+            isDone: isDone,
+            url: nil,
+            note: nil,
+            tag: nil,
+            imageData: nil,
+            subTasks: subTasks)
+    }
+    
+    private func makeSubTask(isDone: Bool = false, title: String = "a title") -> SubTask {
+        SubTask(id: UUID(), isDone: isDone, title: title)
     }
     
     private func expect(_ sut: FeedLoader, toCompleteWith expectedResult: FeedLoader.LoadResult, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
