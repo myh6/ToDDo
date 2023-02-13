@@ -7,10 +7,15 @@
 
 import Foundation
 
-public struct FeedListGroups: Equatable {
-    public let listGroup: [ListGroup]
+public struct FeedListGroup: Equatable {
     
-    public init(listGroup: [ListGroup]) {
-        self.listGroup = listGroup
+    public let listTitle: String
+    public let listImage: Data
+    public let itemsCount: Int
+    
+    public init(listTitle: String, listImage: Data, itemsCount: Int) {
+        self.listTitle = listTitle
+        self.listImage = listImage
+        self.itemsCount = itemsCount
     }
 }

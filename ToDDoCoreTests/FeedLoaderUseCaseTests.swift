@@ -9,14 +9,14 @@ import XCTest
 import ToDDoCore
 
 protocol FeedStore {
-    typealias RetrievalCompletion = (Result<FeedListGroups?, Error>) -> Void
+    typealias RetrievalCompletion = (Result<[FeedListGroup]?, Error>) -> Void
     func retrieve(completion: @escaping RetrievalCompletion)
 }
 
 class FeedLoader {
     let store: FeedStore
     
-    typealias LoadResult = Result<FeedListGroups?, Error>
+    typealias LoadResult = Result<[FeedListGroup]?, Error>
     init(store: FeedStore) {
         self.store = store
     }
@@ -44,10 +44,10 @@ class FeedLoaderUserCaseTests: XCTestCase {
     
     func test_load_failsOnRetrievalError() {
         let (sut, store) = makeSUT()
-        let anyError = NSError(domain: "any error", code: 0)
+        let error = anyError()
         
-        expect(sut, toCompleteWith: .failure(anyError)) {
-            store.completeRetrieval(with: anyError)
+        expect(sut, toCompleteWith: failure(error)) {
+            store.completeRetrieval(with: error)
         }
     }
     
@@ -61,13 +61,13 @@ class FeedLoaderUserCaseTests: XCTestCase {
     
     func test_load_deliversItemOnNonEmptyDatabase() {
         let (sut, store) = makeSUT()
-        let feedListGroup = makeFeedListGroups(listGroup: [makeListGroup(items: [makeFeedItem(subTasks: [makeSubTask()])])])
+        let feedListGroup = makeFeedListGroups()
         
-        expect(sut, toCompleteWith: .success(feedListGroup)) {
-            store.completeRetrieval(with: feedListGroup)
+        expect(sut, toCompleteWith: .success([feedListGroup])) {
+            store.completeRetrieval(with: [feedListGroup])
         }
     }
-    
+       
     //MARK: - Helpers
     
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: FeedLoader, store: FeedStoreSpy) {
@@ -78,31 +78,16 @@ class FeedLoaderUserCaseTests: XCTestCase {
         return (sut, store)
     }
     
-    private func makeFeedListGroups(listGroup: [ListGroup]) -> FeedListGroups {
-        FeedListGroups(listGroup: listGroup)
+    private func failure(_ error: Error) -> FeedLoader.LoadResult {
+        .failure(error)
     }
     
-    private func makeListGroup(title: String = "a title", items: [FeedItem]) -> ListGroup {
-        ListGroup(title: title, titleImage: nil, items: items)
+    private func anyError() -> Error {
+        NSError(domain: "any error", code: 0)
     }
     
-    private func makeFeedItem(expectedDate: Date = Date(), finishedDate: Date = Date(), priority: Int = 0, title: String = "a title", isDone: Bool = false, subTasks: [SubTask]) -> FeedItem {
-        FeedItem(
-            id: UUID(),
-            expectedDate: expectedDate,
-            finishedDate: finishedDate,
-            priority: priority,
-            title: title,
-            isDone: isDone,
-            url: nil,
-            note: nil,
-            tag: nil,
-            imageData: nil,
-            subTasks: subTasks)
-    }
-    
-    private func makeSubTask(isDone: Bool = false, title: String = "a title") -> SubTask {
-        SubTask(id: UUID(), isDone: isDone, title: title)
+    private func makeFeedListGroups(listTitle: String = "a title", listImage: Data = Data("a image".utf8), itemsCount: Int = 0) -> FeedListGroup {
+        FeedListGroup(listTitle: listTitle, listImage: listImage, itemsCount: itemsCount)
     }
     
     private func expect(_ sut: FeedLoader, toCompleteWith expectedResult: FeedLoader.LoadResult, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
@@ -144,7 +129,7 @@ class FeedLoaderUserCaseTests: XCTestCase {
             retrieveCompletion[index](.failure(error))
         }
         
-        func completeRetrieval(with item: FeedListGroups?, at index: Int = 0) {
+        func completeRetrieval(with item: [FeedListGroup]?, at index: Int = 0) {
             retrieveCompletion[index](.success(item))
         }
     }
