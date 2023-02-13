@@ -22,8 +22,9 @@ Creating core domain for future TO-Do List project
     - Error (If applicable, e.g. invalid data)
 
 - Insert
-    - To empty Database store data
-    - To non-empty Database check repeated data
+    - To empty Database store data insert data
+    - To non-empty Database with matched data update data with new one
+    - To non-empty Database with no matched data insert data to database
     - Error (If applicable, e.g. no write permission, not enough storage)
 
 - Delete
