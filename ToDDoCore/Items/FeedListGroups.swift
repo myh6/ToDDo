@@ -7,6 +7,6 @@
 
 import Foundation
 
-public struct FeedListGroups {
+public struct FeedListGroups: Equatable {
     public let listGroup: ListGroup
 }

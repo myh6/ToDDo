@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct ListGroup {
+public struct ListGroup: Equatable {
     public let title: String
     public let titleImage: Data?
     public let items: FeedItem

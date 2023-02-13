@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct FeedItem {
+public struct FeedItem: Equatable {
     public let id: UUID
     public let expectedDate: Date
     public let finishedDate: Date

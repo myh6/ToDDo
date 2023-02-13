@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct SubTask {
+public struct SubTask: Equatable {
     public let id: UUID
     public let isDone: Bool
     public let title: String
