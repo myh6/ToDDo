@@ -22,7 +22,10 @@ class FeedLoader {
     }
     
     func load(completion: @escaping (LoadResult) -> Void) {
-        store.retrieve(completion: completion)
+        store.retrieve { [weak self] result in
+            guard self != nil else { return }
+            completion(result)
+        }
     }
 }
 
@@ -76,7 +79,19 @@ class FeedLoaderUserCaseTests: XCTestCase {
             store.completeRetrieval(with: [feedListGroup])
         }
     }
-    
+   
+    func test_load_doesNotDeliverResultAfterSUTInstanceHasBeenDeallocated() {
+        let store = FeedStoreSpy()
+        var sut: FeedLoader? = FeedLoader(store: store)
+        
+        var receivedResult = [FeedLoader.LoadResult]()
+        sut?.load(completion: { receivedResult.append($0) })
+        
+        sut = nil
+        store.completeRetrievalWithEmptyDatabase()
+        
+        XCTAssertTrue(receivedResult.isEmpty)
+    }
        
     //MARK: - Helpers
     
