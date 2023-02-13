@@ -59,6 +59,14 @@ class FeedLoaderUserCaseTests: XCTestCase {
         }
     }
     
+    func test_load_deliversItemOnNonEmptyDatabase() {
+        let (sut, store) = makeSUT()
+        let feedListGroup = FeedListGroups(listGroup: ListGroup(title: "a title", titleImage: nil, items: FeedItem(id: UUID(), expectedDate: Date(), finishedDate: Date(), priority: 0, title: "a title", isDone: false, url: nil, note: nil, tag: nil, imageData: nil, subTasks: SubTask(id: UUID(), isDone: false, title: "another title"))))
+        expect(sut, toCompleteWith: .success(feedListGroup)) {
+            store.completeRetrieval(with: feedListGroup)
+        }
+    }
+    
     //MARK: - Helpers
     
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: FeedLoader, store: FeedStoreSpy) {
@@ -109,7 +117,7 @@ class FeedLoaderUserCaseTests: XCTestCase {
         }
         
         func completeRetrieval(with item: FeedListGroups?, at index: Int = 0) {
-            retrieveCompletion[index](.success(.none))
+            retrieveCompletion[index](.success(item))
         }
     }
 }

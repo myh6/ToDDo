@@ -11,4 +11,10 @@ public struct SubTask: Equatable {
     public let id: UUID
     public let isDone: Bool
     public let title: String
+    
+    public init(id: UUID, isDone: Bool, title: String) {
+        self.id = id
+        self.isDone = isDone
+        self.title = title
+    }
 }

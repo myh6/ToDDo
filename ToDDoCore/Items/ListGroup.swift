@@ -11,4 +11,10 @@ public struct ListGroup: Equatable {
     public let title: String
     public let titleImage: Data?
     public let items: FeedItem
+    
+    public init(title: String, titleImage: Data?, items: FeedItem) {
+        self.title = title
+        self.titleImage = titleImage
+        self.items = items
+    }
 }

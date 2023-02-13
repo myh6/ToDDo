@@ -19,4 +19,18 @@ public struct FeedItem: Equatable {
     public let tag: String?
     public let imageData: Data?
     public let subTasks: SubTask
+    
+    public init(id: UUID, expectedDate: Date, finishedDate: Date, priority: Int, title: String, isDone: Bool, url: URL?, note: String?, tag: String?, imageData: Data?, subTasks: SubTask) {
+        self.id = id
+        self.expectedDate = expectedDate
+        self.finishedDate = finishedDate
+        self.priority = priority
+        self.title = title
+        self.isDone = isDone
+        self.url = url
+        self.note = note
+        self.tag = tag
+        self.imageData = imageData
+        self.subTasks = subTasks
+    }
 }
