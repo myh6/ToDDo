@@ -8,22 +8,6 @@
 import XCTest
 import ToDDoCore
 
-class FeedLoader {
-    let store: FeedStore
-    
-    typealias LoadResult = Result<[FeedListGroup]?, Error>
-    init(store: FeedStore) {
-        self.store = store
-    }
-    
-    func load(completion: @escaping (LoadResult) -> Void) {
-        store.retrieve { [weak self] result in
-            guard self != nil else { return }
-            completion(result)
-        }
-    }
-}
-
 class FeedLoaderUserCaseTests: XCTestCase {
     
     func test_init_doesNotMessageStoreUponCreation() {
