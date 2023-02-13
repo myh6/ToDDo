@@ -21,7 +21,7 @@ class FeedLoader {
         self.store = store
     }
     
-    func load(completion: @escaping (LoadResult) -> Void = { _ in }) {
+    func load(completion: @escaping (LoadResult) -> Void) {
         store.retrieve(completion: completion)
     }
 }
@@ -37,9 +37,18 @@ class FeedLoaderUserCaseTests: XCTestCase {
     func test_load_requestsStoreRetrieval() {
         let (sut, store) = makeSUT()
         
-        sut.load()
+        sut.load() { _ in }
         
         XCTAssertEqual(store.receivedMessage, [.retrieve])
+    }
+    
+    func test_loadTwice_requestDataFromDatabaseTwice() {
+        let (sut, store) = makeSUT()
+        
+        sut.load { _ in }
+        sut.load { _ in }
+        
+        XCTAssertEqual(store.receivedMessage, [.retrieve, .retrieve])
     }
     
     func test_load_failsOnRetrievalError() {
@@ -67,6 +76,7 @@ class FeedLoaderUserCaseTests: XCTestCase {
             store.completeRetrieval(with: [feedListGroup])
         }
     }
+    
        
     //MARK: - Helpers
     
