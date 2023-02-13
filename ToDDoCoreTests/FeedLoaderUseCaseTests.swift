@@ -64,7 +64,7 @@ class FeedLoaderUserCaseTests: XCTestCase {
         let (sut, store) = makeSUT()
         
         expect(sut, toCompleteWith: .success(.none)) {
-            store.completeRetrieval(with: nil)
+            store.completeRetrievalWithEmptyDatabase()
         }
     }
     
@@ -139,8 +139,12 @@ class FeedLoaderUserCaseTests: XCTestCase {
             retrieveCompletion[index](.failure(error))
         }
         
-        func completeRetrieval(with item: [FeedListGroup]?, at index: Int = 0) {
+        func completeRetrieval(with item: [FeedListGroup], at index: Int = 0) {
             retrieveCompletion[index](.success(item))
+        }
+        
+        func completeRetrievalWithEmptyDatabase(at index: Int = 0) {
+            retrieveCompletion[index](.success(.none))
         }
     }
 }
