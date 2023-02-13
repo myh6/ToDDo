@@ -21,4 +21,8 @@ public class FeedLoader {
             completion(result)
         }
     }
+    
+    public func save() {
+        store.insert()
+    }
 }

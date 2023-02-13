@@ -14,8 +14,10 @@ class FeedStoreSpy: FeedStore {
     
     enum ReceivedMessage: Equatable {
         case retrieve
+        case insert
     }
     
+    //MARK: - Retrieve
     func retrieve(completion: @escaping RetrievalCompletion) {
         receivedMessage.append(.retrieve)
         retrieveCompletion.append(completion)
@@ -31,5 +33,10 @@ class FeedStoreSpy: FeedStore {
     
     func completeRetrievalWithEmptyDatabase(at index: Int = 0) {
         retrieveCompletion[index](.success(.none))
+    }
+    
+    //MARK: - Insert
+    func insert() {
+        receivedMessage.append(.insert)
     }
 }
