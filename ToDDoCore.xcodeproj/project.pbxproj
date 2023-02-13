@@ -75,7 +75,7 @@
 		0FB9CB0929962ED900AAA276 /* ToDDoCore */ = {
 			isa = PBXGroup;
 			children = (
-				0FB9CB212996354700AAA276 /* Items */,
+				0FB9CB31299A0CFE00AAA276 /* Features */,
 				0FB9CB0A29962ED900AAA276 /* ToDDoCore.h */,
 				0FB9CB0B29962ED900AAA276 /* ToDDoCore.docc */,
 			);
@@ -105,6 +105,14 @@
 				0FB9CB262998E42C00AAA276 /* XCTestCase+MemoryLeakTracking.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		0FB9CB31299A0CFE00AAA276 /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				0FB9CB212996354700AAA276 /* Items */,
+			);
+			path = Features;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
