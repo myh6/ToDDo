@@ -22,7 +22,7 @@ public class FeedLoader {
         }
     }
     
-    public func save() {
-        store.insert()
+    public func save(completion: @escaping (Error?) -> Void) {
+        store.insert(completion: completion)
     }
 }
