@@ -37,16 +37,16 @@ class FeedStoreSpy: FeedStore {
     }
     
     //MARK: - Insert
-    func insert(_ feed: FeedListGroup, completion: @escaping (Error?) -> Void) {
+    func insert(_ feed: FeedListGroup, completion: @escaping FeedStore.InsertionCompletion) {
         receivedMessage.append(.insert(feed))
         insertCompletion.append(completion)
     }
     
     func completeSave(with error: Error, at index: Int = 0) {
-        insertCompletion[index](error)
+        insertCompletion[index](.failure(error))
     }
     
     func completeSave(with feed: FeedListGroup, at index: Int = 0) {
-        insertCompletion[index](.none)
+        insertCompletion[index](.success(()))
     }
 }

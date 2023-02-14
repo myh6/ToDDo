@@ -32,9 +32,11 @@ class SaveFeedToDatabaseUseCases: XCTestCase {
         
         let exp = expectation(description: "Wait for description")
         var receivedError: Error?
-        sut.save (listGroup) {
-            receivedError = $0
-            exp.fulfill()
+        sut.save (listGroup) { result in
+            if case let .failure(error) = result {
+                receivedError = error
+                exp.fulfill()
+            }
         }
         store.completeSave(with: saveError)
         
@@ -47,8 +49,8 @@ class SaveFeedToDatabaseUseCases: XCTestCase {
         let listGroup = makeFeedListGroups()
         
         let exp = expectation(description: "Wait for description")
-        sut.save (listGroup) { error in
-            if let error = error {
+        sut.save (listGroup) { result in
+            if case let .failure(error) = result {
                 XCTFail("Expected to insert successfully, got \(error) instead")
             }
             exp.fulfill()

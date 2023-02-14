@@ -11,6 +11,8 @@ public class FeedLoader {
     private let store: FeedStore
     
     public typealias LoadResult = Result<[FeedListGroup]?, Error>
+    public typealias SaveResult = Result<Void, Error>
+    
     public init(store: FeedStore) {
         self.store = store
     }
@@ -22,7 +24,7 @@ public class FeedLoader {
         }
     }
     
-    public func save(_ feed: FeedListGroup, completion: @escaping (Error?) -> Void) {
+    public func save(_ feed: FeedListGroup, completion: @escaping (SaveResult) -> Void) {
         store.insert(feed, completion: completion)
     }
 }
