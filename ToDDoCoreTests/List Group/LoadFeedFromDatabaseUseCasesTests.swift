@@ -86,10 +86,6 @@ class LoadFeedFromDatabaseUseCasesTests: XCTestCase {
         .failure(error)
     }
     
-    private func anyNSError() -> Error {
-        NSError(domain: "any error", code: 0)
-    }
-    
     private func expect(_ sut: FeedLoader, toCompleteWith expectedResult: FeedLoader.LoadResult, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
         
         let exp = expectation(description: "Wait for load completion")
