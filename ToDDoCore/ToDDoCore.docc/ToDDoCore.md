@@ -34,8 +34,7 @@ Creating core domain for future TO-Do List project
 ### Insert
 
 1. To empty database insert data
-2. To non-empty database with mathced data throw error
-3. To non-empty database with no matched data insrt data
+2. To non-empty database insrt data
 4. Error (e.g. not enough storage)
 
 ## Model
