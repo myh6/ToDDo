@@ -9,11 +9,13 @@ import Foundation
 
 public struct FeedListGroup: Equatable {
     
+    public let id: UUID
     public let listTitle: String
     public let listImage: Data
     public let itemsCount: Int
     
-    public init(listTitle: String, listImage: Data, itemsCount: Int) {
+    public init(id: UUID, listTitle: String, listImage: Data, itemsCount: Int) {
+        self.id = id
         self.listTitle = listTitle
         self.listImage = listImage
         self.itemsCount = itemsCount

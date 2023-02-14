@@ -91,7 +91,7 @@ class LoadFeedFromDatabaseUseCasesTests: XCTestCase {
     }
     
     private func makeFeedListGroups(listTitle: String = "a title", listImage: Data = Data("a image".utf8), itemsCount: Int = 0) -> FeedListGroup {
-        FeedListGroup(listTitle: listTitle, listImage: listImage, itemsCount: itemsCount)
+        FeedListGroup(id: UUID(), listTitle: listTitle, listImage: listImage, itemsCount: itemsCount)
     }
     
     private func expect(_ sut: FeedLoader, toCompleteWith expectedResult: FeedLoader.LoadResult, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
