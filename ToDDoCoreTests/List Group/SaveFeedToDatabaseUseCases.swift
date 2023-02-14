@@ -26,7 +26,7 @@ class SaveFeedToDatabaseUseCases: XCTestCase {
     
     func test_save_failsOnSaveError() {
         let (sut, store) = makeSUT()
-        let error = anyNSError()
+        let saveError = anyNSError()
         
         let exp = expectation(description: "Wait for description")
         var receivedError: Error?
@@ -34,10 +34,10 @@ class SaveFeedToDatabaseUseCases: XCTestCase {
             receivedError = $0
             exp.fulfill()
         }
-        store.completeSave(with: error)
+        store.completeSave(with: saveError)
         
         wait(for: [exp], timeout: 1.0)
-        XCTAssertEqual(receivedError as NSError?, error as NSError)
+        XCTAssertEqual(receivedError as NSError?, saveError as NSError)
     }
     
     
