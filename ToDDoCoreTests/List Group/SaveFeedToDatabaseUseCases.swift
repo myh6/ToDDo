@@ -18,19 +18,21 @@ class SaveFeedToDatabaseUseCases: XCTestCase {
     
     func test_save_requestStoreInsertion() {
         let (sut, store) = makeSUT()
+        let listGroup = makeFeedListGroups()
         
-        sut.save { _ in }
+        sut.save (listGroup) { _ in }
         
-        XCTAssertEqual(store.receivedMessage, [.insert])
+        XCTAssertEqual(store.receivedMessage, [.insert(listGroup)])
     }
     
     func test_save_failsOnSaveError() {
         let (sut, store) = makeSUT()
         let saveError = anyNSError()
+        let listGroup = makeFeedListGroups()
         
         let exp = expectation(description: "Wait for description")
         var receivedError: Error?
-        sut.save {
+        sut.save (listGroup) {
             receivedError = $0
             exp.fulfill()
         }
@@ -40,6 +42,23 @@ class SaveFeedToDatabaseUseCases: XCTestCase {
         XCTAssertEqual(receivedError as NSError?, saveError as NSError)
     }
     
+    func test_save_succeedOnSuccessfulInsertion() {
+        let (sut, store) = makeSUT()
+        let listGroup = makeFeedListGroups()
+        
+        let exp = expectation(description: "Wait for description")
+        sut.save (listGroup) { error in
+            if let error = error {
+                XCTFail("Expected to insert successfully, got \(error) instead")
+            }
+            exp.fulfill()
+        }
+        store.completeSave(with: listGroup)
+        
+        wait(for: [exp], timeout: 1.0)
+        
+        XCTAssertEqual(store.receivedMessage, [.insert(listGroup)])
+    }
     
     //MARK: - Helpers
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: FeedLoader, store: FeedStoreSpy) {

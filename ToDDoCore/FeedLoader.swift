@@ -22,7 +22,7 @@ public class FeedLoader {
         }
     }
     
-    public func save(completion: @escaping (Error?) -> Void) {
-        store.insert(completion: completion)
+    public func save(_ feed: FeedListGroup, completion: @escaping (Error?) -> Void) {
+        store.insert(feed, completion: completion)
     }
 }
