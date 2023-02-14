@@ -35,7 +35,7 @@ class LoadFeedFromDatabaseUseCasesTests: XCTestCase {
     
     func test_load_failsOnRetrievalError() {
         let (sut, store) = makeSUT()
-        let error = anyError()
+        let error = anyNSError()
         
         expect(sut, toCompleteWith: failure(error)) {
             store.completeRetrieval(with: error)
@@ -86,7 +86,7 @@ class LoadFeedFromDatabaseUseCasesTests: XCTestCase {
         .failure(error)
     }
     
-    private func anyError() -> Error {
+    private func anyNSError() -> Error {
         NSError(domain: "any error", code: 0)
     }
     
