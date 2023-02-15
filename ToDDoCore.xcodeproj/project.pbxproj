@@ -101,7 +101,7 @@
 			isa = PBXGroup;
 			children = (
 				0FB9CB30299909A400AAA276 /* Helpers */,
-				0FB9CB3A299A3E7000AAA276 /* List Group */,
+				0FB9CB3A299A3E7000AAA276 /* Feed Local */,
 			);
 			path = ToDDoCoreTests;
 			sourceTree = "<group>";
@@ -123,14 +123,14 @@
 			path = Features;
 			sourceTree = "<group>";
 		};
-		0FB9CB3A299A3E7000AAA276 /* List Group */ = {
+		0FB9CB3A299A3E7000AAA276 /* Feed Local */ = {
 			isa = PBXGroup;
 			children = (
 				0FB9CB3B299A3E8400AAA276 /* Helpers */,
 				0FB9CB242996409100AAA276 /* LoadFeedFromDatabaseUseCasesTests.swift */,
 				0FB9CB38299A3CEA00AAA276 /* SaveFeedToDatabaseUseCases.swift */,
 			);
-			path = "List Group";
+			path = "Feed Local";
 			sourceTree = "<group>";
 		};
 		0FB9CB3B299A3E8400AAA276 /* Helpers */ = {
