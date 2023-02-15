@@ -85,8 +85,7 @@
 		0FB9CB0929962ED900AAA276 /* ToDDoCore */ = {
 			isa = PBXGroup;
 			children = (
-				0FB9CB34299A31C000AAA276 /* FeedStore.swift */,
-				0FB9CB36299A327800AAA276 /* LocalFeedLoader.swift */,
+				0FB9CB40299C811600AAA276 /* Feed Local */,
 				0FB9CB31299A0CFE00AAA276 /* Features */,
 				0FB9CB0A29962ED900AAA276 /* ToDDoCore.h */,
 				0FB9CB0B29962ED900AAA276 /* ToDDoCore.docc */,
@@ -136,6 +135,15 @@
 				0FB9CB3E299B1CEC00AAA276 /* SharedTestHelpers.swift */,
 			);
 			path = Helpers;
+			sourceTree = "<group>";
+		};
+		0FB9CB40299C811600AAA276 /* Feed Local */ = {
+			isa = PBXGroup;
+			children = (
+				0FB9CB34299A31C000AAA276 /* FeedStore.swift */,
+				0FB9CB36299A327800AAA276 /* LocalFeedLoader.swift */,
+			);
+			path = "Feed Local";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
