@@ -29,36 +29,17 @@ class SaveFeedToDatabaseUseCases: XCTestCase {
         let (sut, store) = makeSUT()
         let saveError = anyNSError()
         
-        let exp = expectation(description: "Wait for description")
-        var receivedError: Error?
-        sut.save (uniqueItem().model) { result in
-            if case let .failure(error) = result {
-                receivedError = error
-                exp.fulfill()
-            }
+        expect(sut, toCompleteWithError: saveError) {
+            store.completeSave(with: saveError)
         }
-        store.completeSave(with: saveError)
-        
-        wait(for: [exp], timeout: 1.0)
-        XCTAssertEqual(receivedError as NSError?, saveError as NSError)
     }
     
     func test_save_succeedOnSuccessfulInsertion() {
         let (sut, store) = makeSUT()
-        let listGroup = uniqueItem()
         
-        let exp = expectation(description: "Wait for description")
-        sut.save (listGroup.model) { result in
-            if case let .failure(error) = result {
-                XCTFail("Expected to insert successfully, got \(error) instead")
-            }
-            exp.fulfill()
+        expect(sut, toCompleteWithError: .none) {
+            store.completeInsertionSuccessfully()
         }
-        store.completeSave(with: listGroup.local)
-        
-        wait(for: [exp], timeout: 1.0)
-        
-        XCTAssertEqual(store.receivedMessage, [.insert(listGroup.local)])
     }
     
     //MARK: - Helpers
@@ -68,5 +49,21 @@ class SaveFeedToDatabaseUseCases: XCTestCase {
         trackForMemoryLeaks(store)
         trackForMemoryLeaks(sut)
         return (sut, store)
+    }
+    
+    private func expect(_ sut: LocalFeedLoader, toCompleteWithError expectedError: LocalFeedLoader.SaveResult, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
+        let listGroup = uniqueItem()
+        
+        let exp = expectation(description: "Wait for description")
+        var receivedError: Error?
+        sut.save (listGroup.model) { error in
+            receivedError = error
+            exp.fulfill()
+        }
+        
+        action()
+        
+        wait(for: [exp], timeout: 1.0)
+        XCTAssertEqual(receivedError as NSError?, expectedError as NSError?, file: file, line: line)
     }
 }
