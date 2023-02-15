@@ -15,7 +15,7 @@ class FeedStoreSpy: FeedStore {
     
     enum ReceivedMessage: Equatable {
         case retrieve
-        case insert(FeedListGroup)
+        case insert(LocalFeedListGroup)
     }
     
     //MARK: - Retrieve
@@ -28,7 +28,7 @@ class FeedStoreSpy: FeedStore {
         retrieveCompletion[index](.failure(error))
     }
     
-    func completeRetrieval(with item: [FeedListGroup], at index: Int = 0) {
+    func completeRetrieval(with item: [LocalFeedListGroup], at index: Int = 0) {
         retrieveCompletion[index](.success(item))
     }
     
@@ -37,7 +37,7 @@ class FeedStoreSpy: FeedStore {
     }
     
     //MARK: - Insert
-    func insert(_ feed: FeedListGroup, completion: @escaping FeedStore.InsertionCompletion) {
+    func insert(_ feed: LocalFeedListGroup, completion: @escaping FeedStore.InsertionCompletion) {
         receivedMessage.append(.insert(feed))
         insertCompletion.append(completion)
     }
@@ -46,7 +46,7 @@ class FeedStoreSpy: FeedStore {
         insertCompletion[index](.failure(error))
     }
     
-    func completeSave(with feed: FeedListGroup, at index: Int = 0) {
+    func completeSave(with feed: LocalFeedListGroup, at index: Int = 0) {
         insertCompletion[index](.success(()))
     }
 }

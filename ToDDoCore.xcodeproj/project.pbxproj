@@ -18,6 +18,7 @@
 		0FB9CB39299A3CEA00AAA276 /* SaveFeedToDatabaseUseCases.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB9CB38299A3CEA00AAA276 /* SaveFeedToDatabaseUseCases.swift */; };
 		0FB9CB3D299A3E9A00AAA276 /* FeedStoreSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB9CB3C299A3E9A00AAA276 /* FeedStoreSpy.swift */; };
 		0FB9CB3F299B1CEC00AAA276 /* SharedTestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB9CB3E299B1CEC00AAA276 /* SharedTestHelpers.swift */; };
+		0FB9CB42299C814F00AAA276 /* LocalFeedListGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB9CB41299C814F00AAA276 /* LocalFeedListGroup.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +44,7 @@
 		0FB9CB38299A3CEA00AAA276 /* SaveFeedToDatabaseUseCases.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SaveFeedToDatabaseUseCases.swift; sourceTree = "<group>"; };
 		0FB9CB3C299A3E9A00AAA276 /* FeedStoreSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedStoreSpy.swift; sourceTree = "<group>"; };
 		0FB9CB3E299B1CEC00AAA276 /* SharedTestHelpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SharedTestHelpers.swift; sourceTree = "<group>"; };
+		0FB9CB41299C814F00AAA276 /* LocalFeedListGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalFeedListGroup.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -142,6 +144,7 @@
 			children = (
 				0FB9CB34299A31C000AAA276 /* FeedStore.swift */,
 				0FB9CB36299A327800AAA276 /* LocalFeedLoader.swift */,
+				0FB9CB41299C814F00AAA276 /* LocalFeedListGroup.swift */,
 			);
 			path = "Feed Local";
 			sourceTree = "<group>";
@@ -260,6 +263,7 @@
 				0FB9CB292999015000AAA276 /* FeedListGroups.swift in Sources */,
 				0FB9CB37299A327800AAA276 /* LocalFeedLoader.swift in Sources */,
 				0FB9CB35299A31C000AAA276 /* FeedStore.swift in Sources */,
+				0FB9CB42299C814F00AAA276 /* LocalFeedListGroup.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

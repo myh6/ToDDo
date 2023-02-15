@@ -8,9 +8,9 @@
 import Foundation
 
 public protocol FeedStore {
-    typealias RetrievalCompletion = (Result<[FeedListGroup]?, Error>) -> Void
+    typealias RetrievalCompletion = (Result<[LocalFeedListGroup]?, Error>) -> Void
     typealias InsertionCompletion = (Result<Void, Error>) -> Void
     
     func retrieve(completion: @escaping RetrievalCompletion)
-    func insert(_ feed: FeedListGroup, completion: @escaping InsertionCompletion)
+    func insert(_ feed: LocalFeedListGroup, completion: @escaping InsertionCompletion)
 }

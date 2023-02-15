@@ -18,17 +18,18 @@ class SaveFeedToDatabaseUseCases: XCTestCase {
     
     func test_save_requestStoreInsertion() {
         let (sut, store) = makeSUT()
-        let listGroup = makeFeedListGroups()
+        let listGroup = uniqueFeedListGroup()
+        let localListGroup = LocalFeedListGroup(id: listGroup.id, listTitle: listGroup.listTitle, listImage: listGroup.listImage, itemsCount: listGroup.itemsCount)
         
         sut.save (listGroup) { _ in }
         
-        XCTAssertEqual(store.receivedMessage, [.insert(listGroup)])
+        XCTAssertEqual(store.receivedMessage, [.insert(localListGroup)])
     }
     
     func test_save_failsOnSaveError() {
         let (sut, store) = makeSUT()
         let saveError = anyNSError()
-        let listGroup = makeFeedListGroups()
+        let listGroup = uniqueFeedListGroup()
         
         let exp = expectation(description: "Wait for description")
         var receivedError: Error?
@@ -46,7 +47,8 @@ class SaveFeedToDatabaseUseCases: XCTestCase {
     
     func test_save_succeedOnSuccessfulInsertion() {
         let (sut, store) = makeSUT()
-        let listGroup = makeFeedListGroups()
+        let listGroup = uniqueFeedListGroup()
+        let localListGroup = LocalFeedListGroup(id: listGroup.id, listTitle: listGroup.listTitle, listImage: listGroup.listImage, itemsCount: listGroup.itemsCount)
         
         let exp = expectation(description: "Wait for description")
         sut.save (listGroup) { result in
@@ -55,11 +57,11 @@ class SaveFeedToDatabaseUseCases: XCTestCase {
             }
             exp.fulfill()
         }
-        store.completeSave(with: listGroup)
+        store.completeSave(with: localListGroup)
         
         wait(for: [exp], timeout: 1.0)
         
-        XCTAssertEqual(store.receivedMessage, [.insert(listGroup)])
+        XCTAssertEqual(store.receivedMessage, [.insert(localListGroup)])
     }
     
     //MARK: - Helpers
