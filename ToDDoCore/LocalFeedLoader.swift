@@ -7,15 +7,24 @@
 
 import Foundation
 
-public class FeedLoader {
+public protocol FeedLoader {
+    typealias Result = Swift.Result<[FeedListGroup]?, Error>
+    
+    func load(completion: @escaping (Result) -> Void)
+}
+
+public class LocalFeedLoader {
     private let store: FeedStore
     
-    public typealias LoadResult = Result<[FeedListGroup]?, Error>
     public typealias SaveResult = Result<Void, Error>
     
     public init(store: FeedStore) {
         self.store = store
     }
+}
+
+extension LocalFeedLoader: FeedLoader {
+    public typealias LoadResult = FeedLoader.Result
     
     public func load(completion: @escaping (LoadResult) -> Void) {
         store.retrieve { [weak self] result in
@@ -23,7 +32,9 @@ public class FeedLoader {
             completion(result)
         }
     }
-    
+}
+
+extension LocalFeedLoader {
     public func save(_ feed: FeedListGroup, completion: @escaping (SaveResult) -> Void) {
         store.insert(feed, completion: completion)
     }

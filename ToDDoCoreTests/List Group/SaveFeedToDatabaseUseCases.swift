@@ -63,9 +63,9 @@ class SaveFeedToDatabaseUseCases: XCTestCase {
     }
     
     //MARK: - Helpers
-    private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: FeedLoader, store: FeedStoreSpy) {
+    private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: LocalFeedLoader, store: FeedStoreSpy) {
         let store = FeedStoreSpy()
-        let sut = FeedLoader(store: store)
+        let sut = LocalFeedLoader(store: store)
         trackForMemoryLeaks(store)
         trackForMemoryLeaks(sut)
         return (sut, store)

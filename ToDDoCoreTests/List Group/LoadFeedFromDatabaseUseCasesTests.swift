@@ -61,9 +61,9 @@ class LoadFeedFromDatabaseUseCasesTests: XCTestCase {
    
     func test_load_doesNotDeliverResultAfterSUTInstanceHasBeenDeallocated() {
         let store = FeedStoreSpy()
-        var sut: FeedLoader? = FeedLoader(store: store)
+        var sut: LocalFeedLoader? = LocalFeedLoader(store: store)
         
-        var receivedResult = [FeedLoader.LoadResult]()
+        var receivedResult = [LocalFeedLoader.LoadResult]()
         sut?.load(completion: { receivedResult.append($0) })
         
         sut = nil
@@ -74,19 +74,19 @@ class LoadFeedFromDatabaseUseCasesTests: XCTestCase {
        
     //MARK: - Helpers
     
-    private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: FeedLoader, store: FeedStoreSpy) {
+    private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: LocalFeedLoader, store: FeedStoreSpy) {
         let store = FeedStoreSpy()
-        let sut = FeedLoader(store: store)
+        let sut = LocalFeedLoader(store: store)
         trackForMemoryLeaks(store, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
         return (sut, store)
     }
     
-    private func failure(_ error: Error) -> FeedLoader.LoadResult {
+    private func failure(_ error: Error) -> LocalFeedLoader.LoadResult {
         .failure(error)
     }
     
-    private func expect(_ sut: FeedLoader, toCompleteWith expectedResult: FeedLoader.LoadResult, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
+    private func expect(_ sut: LocalFeedLoader, toCompleteWith expectedResult: LocalFeedLoader.LoadResult, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
         
         let exp = expectation(description: "Wait for load completion")
         sut.load { receivedResult in
