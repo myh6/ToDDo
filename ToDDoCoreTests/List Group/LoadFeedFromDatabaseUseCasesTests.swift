@@ -52,11 +52,10 @@ class LoadFeedFromDatabaseUseCasesTests: XCTestCase {
     
     func test_load_deliversItemOnNonEmptyDatabase() {
         let (sut, store) = makeSUT()
-        let feedListGroup = [uniqueFeedListGroup()]
-        let localFeedListGroup = feedListGroup.map { LocalFeedListGroup(id: $0.id, listTitle: $0.listTitle, listImage: $0.listImage, itemsCount: $0.itemsCount) }
+        let listGroup = uniqueItems()
         
-        expect(sut, toCompleteWith: .success(feedListGroup)) {
-            store.completeRetrieval(with: localFeedListGroup)
+        expect(sut, toCompleteWith: .success(listGroup.models)) {
+            store.completeRetrieval(with: listGroup.locals)
         }
     }
    

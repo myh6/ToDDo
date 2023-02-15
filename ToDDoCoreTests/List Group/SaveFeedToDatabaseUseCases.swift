@@ -18,22 +18,20 @@ class SaveFeedToDatabaseUseCases: XCTestCase {
     
     func test_save_requestStoreInsertion() {
         let (sut, store) = makeSUT()
-        let listGroup = uniqueFeedListGroup()
-        let localListGroup = LocalFeedListGroup(id: listGroup.id, listTitle: listGroup.listTitle, listImage: listGroup.listImage, itemsCount: listGroup.itemsCount)
+        let listGroup = uniqueItem()
         
-        sut.save (listGroup) { _ in }
+        sut.save (listGroup.model) { _ in }
         
-        XCTAssertEqual(store.receivedMessage, [.insert(localListGroup)])
+        XCTAssertEqual(store.receivedMessage, [.insert(listGroup.local)])
     }
     
     func test_save_failsOnSaveError() {
         let (sut, store) = makeSUT()
         let saveError = anyNSError()
-        let listGroup = uniqueFeedListGroup()
         
         let exp = expectation(description: "Wait for description")
         var receivedError: Error?
-        sut.save (listGroup) { result in
+        sut.save (uniqueItem().model) { result in
             if case let .failure(error) = result {
                 receivedError = error
                 exp.fulfill()
@@ -47,21 +45,20 @@ class SaveFeedToDatabaseUseCases: XCTestCase {
     
     func test_save_succeedOnSuccessfulInsertion() {
         let (sut, store) = makeSUT()
-        let listGroup = uniqueFeedListGroup()
-        let localListGroup = LocalFeedListGroup(id: listGroup.id, listTitle: listGroup.listTitle, listImage: listGroup.listImage, itemsCount: listGroup.itemsCount)
+        let listGroup = uniqueItem()
         
         let exp = expectation(description: "Wait for description")
-        sut.save (listGroup) { result in
+        sut.save (listGroup.model) { result in
             if case let .failure(error) = result {
                 XCTFail("Expected to insert successfully, got \(error) instead")
             }
             exp.fulfill()
         }
-        store.completeSave(with: localListGroup)
+        store.completeSave(with: listGroup.local)
         
         wait(for: [exp], timeout: 1.0)
         
-        XCTAssertEqual(store.receivedMessage, [.insert(localListGroup)])
+        XCTAssertEqual(store.receivedMessage, [.insert(listGroup.local)])
     }
     
     //MARK: - Helpers
