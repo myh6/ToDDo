@@ -7,12 +7,6 @@
 
 import Foundation
 
-public protocol FeedLoader {
-    typealias Result = Swift.Result<[FeedListGroup]?, Error>
-    
-    func load(completion: @escaping (Result) -> Void)
-}
-
 public class LocalFeedLoader {
     private let store: FeedStore
     
