@@ -51,7 +51,20 @@ extension LocalFeedLoader {
     public typealias DeleteResult = Error?
     
     public func delete(_ feed: FeedListGroup, completion: @escaping (SaveResult) -> Void) {
-        store.remove(map(feed), completion: completion)
+        store.retrieve { [weak self] result in
+            guard let self = self else { return }
+            switch result {
+            case let .success(database):
+                guard let database = database else {
+                    return
+                }
+                if database.toModel().contains(feed) {
+                    self.store.remove(self.map(feed), completion: completion)
+                }
+            case .failure:
+                self.store.remove(self.map(feed), completion: completion)
+            }
+        }
     }
 }
 

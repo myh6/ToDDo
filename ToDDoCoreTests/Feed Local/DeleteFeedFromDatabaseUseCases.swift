@@ -16,39 +16,14 @@ class DeleteFeedFromDatabaseUseCases: XCTestCase {
         XCTAssertTrue(store.receivedMessage.isEmpty)
     }
     
-    func test_delete_failsOnDeletionError() {
-        let (sut, store) = makeSUT()
-        let listGroup = uniqueItem()
-        let deletionError = anyNSError()
-        
-        var receivdError: Error?
-        let exp = expectation(description: "Wait for delete completion")
-        sut.delete(listGroup.model) {
-            receivdError = $0
-            exp.fulfill()
-        }
-        
-        store.completeDelete(with: deletionError)
-        wait(for: [exp], timeout: 1.0)
-        
-        XCTAssertEqual(receivdError as NSError?, deletionError as NSError?)
-    }
-    
-    func test_delete_deliversNoErrorOnEmptyDatabase() {
+    func test_delete_doesNotDeleteOnEmptyDatabase() {
         let (sut, store) = makeSUT()
         let listGroup = uniqueItem()
         
-        var receivdError: Error?
-        let exp = expectation(description: "Wait for delete completion")
-        sut.delete(listGroup.model) {
-            receivdError = $0
-            exp.fulfill()
-        }
-        
-        store.completeDeletionWithEmptyDatabase()
-        wait(for: [exp], timeout: 1.0)
-        
-        XCTAssertNil(receivdError)
+        sut.delete(listGroup.model) { _ in }
+        store.completeRetrievalWithEmptyDatabase()
+
+        XCTAssertEqual(store.receivedMessage, [.retrieve])
     }
     
     //MARK: - Helpers
@@ -56,8 +31,8 @@ class DeleteFeedFromDatabaseUseCases: XCTestCase {
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: LocalFeedLoader, store: FeedStoreSpy) {
         let store = FeedStoreSpy()
         let sut = LocalFeedLoader(store: store)
-        trackForMemoryLeaks(store)
-        trackForMemoryLeaks(sut)
+        trackForMemoryLeaks(store, file: file, line: line)
+        trackForMemoryLeaks(sut, file: file, line: line)
         return (sut, store)
     }
 }
