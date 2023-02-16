@@ -65,7 +65,7 @@ extension LocalFeedLoader: FeedDelete {
     }
 }
 
-extension LocalFeedLoader {
+extension LocalFeedLoader: FeedUpdate {
     public typealias UpdateResult = (Error?)
     
     public func update(_ feed: FeedListGroup, completion: @escaping (UpdateResult) -> Void) {

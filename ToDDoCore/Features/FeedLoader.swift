@@ -23,5 +23,10 @@ public protocol FeedDelete {
     typealias Result = (Error?)
     
     func delete(_ feed: FeedListGroup, completion: @escaping (FeedDelete.Result) -> Void)
+}
 
+public protocol FeedUpdate {
+    typealias Result = (Error?)
+    
+    func update(_ feed: FeedListGroup, completion: @escaping (FeedUpdate.Result) -> Void)
 }
