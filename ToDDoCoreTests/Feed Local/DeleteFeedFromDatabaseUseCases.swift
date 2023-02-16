@@ -48,6 +48,25 @@ class DeleteFeedFromDatabaseUseCases: XCTestCase {
         XCTAssertEqual(store.receivedMessage, [.retrieve])
     }
     
+    func test_delete_deletesOnMatchedData() {
+        let (sut, store) = makeSUT()
+        let matchedData = uniqueItem()
+        
+        let exp = expectation(description: "Wait for delete completion")
+        var receivedError: Error?
+        sut.delete(matchedData.model) {
+            receivedError = $0
+            exp.fulfill()
+        }
+        
+        store.completeRetrieval(with: [matchedData.local])
+        store.completeDeletionSuccessfully()
+        wait(for: [exp], timeout: 1.0)
+        
+        XCTAssertNil(receivedError)
+        XCTAssertEqual(store.receivedMessage, [.retrieve, .remove])
+    }
+    
     //MARK: - Helpers
     
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: LocalFeedLoader, store: FeedStoreSpy) {
