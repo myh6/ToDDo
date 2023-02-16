@@ -18,8 +18,8 @@ class FeedStoreSpy: FeedStore {
     enum ReceivedMessage: Equatable {
         case retrieve
         case insert(LocalFeedListGroup)
-        case remove
-        case update
+        case remove(LocalFeedListGroup)
+        case update(LocalFeedListGroup)
     }
     
     //MARK: - Retrieve
@@ -56,7 +56,7 @@ class FeedStoreSpy: FeedStore {
     
     //MARK: - Remove
     func remove(_ feed: LocalFeedListGroup, completion: @escaping RemovalCompletion) {
-        receivedMessage.append(.remove)
+        receivedMessage.append(.remove(feed))
         removeCompletion.append(completion)
     }
     
@@ -70,7 +70,7 @@ class FeedStoreSpy: FeedStore {
     
     //MARK: - Update
     func update(_ feed: LocalFeedListGroup, completion: @escaping UpdateCompletion) {
-        receivedMessage.append(.update)
+        receivedMessage.append(.update(feed))
         updateCompletion.append(completion)
     }
     

@@ -64,7 +64,7 @@ class DeleteFeedFromDatabaseUseCases: XCTestCase {
         wait(for: [exp], timeout: 1.0)
         
         XCTAssertNil(receivedError)
-        XCTAssertEqual(store.receivedMessage, [.retrieve, .remove])
+        XCTAssertEqual(store.receivedMessage, [.retrieve, .remove(matchedData.local)])
     }
     
     func test_delete_doesNotDeliverResultAfterSUTInstanceHasBeenDeallocated() {

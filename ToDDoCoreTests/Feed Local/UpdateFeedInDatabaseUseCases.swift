@@ -64,7 +64,7 @@ class UpdateFeedInDatabaseUseCases: XCTestCase {
         wait(for: [exp], timeout: 1.0)
         
         XCTAssertNil(receivedError)
-        XCTAssertEqual(store.receivedMessage, [.retrieve, .update])
+        XCTAssertEqual(store.receivedMessage, [.retrieve, .update(matchedData.local)])
     }
     
     //MARK: - Helpers
