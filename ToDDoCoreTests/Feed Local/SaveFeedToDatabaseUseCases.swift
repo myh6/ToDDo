@@ -52,11 +52,9 @@ class SaveFeedToDatabaseUseCases: XCTestCase {
     }
     
     private func expect(_ sut: LocalFeedLoader, toCompleteWithError expectedError: LocalFeedLoader.SaveResult, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
-        let listGroup = uniqueItem()
-        
         let exp = expectation(description: "Wait for description")
         var receivedError: Error?
-        sut.save (listGroup.model) { error in
+        sut.save (uniqueItem().model) { error in
             receivedError = error
             exp.fulfill()
         }
