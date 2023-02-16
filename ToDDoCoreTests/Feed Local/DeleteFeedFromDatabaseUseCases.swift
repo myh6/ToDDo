@@ -48,6 +48,25 @@ class DeleteFeedFromDatabaseUseCases: XCTestCase {
         XCTAssertEqual(store.receivedMessage, [.retrieve])
     }
     
+    func test_delete_failsOnDeletionError() {
+        let (sut, store) = makeSUT()
+        let listGroup = uniqueItem()
+        let deletionError = anyNSError()
+        
+        var receivedError: Error?
+        let exp = expectation(description: "Wait for delete completion")
+        sut.delete(listGroup.model) {
+            receivedError = $0
+            exp.fulfill()
+        }
+        
+        store.completeRetrieval(with: [listGroup.local])
+        store.completeDelete(with: deletionError)
+        wait(for: [exp], timeout: 1.0)
+        
+        XCTAssertEqual(receivedError as NSError?, deletionError as NSError?)
+    }
+    
     func test_delete_deletesOnMatchedData() {
         let (sut, store) = makeSUT()
         let matchedData = uniqueItem()
