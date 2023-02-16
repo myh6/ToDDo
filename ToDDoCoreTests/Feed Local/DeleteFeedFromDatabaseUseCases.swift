@@ -16,6 +16,24 @@ class DeleteFeedFromDatabaseUseCases: XCTestCase {
         XCTAssertTrue(store.receivedMessage.isEmpty)
     }
     
+    func test_delete_failsOnDeletionError() {
+        let (sut, store) = makeSUT()
+        let listGroup = uniqueItem()
+        let deletionError = anyNSError()
+        
+        var receivdError: Error?
+        let exp = expectation(description: "Wait for delete completion")
+        sut.delete(listGroup.model) {
+            receivdError = $0
+            exp.fulfill()
+        }
+        
+        store.completeDelete(with: deletionError)
+        wait(for: [exp], timeout: 1.0)
+        
+        XCTAssertEqual(receivdError as NSError?, deletionError as NSError?)
+    }
+    
     //MARK: - Helpers
     
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: LocalFeedLoader, store: FeedStoreSpy) {

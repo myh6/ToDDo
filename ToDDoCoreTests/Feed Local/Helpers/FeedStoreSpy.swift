@@ -12,6 +12,7 @@ class FeedStoreSpy: FeedStore {
     
     private var retrieveCompletion = [RetrievalCompletion]()
     private var insertCompletion = [InsertionCompletion]()
+    private var removeCompletion = [RemovalCompletion]()
     
     enum ReceivedMessage: Equatable {
         case retrieve
@@ -48,5 +49,14 @@ class FeedStoreSpy: FeedStore {
     
     func completeInsertionSuccessfully(at index: Int = 0) {
         insertCompletion[index](.none)
+    }
+    
+    //MARK: - Remove
+    func remove(_ feed: LocalFeedListGroup, completion: @escaping RemovalCompletion) {
+        removeCompletion.append(completion)
+    }
+    
+    func completeDelete(with error: Error, at index: Int = 0) {
+        removeCompletion[index](error)
     }
 }

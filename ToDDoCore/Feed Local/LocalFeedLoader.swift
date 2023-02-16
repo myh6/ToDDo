@@ -13,6 +13,10 @@ public class LocalFeedLoader {
     public init(store: FeedStore) {
         self.store = store
     }
+    
+    private func map(_ feed: FeedListGroup) -> LocalFeedListGroup {
+        return LocalFeedListGroup(id: feed.id, listTitle: feed.listTitle, listImage: feed.listImage, itemsCount: feed.itemsCount)
+    }
 }
 
 extension LocalFeedLoader: FeedLoader {
@@ -38,8 +42,13 @@ extension LocalFeedLoader {
         store.insert(map(feed), completion: completion)
     }
     
-    private func map(_ feed: FeedListGroup) -> LocalFeedListGroup {
-        return LocalFeedListGroup(id: feed.id, listTitle: feed.listTitle, listImage: feed.listImage, itemsCount: feed.itemsCount)
+}
+
+extension LocalFeedLoader {
+    public typealias DeleteResult = Error?
+    
+    public func delete(_ feed: FeedListGroup, completion: @escaping (SaveResult) -> Void) {
+        store.remove(map(feed), completion: completion)
     }
 }
 
