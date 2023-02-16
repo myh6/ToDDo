@@ -86,6 +86,19 @@ class UpdateFeedInDatabaseUseCases: XCTestCase {
         XCTAssertEqual(store.receivedMessage, [.retrieve, .update(matchedData.local)])
     }
     
+    func test_update_doesNotDeliverResultAfterSUTInstanceHasBeenDeallocated() {
+        let store = FeedStoreSpy()
+        var sut: LocalFeedLoader? = LocalFeedLoader(store: store)
+        let listGroup = uniqueItem()
+        var receivedResult = [LocalFeedLoader.UpdateResult]()
+        sut?.update(listGroup.model) { receivedResult.append($0) }
+        
+        sut = nil
+        store.completeRetrieval(with: [listGroup.local])
+        
+        XCTAssertTrue(receivedResult.isEmpty)
+    }
+    
     //MARK: - Helpers
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: LocalFeedLoader, store: FeedStoreSpy) {
         let store = FeedStoreSpy()
