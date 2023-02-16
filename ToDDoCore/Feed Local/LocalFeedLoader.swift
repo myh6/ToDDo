@@ -35,8 +35,8 @@ extension LocalFeedLoader: FeedLoader {
     }
 }
 
-extension LocalFeedLoader {
-    public typealias SaveResult = Error?
+extension LocalFeedLoader: FeedCreate {
+    public typealias SaveResult = FeedCreate.Result
     
     public func create(_ feed: FeedListGroup, completion: @escaping (SaveResult) -> Void) {
         store.insert(map(feed)) { [weak self] result in

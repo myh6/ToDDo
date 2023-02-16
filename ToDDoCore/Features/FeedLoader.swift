@@ -12,3 +12,9 @@ public protocol FeedLoader {
     
     func load(completion: @escaping (Result) -> Void)
 }
+
+public protocol FeedCreate {
+    typealias Result = (Error?)
+    
+    func create(_ feed: FeedListGroup, completion: @escaping (Result) -> Void)
+}
