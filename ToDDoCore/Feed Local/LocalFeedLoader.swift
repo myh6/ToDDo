@@ -55,16 +55,20 @@ extension LocalFeedLoader {
             guard let self = self else { return }
             switch result {
             case let .success(database):
-                guard let database = database else {
-                    return
-                }
-                if database.toModel().contains(feed) {
+                if let database = database?.toModel(), FeedDeletePolicy.hasData(feed, in: database) {
                     self.store.remove(self.map(feed), completion: completion)
                 }
             case let .failure(retrievalError):
                 completion(retrievalError)
             }
         }
+    }
+}
+
+class FeedDeletePolicy {
+    private init() {}
+    static func hasData(_ data: FeedListGroup, in database: [FeedListGroup]) -> Bool {
+        database.contains(data)
     }
 }
 
