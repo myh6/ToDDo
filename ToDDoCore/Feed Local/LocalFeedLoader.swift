@@ -55,7 +55,7 @@ extension LocalFeedLoader: FeedDelete {
             guard let self = self else { return }
             switch result {
             case let .success(database):
-                if let database = database?.toModel(), FeedDeletePolicy.hasData(feed, in: database) {
+                if let database = database?.toModel(), FeedMatchingPolicy.hasData(feed, in: database) {
                     self.store.remove(self.map(feed), completion: completion)
                 }
             case let .failure(retrievalError):
@@ -73,7 +73,7 @@ extension LocalFeedLoader {
             guard let self = self else { return }
             switch result {
             case let .success(database):
-                if let database = database?.toModel(), FeedDeletePolicy.hasData(feed, in: database) {
+                if let database = database?.toModel(), FeedMatchingPolicy.hasData(feed, in: database) {
                     self.store.update()
                 }
             case let .failure(retrievalError):

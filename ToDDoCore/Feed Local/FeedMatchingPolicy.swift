@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class FeedDeletePolicy {
+final class FeedMatchingPolicy {
     private init() {}
     static func hasData(_ data: FeedListGroup, in database: [FeedListGroup]) -> Bool {
         database.contains(data)
