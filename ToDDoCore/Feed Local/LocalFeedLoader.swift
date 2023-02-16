@@ -39,9 +39,13 @@ extension LocalFeedLoader: FeedCreate {
     public typealias SaveResult = FeedCreate.Result
     
     public func create(_ feed: FeedListGroup, completion: @escaping (SaveResult) -> Void) {
-        store.insert(map(feed)) { [weak self] result in
+        store.insert(map(feed)) { [weak self] insertionError in
             guard self != nil else { return }
-            completion(result)
+            if let insertionError = insertionError {
+                completion(.failure(insertionError))
+            } else {
+                completion(.success(()))
+            }
         }
     }
     

@@ -64,17 +64,17 @@ class SaveFeedToDatabaseUseCases: XCTestCase {
         return (sut, store)
     }
     
-    private func expect(_ sut: LocalFeedLoader, toCompleteWithError expectedError: LocalFeedLoader.SaveResult, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
+    private func expect(_ sut: LocalFeedLoader, toCompleteWithError expectedError: NSError?, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
         let exp = expectation(description: "Wait for description")
         var receivedError: Error?
-        sut.create (uniqueItem().model) { error in
-            receivedError = error
+        sut.create (uniqueItem().model) { result in
+            if case let Result.failure(error) = result { receivedError = error }
             exp.fulfill()
         }
         
         action()
         
         wait(for: [exp], timeout: 1.0)
-        XCTAssertEqual(receivedError as NSError?, expectedError as NSError?, file: file, line: line)
+        XCTAssertEqual(receivedError as NSError?, expectedError, file: file, line: line)
     }
 }

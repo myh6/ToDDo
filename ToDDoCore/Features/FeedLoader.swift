@@ -14,7 +14,7 @@ public protocol FeedLoader {
 }
 
 public protocol FeedCreate {
-    typealias Result = (Error?)
+    typealias Result = Swift.Result<Void, Error>
     
     func create(_ feed: FeedListGroup, completion: @escaping (Result) -> Void)
 }
