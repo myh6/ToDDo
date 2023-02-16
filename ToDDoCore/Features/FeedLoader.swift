@@ -18,3 +18,10 @@ public protocol FeedCreate {
     
     func create(_ feed: FeedListGroup, completion: @escaping (Result) -> Void)
 }
+
+public protocol FeedDelete {
+    typealias Result = (Error?)
+    
+    func delete(_ feed: FeedListGroup, completion: @escaping (FeedDelete.Result) -> Void)
+
+}

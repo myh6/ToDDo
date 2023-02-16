@@ -47,8 +47,8 @@ extension LocalFeedLoader: FeedCreate {
     
 }
 
-extension LocalFeedLoader {
-    public typealias DeleteResult = Error?
+extension LocalFeedLoader: FeedDelete {
+    public typealias DeleteResult = FeedDelete.Result
     
     public func delete(_ feed: FeedListGroup, completion: @escaping (DeleteResult) -> Void) {
         store.retrieve { [weak self] result in
