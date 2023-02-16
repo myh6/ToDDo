@@ -67,7 +67,7 @@ class UpdateFeedInDatabaseUseCases: XCTestCase {
         XCTAssertEqual(receivedError as NSError?, updateError as NSError?)
     }
     
-    func test_update_updateOnMatchedData() {
+    func test_update_succeedOnUpdatingMatchedData() {
         let (sut, store) = makeSUT()
         let matchedData = uniqueItem()
         
