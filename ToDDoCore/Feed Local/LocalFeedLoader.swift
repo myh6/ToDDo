@@ -50,7 +50,7 @@ extension LocalFeedLoader {
 extension LocalFeedLoader {
     public typealias DeleteResult = Error?
     
-    public func delete(_ feed: FeedListGroup, completion: @escaping (SaveResult) -> Void) {
+    public func delete(_ feed: FeedListGroup, completion: @escaping (DeleteResult) -> Void) {
         store.retrieve { [weak self] result in
             guard let self = self else { return }
             switch result {
