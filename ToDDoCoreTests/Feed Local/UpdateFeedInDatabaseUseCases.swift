@@ -37,6 +37,17 @@ class UpdateFeedInDatabaseUseCases: XCTestCase {
         XCTAssertEqual(store.receivedMessage, [.retrieve])
     }
     
+    func test_update_doesNotUpdateOnNonMatchedData() {
+        let (sut, store) = makeSUT()
+        let listGroups = uniqueItems()
+        let nonMatchedData = uniqueItem()
+        
+        sut.update(nonMatchedData.model) { _ in }
+        store.completeRetrieval(with: listGroups.locals)
+        
+        XCTAssertEqual(store.receivedMessage, [.retrieve])
+    }
+    
     //MARK: - Helpers
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: LocalFeedLoader, store: FeedStoreSpy) {
         let store = FeedStoreSpy()

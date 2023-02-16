@@ -18,6 +18,7 @@ class FeedStoreSpy: FeedStore {
         case retrieve
         case insert(LocalFeedListGroup)
         case remove
+        case update
     }
     
     //MARK: - Retrieve
@@ -64,5 +65,10 @@ class FeedStoreSpy: FeedStore {
     
     func completeDeletionSuccessfully(at index: Int = 0) {
         removeCompletion[index](.none)
+    }
+    
+    //MARK: - Update
+    func update() {
+        receivedMessage.append(.update)
     }
 }
