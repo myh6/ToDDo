@@ -59,4 +59,8 @@ class FeedStoreSpy: FeedStore {
     func completeDelete(with error: Error, at index: Int = 0) {
         removeCompletion[index](error)
     }
+    
+    func completeDeletionWithEmptyDatabase(at index: Int = 0) {
+        removeCompletion[index](.none)
+    }
 }
