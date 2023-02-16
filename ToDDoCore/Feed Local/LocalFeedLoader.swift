@@ -74,7 +74,7 @@ extension LocalFeedLoader {
             switch result {
             case let .success(database):
                 if let database = database?.toModel(), FeedMatchingPolicy.hasData(feed, in: database) {
-                    self.store.update()
+                    self.store.update(self.map(feed), completion: completion)
                 }
             case let .failure(retrievalError):
                 completion(retrievalError)

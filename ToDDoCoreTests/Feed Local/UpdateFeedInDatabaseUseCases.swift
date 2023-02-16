@@ -48,6 +48,25 @@ class UpdateFeedInDatabaseUseCases: XCTestCase {
         XCTAssertEqual(store.receivedMessage, [.retrieve])
     }
     
+    func test_update_updateOnMatchedData() {
+        let (sut, store) = makeSUT()
+        let matchedData = uniqueItem()
+        
+        let exp = expectation(description: "Wait for delete completion")
+        var receivedError: Error?
+        sut.update(matchedData.model) {
+            receivedError = $0
+            exp.fulfill()
+        }
+        
+        store.completeRetrieval(with: [matchedData.local])
+        store.completeUpdateSuccessfully()
+        wait(for: [exp], timeout: 1.0)
+        
+        XCTAssertNil(receivedError)
+        XCTAssertEqual(store.receivedMessage, [.retrieve, .update])
+    }
+    
     //MARK: - Helpers
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: LocalFeedLoader, store: FeedStoreSpy) {
         let store = FeedStoreSpy()
