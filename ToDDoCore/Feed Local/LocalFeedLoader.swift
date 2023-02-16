@@ -65,6 +65,14 @@ extension LocalFeedLoader: FeedDelete {
     }
 }
 
+extension LocalFeedLoader {
+    public typealias UpdateResult = (Error?)
+    
+    public func update(_ feed: FeedListGroup, completion: @escaping (UpdateResult) -> Void) {
+        store.retrieve() { _ in }
+    }
+}
+
 private extension Array where Element == LocalFeedListGroup {
     func toModel() -> [FeedListGroup] {
         return map { FeedListGroup(id: $0.id, listTitle: $0.listTitle, listImage: $0.listImage, itemsCount: $0.itemsCount) }

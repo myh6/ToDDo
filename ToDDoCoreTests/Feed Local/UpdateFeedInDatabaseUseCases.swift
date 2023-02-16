@@ -16,6 +16,16 @@ class UpdateFeedInDatabaseUseCases: XCTestCase {
         XCTAssertTrue(store.receivedMessage.isEmpty)
     }
     
+    func test_update_doesNotUpdateOnEmptyDatabase() {
+        let (sut, store) = makeSUT()
+        let listGroup = uniqueItem()
+        
+        sut.update(listGroup.model) { _ in }
+        store.completeRetrievalWithEmptyDatabase()
+
+        XCTAssertEqual(store.receivedMessage, [.retrieve])
+    }
+    
     //MARK: - Helpers
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: LocalFeedLoader, store: FeedStoreSpy) {
         let store = FeedStoreSpy()
