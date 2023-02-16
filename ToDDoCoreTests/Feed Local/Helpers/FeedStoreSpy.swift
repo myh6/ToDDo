@@ -77,4 +77,8 @@ class FeedStoreSpy: FeedStore {
     func completeUpdateSuccessfully(at index: Int = 0) {
         updateCompletion[index](.none)
     }
+    
+    func completeUpdate(with error: Error, at index: Int = 0) {
+        updateCompletion[index](error)
+    }
 }

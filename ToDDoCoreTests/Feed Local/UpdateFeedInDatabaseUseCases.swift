@@ -48,6 +48,25 @@ class UpdateFeedInDatabaseUseCases: XCTestCase {
         XCTAssertEqual(store.receivedMessage, [.retrieve])
     }
     
+    func test_update_failsOnUpdateError() {
+        let (sut, store) = makeSUT()
+        let listGroup = uniqueItem()
+        let updateError = anyNSError()
+        
+        var receivedError: Error?
+        let exp = expectation(description: "Wait for delete completion")
+        sut.update(listGroup.model) {
+            receivedError = $0
+            exp.fulfill()
+        }
+        
+        store.completeRetrieval(with: [listGroup.local])
+        store.completeUpdate(with: updateError)
+        wait(for: [exp], timeout: 1.0)
+        
+        XCTAssertEqual(receivedError as NSError?, updateError as NSError?)
+    }
+    
     func test_update_updateOnMatchedData() {
         let (sut, store) = makeSUT()
         let matchedData = uniqueItem()
