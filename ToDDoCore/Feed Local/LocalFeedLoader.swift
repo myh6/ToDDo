@@ -61,8 +61,8 @@ extension LocalFeedLoader {
                 if database.toModel().contains(feed) {
                     self.store.remove(self.map(feed), completion: completion)
                 }
-            case .failure:
-                self.store.remove(self.map(feed), completion: completion)
+            case let .failure(retrievalError):
+                completion(retrievalError)
             }
         }
     }

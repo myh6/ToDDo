@@ -26,6 +26,17 @@ class DeleteFeedFromDatabaseUseCases: XCTestCase {
         XCTAssertEqual(store.receivedMessage, [.retrieve])
     }
     
+    func test_delete_doesNotDeleteOnRetrievalError() {
+        let (sut, store) = makeSUT()
+        let listGroup = uniqueItem()
+        let retrievalError = anyNSError()
+        
+        sut.delete(listGroup.model) { _ in }
+        store.completeRetrieval(with: retrievalError)
+        
+        XCTAssertEqual(store.receivedMessage, [.retrieve])
+    }
+    
     //MARK: - Helpers
     
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: LocalFeedLoader, store: FeedStoreSpy) {
