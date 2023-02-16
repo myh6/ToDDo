@@ -67,7 +67,7 @@ class DeleteFeedFromDatabaseUseCases: XCTestCase {
         XCTAssertEqual(receivedError as NSError?, deletionError as NSError?)
     }
     
-    func test_delete_deletesOnMatchedData() {
+    func test_delete_succeedOnDeletingMatchedData() {
         let (sut, store) = makeSUT()
         let matchedData = uniqueItem()
         
