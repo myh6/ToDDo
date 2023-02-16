@@ -67,6 +67,19 @@ class DeleteFeedFromDatabaseUseCases: XCTestCase {
         XCTAssertEqual(store.receivedMessage, [.retrieve, .remove])
     }
     
+    func test_delete_doesNotDeliverResultAfterSUTInstanceHasBeenDeallocated() {
+        let store = FeedStoreSpy()
+        var sut: LocalFeedLoader? = LocalFeedLoader(store: store)
+        let listGroup = uniqueItem()
+        var receivedResult = [LocalFeedLoader.DeleteResult]()
+        sut?.delete(listGroup.model) { receivedResult.append($0) }
+        
+        sut = nil
+        store.completeRetrieval(with: [listGroup.local])
+        
+        XCTAssertTrue(receivedResult.isEmpty)
+    }
+    
     //MARK: - Helpers
     
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: LocalFeedLoader, store: FeedStoreSpy) {
