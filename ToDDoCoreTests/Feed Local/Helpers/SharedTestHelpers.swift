@@ -23,6 +23,6 @@ func uniqueItem() -> (model: FeedListGroup, local: LocalFeedListGroup) {
     return (model, local)
 }
 
-func anyNSError() -> Error {
+func anyNSError() -> NSError {
     NSError(domain: "any error", code: 0)
 }
