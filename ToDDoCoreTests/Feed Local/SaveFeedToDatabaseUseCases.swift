@@ -42,6 +42,19 @@ class SaveFeedToDatabaseUseCases: XCTestCase {
         }
     }
     
+    func test_save_doesNotDeliverResultAfterSUTInstanceHasBeenDeallocated() {
+        let store = FeedStoreSpy()
+        var sut: LocalFeedLoader? = LocalFeedLoader(store: store)
+        
+        var receivedResult = [LocalFeedLoader.SaveResult]()
+        sut?.save(uniqueItem().model) { receivedResult.append($0) }
+        
+        sut = nil
+        store.completeInsertionSuccessfully()
+        
+        XCTAssertTrue(receivedResult.isEmpty)
+    }
+    
     //MARK: - Helpers
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: LocalFeedLoader, store: FeedStoreSpy) {
         let store = FeedStoreSpy()

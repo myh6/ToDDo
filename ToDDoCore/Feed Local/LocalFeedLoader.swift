@@ -39,7 +39,10 @@ extension LocalFeedLoader {
     public typealias SaveResult = Error?
     
     public func save(_ feed: FeedListGroup, completion: @escaping (SaveResult) -> Void) {
-        store.insert(map(feed), completion: completion)
+        store.insert(map(feed)) { [weak self] result in
+            guard self != nil else { return }
+            completion(result)
+        }
     }
     
 }
