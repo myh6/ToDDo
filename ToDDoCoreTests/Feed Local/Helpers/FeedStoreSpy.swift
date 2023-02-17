@@ -47,11 +47,11 @@ class FeedStoreSpy: FeedStore {
     }
     
     func completeSave(with error: Error, at index: Int = 0) {
-        insertCompletion[index](error)
+        insertCompletion[index](.failure(error))
     }
     
     func completeInsertionSuccessfully(at index: Int = 0) {
-        insertCompletion[index](.none)
+        insertCompletion[index](.success(()))
     }
     
     //MARK: - Remove
