@@ -13,12 +13,6 @@ public protocol FeedLoader {
     func load(completion: @escaping (Result) -> Void)
 }
 
-public protocol FeedCreate {
-    typealias Result = Swift.Result<Void, Error>
-    
-    func create(_ feed: FeedListGroup, completion: @escaping (Result) -> Void)
-}
-
 public protocol FeedDelete {
     typealias Result = Swift.Result<Void, Error>
     
