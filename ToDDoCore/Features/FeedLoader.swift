@@ -12,9 +12,3 @@ public protocol FeedLoader {
     
     func load(completion: @escaping (Result) -> Void)
 }
-
-public protocol FeedUpdate {
-    typealias Result = Swift.Result<Void, Error>
-    
-    func update(_ feed: FeedListGroup, completion: @escaping (FeedUpdate.Result) -> Void)
-}
