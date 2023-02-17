@@ -86,7 +86,7 @@ class DeleteFeedFromDatabaseUseCases: XCTestCase {
     
     //MARK: - Helpers
     
-    private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: LocalFeedLoader, store: FeedStoreSpy) {
+    private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: FeedDelete, store: FeedStoreSpy) {
         let store = FeedStoreSpy()
         let sut = LocalFeedLoader(store: store)
         trackForMemoryLeaks(store, file: file, line: line)
@@ -94,7 +94,7 @@ class DeleteFeedFromDatabaseUseCases: XCTestCase {
         return (sut, store)
     }
     
-    private func expect(_ sut: LocalFeedLoader, delete item: FeedListGroup, toCompleteWith expectedResult: LocalFeedLoader.DeleteResult, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
+    private func expect(_ sut: FeedDelete, delete item: FeedListGroup, toCompleteWith expectedResult: FeedDelete.Result, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
         let exp = expectation(description: "Wait for delete completion")
         sut.delete(item) { receivedResult in
             switch (receivedResult, expectedResult) {
