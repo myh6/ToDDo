@@ -9,7 +9,7 @@ import Foundation
 
 final class FeedMatchingPolicy {
     private init() {}
-    static func hasData(_ data: FeedListGroup, in database: [FeedListGroup]) -> Bool {
+    static func hasData(_ data: LocalFeedListGroup, in database: [LocalFeedListGroup]) -> Bool {
         database.contains(data)
     }
 }
