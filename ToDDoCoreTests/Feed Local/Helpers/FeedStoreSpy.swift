@@ -61,11 +61,11 @@ class FeedStoreSpy: FeedStore {
     }
     
     func completeDelete(with error: Error, at index: Int = 0) {
-        removeCompletion[index](error)
+        removeCompletion[index](.failure(error))
     }
     
     func completeDeletionSuccessfully(at index: Int = 0) {
-        removeCompletion[index](.none)
+        removeCompletion[index](.success(()))
     }
     
     //MARK: - Update

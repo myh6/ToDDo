@@ -55,8 +55,10 @@ class DeleteFeedFromDatabaseUseCases: XCTestCase {
         
         var receivedError: Error?
         let exp = expectation(description: "Wait for delete completion")
-        sut.delete(listGroup.model) {
-            receivedError = $0
+        sut.delete(listGroup.model) { result in
+            if case let .failure(error) = result {
+                receivedError = error
+            }
             exp.fulfill()
         }
         
@@ -73,8 +75,10 @@ class DeleteFeedFromDatabaseUseCases: XCTestCase {
         
         let exp = expectation(description: "Wait for delete completion")
         var receivedError: Error?
-        sut.delete(matchedData.model) {
-            receivedError = $0
+        sut.delete(matchedData.model) { result in
+            if case let .failure(error) = result {
+                receivedError = error
+            }
             exp.fulfill()
         }
         

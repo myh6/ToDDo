@@ -20,7 +20,7 @@ public protocol FeedCreate {
 }
 
 public protocol FeedDelete {
-    typealias Result = (Error?)
+    typealias Result = Swift.Result<Void, Error>
     
     func delete(_ feed: FeedListGroup, completion: @escaping (FeedDelete.Result) -> Void)
 }

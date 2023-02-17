@@ -63,7 +63,7 @@ extension LocalFeedLoader: FeedDelete {
                     self.store.remove(self.map(feed), completion: completion)
                 }
             case let .failure(retrievalError):
-                completion(retrievalError)
+                completion(.failure(retrievalError))
             }
         }
     }
