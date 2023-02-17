@@ -53,40 +53,21 @@ class DeleteFeedFromDatabaseUseCases: XCTestCase {
         let listGroup = uniqueItem()
         let deletionError = anyNSError()
         
-        var receivedError: Error?
-        let exp = expectation(description: "Wait for delete completion")
-        sut.delete(listGroup.model) { result in
-            if case let .failure(error) = result {
-                receivedError = error
-            }
-            exp.fulfill()
+        expect(sut, delete: listGroup.model, toCompleteWith: .failure(deletionError)) {
+            store.completeRetrieval(with: [listGroup.local])
+            store.completeDelete(with: deletionError)
         }
-        
-        store.completeRetrieval(with: [listGroup.local])
-        store.completeDelete(with: deletionError)
-        wait(for: [exp], timeout: 1.0)
-        
-        XCTAssertEqual(receivedError as NSError?, deletionError)
     }
     
     func test_delete_succeedOnDeletingMatchedData() {
         let (sut, store) = makeSUT()
         let matchedData = uniqueItem()
         
-        let exp = expectation(description: "Wait for delete completion")
-        var receivedError: Error?
-        sut.delete(matchedData.model) { result in
-            if case let .failure(error) = result {
-                receivedError = error
-            }
-            exp.fulfill()
+        expect(sut, delete: matchedData.model, toCompleteWith: .success(())) {
+            store.completeRetrieval(with: [matchedData.local])
+            store.completeDeletionSuccessfully()
         }
         
-        store.completeRetrieval(with: [matchedData.local])
-        store.completeDeletionSuccessfully()
-        wait(for: [exp], timeout: 1.0)
-        
-        XCTAssertNil(receivedError)
         XCTAssertEqual(store.receivedMessage, [.retrieve, .remove(matchedData.local)])
     }
     
@@ -111,5 +92,26 @@ class DeleteFeedFromDatabaseUseCases: XCTestCase {
         trackForMemoryLeaks(store, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
         return (sut, store)
+    }
+    
+    private func expect(_ sut: LocalFeedLoader, delete item: FeedListGroup, toCompleteWith expectedResult: LocalFeedLoader.DeleteResult, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
+        let exp = expectation(description: "Wait for delete completion")
+        sut.delete(item) { receivedResult in
+            switch (receivedResult, expectedResult) {
+            case let (.failure(receivedError), .failure(expectedError)):
+                
+                XCTAssertEqual(receivedError as NSError?, expectedError as NSError?)
+                
+            case (.success, .success):
+                break
+                
+            default:
+                XCTFail("Expecte to get result: \(expectedResult), got \(receivedResult) instead")
+            }
+            exp.fulfill()
+        }
+        
+        action()
+        wait(for: [exp], timeout: 1.0)
     }
 }
