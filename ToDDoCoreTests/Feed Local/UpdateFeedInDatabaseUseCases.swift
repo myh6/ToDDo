@@ -66,7 +66,7 @@ class UpdateFeedInDatabaseUseCases: XCTestCase {
         store.completeUpdate(with: updateError)
         wait(for: [exp], timeout: 1.0)
         
-        XCTAssertEqual(receivedError as NSError?, updateError as NSError?)
+        XCTAssertEqual(receivedError as NSError?, updateError)
     }
     
     func test_update_succeedOnUpdatingMatchedData() {

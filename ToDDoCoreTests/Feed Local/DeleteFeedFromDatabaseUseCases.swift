@@ -66,7 +66,7 @@ class DeleteFeedFromDatabaseUseCases: XCTestCase {
         store.completeDelete(with: deletionError)
         wait(for: [exp], timeout: 1.0)
         
-        XCTAssertEqual(receivedError as NSError?, deletionError as NSError?)
+        XCTAssertEqual(receivedError as NSError?, deletionError)
     }
     
     func test_delete_succeedOnDeletingMatchedData() {
