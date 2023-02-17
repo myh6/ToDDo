@@ -85,7 +85,7 @@ class UpdateFeedInDatabaseUseCases: XCTestCase {
     }
     
     //MARK: - Helpers
-    private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: LocalFeedLoader, store: FeedStoreSpy) {
+    private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: FeedUpdate, store: FeedStoreSpy) {
         let store = FeedStoreSpy()
         let sut = LocalFeedLoader(store: store)
         trackForMemoryLeaks(store, file: file, line: line)
@@ -93,7 +93,7 @@ class UpdateFeedInDatabaseUseCases: XCTestCase {
         return (sut, store)
     }
     
-    private func expect(_ sut: LocalFeedLoader, update item: FeedListGroup, toCompleteWith expectedResult: LocalFeedLoader.UpdateResult, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
+    private func expect(_ sut: FeedUpdate, update item: FeedListGroup, toCompleteWith expectedResult: FeedUpdate.Result, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
         let exp = expectation(description: "Wait for update completion")
         sut.update(item) { receivedResult in
             switch (receivedResult, expectedResult) {
