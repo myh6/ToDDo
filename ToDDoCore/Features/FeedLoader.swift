@@ -26,7 +26,7 @@ public protocol FeedDelete {
 }
 
 public protocol FeedUpdate {
-    typealias Result = (Error?)
+    typealias Result = Swift.Result<Void, Error>
     
     func update(_ feed: FeedListGroup, completion: @escaping (FeedUpdate.Result) -> Void)
 }

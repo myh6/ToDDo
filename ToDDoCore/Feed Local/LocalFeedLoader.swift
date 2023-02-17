@@ -72,7 +72,7 @@ extension LocalFeedLoader: FeedDelete {
 }
 
 extension LocalFeedLoader: FeedUpdate {
-    public typealias UpdateResult = (Error?)
+    public typealias UpdateResult = FeedUpdate.Result
     
     public func update(_ feed: FeedListGroup, completion: @escaping (UpdateResult) -> Void) {
         store.retrieve() { [weak self] result in
@@ -83,7 +83,7 @@ extension LocalFeedLoader: FeedUpdate {
                     self.store.update(self.map(feed), completion: completion)
                 }
             case let .failure(retrievalError):
-                completion(retrievalError)
+                completion(.failure(retrievalError))
             }
         }
     }

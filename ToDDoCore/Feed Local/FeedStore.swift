@@ -11,7 +11,7 @@ public protocol FeedStore {
     typealias RetrievalCompletion = (Result<[LocalFeedListGroup]?, Error>) -> Void
     typealias InsertionCompletion = (Result<Void, Error>) -> Void
     typealias RemovalCompletion = (Result<Void, Error>) -> Void
-    typealias UpdateCompletion = (Error?) -> Void
+    typealias UpdateCompletion = (Result<Void, Error>) -> Void
     
     func retrieve(completion: @escaping RetrievalCompletion)
     func insert(_ feed: LocalFeedListGroup, completion: @escaping InsertionCompletion)
