@@ -53,40 +53,21 @@ class UpdateFeedInDatabaseUseCases: XCTestCase {
         let listGroup = uniqueItem()
         let updateError = anyNSError()
         
-        var receivedError: Error?
-        let exp = expectation(description: "Wait for delete completion")
-        sut.update(listGroup.model) { result in
-            if case let .failure(error) = result {
-                receivedError = error
-            }
-            exp.fulfill()
+        expect(sut, update: listGroup.model, toCompleteWith: .failure(updateError)) {
+            store.completeRetrieval(with: [listGroup.local])
+            store.completeUpdate(with: updateError)
         }
-        
-        store.completeRetrieval(with: [listGroup.local])
-        store.completeUpdate(with: updateError)
-        wait(for: [exp], timeout: 1.0)
-        
-        XCTAssertEqual(receivedError as NSError?, updateError)
     }
     
     func test_update_succeedOnUpdatingMatchedData() {
         let (sut, store) = makeSUT()
         let matchedData = uniqueItem()
         
-        let exp = expectation(description: "Wait for delete completion")
-        var receivedError: Error?
-        sut.update(matchedData.model) { result in
-            if case let .failure(error) = result {
-                receivedError = error
-            }
-            exp.fulfill()
+        expect(sut, update: matchedData.model, toCompleteWith: .success(())) {
+            store.completeRetrieval(with: [matchedData.local])
+            store.completeUpdateSuccessfully()
         }
         
-        store.completeRetrieval(with: [matchedData.local])
-        store.completeUpdateSuccessfully()
-        wait(for: [exp], timeout: 1.0)
-        
-        XCTAssertNil(receivedError)
         XCTAssertEqual(store.receivedMessage, [.retrieve, .update(matchedData.local)])
     }
     
@@ -110,5 +91,26 @@ class UpdateFeedInDatabaseUseCases: XCTestCase {
         trackForMemoryLeaks(store, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
         return (sut, store)
+    }
+    
+    private func expect(_ sut: LocalFeedLoader, update item: FeedListGroup, toCompleteWith expectedResult: LocalFeedLoader.UpdateResult, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
+        let exp = expectation(description: "Wait for update completion")
+        sut.update(item) { receivedResult in
+            switch (receivedResult, expectedResult) {
+            case let (.failure(receivedError), .failure(expectedError)):
+                
+                XCTAssertEqual(receivedError as NSError?, expectedError as NSError?)
+                
+            case (.success, .success):
+                break
+                
+            default:
+                XCTFail("Expecte to get result: \(expectedResult), got \(receivedResult) instead")
+            }
+            exp.fulfill()
+        }
+        
+        action()
+        wait(for: [exp], timeout: 1.0)
     }
 }
