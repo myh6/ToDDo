@@ -37,7 +37,7 @@ Creating core domain for future TO-Do List project
 2. To non-empty database insert data
 4. Error (e.g. not enough storage)
 
-## Model
+## Model (Undefined)
 
 - Data Model
     - ˋidˋ : UUID
