@@ -7,8 +7,8 @@
 
 import Foundation
 
-public protocol FeedDelete {
+public protocol FeedDeleter {
     typealias Result = Swift.Result<Void, Error>
     
-    func delete(_ feed: FeedListGroup, completion: @escaping (FeedDelete.Result) -> Void)
+    func delete(_ feed: FeedListGroup, completion: @escaping (FeedDeleter.Result) -> Void)
 }

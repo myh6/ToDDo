@@ -35,8 +35,8 @@ extension LocalFeedLoader: FeedLoader {
     }
 }
 
-extension LocalFeedLoader: FeedCreate {
-    public typealias SaveResult = FeedCreate.Result
+extension LocalFeedLoader: FeedCreater {
+    public typealias SaveResult = FeedCreater.Result
     
     public func create(_ feed: FeedListGroup, completion: @escaping (SaveResult) -> Void) {
         store.insert(map(feed)) { [weak self] insertionResult in
@@ -53,8 +53,8 @@ extension LocalFeedLoader: FeedCreate {
     
 }
 
-extension LocalFeedLoader: FeedDelete {
-    public typealias DeleteResult = FeedDelete.Result
+extension LocalFeedLoader: FeedDeleter {
+    public typealias DeleteResult = FeedDeleter.Result
     
     public func delete(_ feed: FeedListGroup, completion: @escaping (DeleteResult) -> Void) {
         store.retrieve { [weak self] result in
@@ -71,8 +71,8 @@ extension LocalFeedLoader: FeedDelete {
     }
 }
 
-extension LocalFeedLoader: FeedUpdate {
-    public typealias UpdateResult = FeedUpdate.Result
+extension LocalFeedLoader: FeedUpdater {
+    public typealias UpdateResult = FeedUpdater.Result
     
     public func update(_ feed: FeedListGroup, completion: @escaping (UpdateResult) -> Void) {
         store.retrieve() { [weak self] result in
