@@ -34,7 +34,7 @@ class CoreDataFeedStore: FeedStore {
 class CoreDataFeedStoreTests: XCTestCase {
     
     func test_retrieve_deliversEmptyOnEmptyDatabase() {
-        let sut = CoreDataFeedStore()
+        let sut = makeSUT()
         
         sut.retrieve { result in
             if case let .success(item) = result {
@@ -46,7 +46,7 @@ class CoreDataFeedStoreTests: XCTestCase {
     }
     
     func test_retrieve_hasNoSideEffectOnEmptyDatabase() {
-        let sut = CoreDataFeedStore()
+        let sut = makeSUT()
         
         sut.retrieve { result in
             if case let .success(item) = result {
@@ -62,6 +62,13 @@ class CoreDataFeedStoreTests: XCTestCase {
                 XCTFail("Expected no item on first retrieve")
             }
         }
+    }
+    
+    //MARK: - Helpers
+    private func makeSUT() -> FeedStore {
+        let sut = CoreDataFeedStore()
+        trackForMemoryLeaks(sut)
+        return sut
     }
     
     
