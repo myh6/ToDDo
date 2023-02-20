@@ -8,29 +8,6 @@
 import XCTest
 import ToDDoCore
 
-class CoreDataFeedStore: FeedStore {
-    func retrieve(completion: @escaping RetrievalCompletion) {
-        completion(.success(.none))
-    }
-    
-    func insert(_ feed: ToDDoCore.LocalFeedListGroup, completion: @escaping InsertionCompletion) {
-        
-    }
-    
-    func remove(_ feed: ToDDoCore.LocalFeedListGroup, completion: @escaping RemovalCompletion) {
-        
-    }
-    
-    func update(_ feed: ToDDoCore.LocalFeedListGroup, completion: @escaping UpdateCompletion) {
-        
-    }
-    
-    func hasItem(withID: UUID) -> Bool {
-        return false
-    }
-    
-}
-
 class CoreDataFeedStoreTests: XCTestCase {
     
     func test_retrieve_deliversEmptyOnEmptyDatabase() {
