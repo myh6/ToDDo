@@ -45,7 +45,24 @@ class CoreDataFeedStoreTests: XCTestCase {
         }
     }
     
-    
+    func test_retrieve_hasNoSideEffectOnEmptyDatabase() {
+        let sut = CoreDataFeedStore()
+        
+        sut.retrieve { result in
+            if case let .success(item) = result {
+                XCTAssertNil(item)
+                sut.retrieve { result in
+                    if case let .success(item) = result {
+                        XCTAssertNil(item)
+                    } else {
+                        XCTFail("Expected no item on second retrieve")
+                    }
+                }
+            } else {
+                XCTFail("Expected no item on first retrieve")
+            }
+        }
+    }
     
     
 }
