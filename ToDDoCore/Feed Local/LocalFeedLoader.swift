@@ -67,16 +67,8 @@ extension LocalFeedLoader: FeedUpdater {
     public typealias UpdateResult = FeedUpdater.Result
     
     public func update(_ feed: FeedListGroup, completion: @escaping (UpdateResult) -> Void) {
-        store.retrieve() { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case let .success(database):
-                if let database = database?.toModel(), FeedMatchingPolicy.hasData(self.map(feed), in: database.toLocal()) {
-                    self.store.update(self.map(feed), completion: completion)
-                }
-            case let .failure(retrievalError):
-                completion(.failure(retrievalError))
-            }
+        if store.hasItem(withID: feed.id) {
+            store.update(map(feed), completion: completion)
         }
     }
 }

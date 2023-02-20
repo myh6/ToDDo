@@ -15,73 +15,38 @@ class UpdateFeedInDatabaseUseCases: XCTestCase {
         
         XCTAssertTrue(store.receivedMessage.isEmpty)
     }
-    
-    func test_update_doesNotUpdateOnEmptyDatabase() {
-        let (sut, store) = makeSUT()
-        let listGroup = uniqueItem()
-        
-        sut.update(listGroup.model) { _ in }
-        store.completeRetrievalWithEmptyDatabase()
 
-        XCTAssertEqual(store.receivedMessage, [.retrieve])
-    }
-    
-    func test_update_doesNotUpdateOnRetrievalError() {
-        let (sut, store) = makeSUT()
-        let listGroup = uniqueItem()
-        let retrievalError = anyNSError()
-        
-        sut.update(listGroup.model) { _ in }
-        store.completeRetrieval(with: retrievalError)
-        
-        XCTAssertEqual(store.receivedMessage, [.retrieve])
-    }
-    
     func test_update_doesNotUpdateOnNonMatchedData() {
         let (sut, store) = makeSUT()
-        let listGroups = uniqueItems()
         let nonMatchedData = uniqueItem()
         
+        store.completeWithNoMatchingItem()
         sut.update(nonMatchedData.model) { _ in }
-        store.completeRetrieval(with: listGroups.locals)
-        
-        XCTAssertEqual(store.receivedMessage, [.retrieve])
+
+        XCTAssertEqual(store.receivedMessage, [.check(false)])
     }
-    
+
     func test_update_failsOnUpdateError() {
         let (sut, store) = makeSUT()
         let listGroup = uniqueItem()
         let updateError = anyNSError()
-        
+
+        store.completeWithMatchingItem()
         expect(sut, update: listGroup.model, toCompleteWith: .failure(updateError)) {
-            store.completeRetrieval(with: [listGroup.local])
             store.completeUpdate(with: updateError)
         }
     }
-    
+
     func test_update_succeedOnUpdatingMatchedData() {
         let (sut, store) = makeSUT()
         let matchedData = uniqueItem()
-        
+
+        store.completeWithMatchingItem()
         expect(sut, update: matchedData.model, toCompleteWith: .success(())) {
-            store.completeRetrieval(with: [matchedData.local])
             store.completeUpdateSuccessfully()
         }
-        
-        XCTAssertEqual(store.receivedMessage, [.retrieve, .update(matchedData.local)])
-    }
-    
-    func test_update_doesNotDeliverResultAfterSUTInstanceHasBeenDeallocated() {
-        let store = FeedStoreSpy()
-        var sut: LocalFeedLoader? = LocalFeedLoader(store: store)
-        let listGroup = uniqueItem()
-        var receivedResult = [LocalFeedLoader.UpdateResult]()
-        sut?.update(listGroup.model) { receivedResult.append($0) }
-        
-        sut = nil
-        store.completeRetrieval(with: [listGroup.local])
-        
-        XCTAssertTrue(receivedResult.isEmpty)
+
+        XCTAssertEqual(store.receivedMessage, [.check(true), .update(matchedData.local)])
     }
     
     //MARK: - Helpers
