@@ -15,7 +15,7 @@ public class LocalFeedLoader {
     }
     
     private func map(_ feed: FeedListGroup) -> LocalFeedListGroup {
-        return LocalFeedListGroup(id: feed.id, listTitle: feed.listTitle, listImage: feed.listImage, itemsCount: feed.itemsCount)
+        return LocalFeedListGroup(id: feed.id, listTitle: feed.listTitle, listImage: feed.listImage, items: feed.items.toCoreModel())
     }
 }
 
@@ -75,12 +75,28 @@ extension LocalFeedLoader: FeedUpdater {
 
 private extension Array where Element == LocalFeedListGroup {
     func toModel() -> [FeedListGroup] {
-        return map { FeedListGroup(id: $0.id, listTitle: $0.listTitle, listImage: $0.listImage, itemsCount: $0.itemsCount) }
+        return map { FeedListGroup(id: $0.id, listTitle: $0.listTitle, listImage: $0.listImage, items: $0.items.toPresentedModel()) }
     }
 }
 
 private extension Array where Element == FeedListGroup {
     func toLocal() -> [LocalFeedListGroup] {
-        return map { LocalFeedListGroup(id: $0.id, listTitle: $0.listTitle, listImage: $0.listImage, itemsCount: $0.itemsCount) }
+        return map { LocalFeedListGroup(id: $0.id, listTitle: $0.listTitle, listImage: $0.listImage, items: $0.items.toCoreModel()) }
+    }
+}
+
+public extension Array where Element == LocalToDoItem {
+    func toPresentedModel() -> [FeedToDoItem] {
+        return map {
+            FeedToDoItem(id: $0.id, title: $0.title, isDone: $0.isDone, expectedDate: $0.expectedDate, finishedDate: $0.finishedDate, priority: $0.priority, url: $0.url, note: $0.note)
+        }
+    }
+}
+
+public extension Array where Element == FeedToDoItem {
+    func toCoreModel() -> [LocalToDoItem] {
+        return map {
+            LocalToDoItem(id: $0.id, title: $0.title, isDone: $0.isDone, expectedDate: $0.expectedDate, finishedDate: $0.finishedDate, priority: $0.priority, url: $0.url, note: $0.note)
+        }
     }
 }

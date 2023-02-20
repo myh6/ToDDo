@@ -52,7 +52,7 @@ class LoadFeedFromDatabaseUseCasesTests: XCTestCase {
     
     func test_load_deliversItemOnNonEmptyDatabase() {
         let (sut, store) = makeSUT()
-        let listGroup = uniqueItems()
+        let listGroup = uniqueUser()
         
         expect(sut, toCompleteWith: .success(listGroup.models)) {
             store.completeRetrieval(with: listGroup.locals)

@@ -18,7 +18,7 @@ class UpdateFeedInDatabaseUseCases: XCTestCase {
 
     func test_update_doesNotUpdateOnNonMatchedData() {
         let (sut, store) = makeSUT()
-        let nonMatchedData = uniqueItem()
+        let nonMatchedData = uniqueList()
         
         store.completeWithNoMatchingItem()
         sut.update(nonMatchedData.model) { _ in }
@@ -28,7 +28,7 @@ class UpdateFeedInDatabaseUseCases: XCTestCase {
 
     func test_update_failsOnUpdateError() {
         let (sut, store) = makeSUT()
-        let listGroup = uniqueItem()
+        let listGroup = uniqueList()
         let updateError = anyNSError()
 
         store.completeWithMatchingItem()
@@ -39,7 +39,7 @@ class UpdateFeedInDatabaseUseCases: XCTestCase {
 
     func test_update_succeedOnUpdatingMatchedData() {
         let (sut, store) = makeSUT()
-        let matchedData = uniqueItem()
+        let matchedData = uniqueList()
 
         store.completeWithMatchingItem()
         expect(sut, update: matchedData.model, toCompleteWith: .success(())) {

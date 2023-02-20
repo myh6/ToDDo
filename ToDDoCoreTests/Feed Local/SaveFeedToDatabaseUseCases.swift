@@ -18,7 +18,7 @@ class SaveFeedToDatabaseUseCases: XCTestCase {
     
     func test_save_requestStoreInsertion() {
         let (sut, store) = makeSUT()
-        let listGroup = uniqueItem()
+        let listGroup = uniqueList()
         
         sut.create (listGroup.model) { _ in }
         
@@ -47,7 +47,7 @@ class SaveFeedToDatabaseUseCases: XCTestCase {
         var sut: LocalFeedLoader? = LocalFeedLoader(store: store)
         
         var receivedResult = [LocalFeedLoader.SaveResult]()
-        sut?.create(uniqueItem().model) { receivedResult.append($0) }
+        sut?.create(uniqueList().model) { receivedResult.append($0) }
         
         sut = nil
         store.completeInsertionSuccessfully()
@@ -67,7 +67,7 @@ class SaveFeedToDatabaseUseCases: XCTestCase {
     private func expect(_ sut: FeedCreater, toCompleteWithError expectedError: NSError?, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
         let exp = expectation(description: "Wait for description")
         var receivedError: Error?
-        sut.create (uniqueItem().model) { result in
+        sut.create (uniqueList().model) { result in
             if case let Result.failure(error) = result { receivedError = error }
             exp.fulfill()
         }

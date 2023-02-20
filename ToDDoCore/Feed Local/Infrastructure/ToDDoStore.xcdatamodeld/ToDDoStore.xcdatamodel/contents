@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21512" systemVersion="22C65" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="ToDDoItem" representedClassName="ToDDoItem" syncable="YES">
+        <attribute name="expectedDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="finishedDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="isDone" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="note" optional="YES" attributeType="String"/>
+        <attribute name="priority" optional="YES" attributeType="String"/>
         <attribute name="title" attributeType="String"/>
+        <attribute name="url" optional="YES" attributeType="URI"/>
         <relationship name="list" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ToDDoList" inverseName="item" inverseEntity="ToDDoList"/>
     </entity>
     <entity name="ToDDoList" representedClassName="ToDDoList" syncable="YES">
@@ -11,11 +16,5 @@
         <attribute name="image" optional="YES" attributeType="Binary"/>
         <attribute name="title" attributeType="String"/>
         <relationship name="item" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ToDDoItem" inverseName="list" inverseEntity="ToDDoItem"/>
-        <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ToDDoUser" inverseName="lists" inverseEntity="ToDDoUser"/>
-    </entity>
-    <entity name="ToDDoUser" representedClassName="ToDDoUser" syncable="YES">
-        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
-        <attribute name="userName" optional="YES" attributeType="String"/>
-        <relationship name="lists" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ToDDoList" inverseName="user" inverseEntity="ToDDoList"/>
     </entity>
 </model>

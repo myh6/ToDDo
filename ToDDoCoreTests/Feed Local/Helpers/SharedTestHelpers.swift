@@ -7,19 +7,28 @@
 
 import ToDDoCore
 
-func uniqueFeedListGroup(listTitle: String = "a title", listImage: Data = Data("a image".utf8), itemsCount: Int = 0) -> FeedListGroup {
-    FeedListGroup(id: UUID(), listTitle: listTitle, listImage: listImage, itemsCount: itemsCount)
+func uniqueFeedListGroup(listTitle: String = "a title", listImage: Data = Data("a image".utf8), items: [FeedToDoItem]) -> FeedListGroup {
+    FeedListGroup(id: UUID(), listTitle: listTitle, listImage: listImage, items: items)
 }
 
-func uniqueItems() -> (models: [FeedListGroup], locals: [LocalFeedListGroup]) {
-    let models = [uniqueFeedListGroup(), uniqueFeedListGroup()]
-    let local = models.map { LocalFeedListGroup(id: $0.id, listTitle: $0.listTitle, listImage: $0.listImage, itemsCount: $0.itemsCount) }
+func uniqueUser() -> (models: [FeedListGroup], locals: [LocalFeedListGroup]) {
+    let item1 = [uniqueItem().model]
+    let item2 = [uniqueItem().model]
+    let models = [uniqueFeedListGroup(items: item1), uniqueFeedListGroup(items: item2)]
+    let local = models.map { LocalFeedListGroup(id: $0.id, listTitle: $0.listTitle, listImage: $0.listImage, items: $0.items.toCoreModel()) }
     return (models, local)
 }
 
-func uniqueItem() -> (model: FeedListGroup, local: LocalFeedListGroup) {
-    let model = uniqueFeedListGroup()
-    let local = LocalFeedListGroup(id: model.id, listTitle: model.listTitle, listImage: model.listImage, itemsCount: model.itemsCount)
+func uniqueList() -> (model: FeedListGroup, local: LocalFeedListGroup) {
+    let items = [uniqueItem().model]
+    let model = uniqueFeedListGroup(items: items)
+    let local = LocalFeedListGroup(id: model.id, listTitle: model.listTitle, listImage: model.listImage, items: items.toCoreModel())
+    return (model, local)
+}
+
+func uniqueItem() -> (model: FeedToDoItem, local: LocalToDoItem) {
+    let model = FeedToDoItem(id: UUID(), title: "a title", isDone: false, expectedDate: nil, finishedDate: nil, priority: nil, url: nil, note: nil)
+    let local = LocalToDoItem(id: model.id, title: model.title, isDone: model.isDone, expectedDate: model.expectedDate, finishedDate: model.finishedDate, priority: model.priority, url: model.url, note: model.note)
     return (model, local)
 }
 

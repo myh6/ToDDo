@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0F3312A529A349DA0032EA92 /* ToDDoUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F3312A429A349DA0032EA92 /* ToDDoUser.swift */; };
 		0F3312A729A34B180032EA92 /* CoreDataFeedStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F3312A629A34B180032EA92 /* CoreDataFeedStoreTests.swift */; };
 		0F3312A929A3512E0032EA92 /* CoreDataFeedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F3312A829A3512E0032EA92 /* CoreDataFeedStore.swift */; };
 		0F3312AB29A359610032EA92 /* ToDDoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F3312AA29A359610032EA92 /* ToDDoItem.swift */; };
@@ -44,7 +43,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0F3312A429A349DA0032EA92 /* ToDDoUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDDoUser.swift; sourceTree = "<group>"; };
 		0F3312A629A34B180032EA92 /* CoreDataFeedStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataFeedStoreTests.swift; sourceTree = "<group>"; };
 		0F3312A829A3512E0032EA92 /* CoreDataFeedStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataFeedStore.swift; sourceTree = "<group>"; };
 		0F3312AA29A359610032EA92 /* ToDDoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDDoItem.swift; sourceTree = "<group>"; };
@@ -195,7 +193,6 @@
 				0FB9CB5829A343F500AAA276 /* ToDDoStore.xcdatamodeld */,
 				0F3312AA29A359610032EA92 /* ToDDoItem.swift */,
 				0FB9CB5B29A345EA00AAA276 /* ToDDolist.swift */,
-				0F3312A429A349DA0032EA92 /* ToDDoUser.swift */,
 				0F3312A829A3512E0032EA92 /* CoreDataFeedStore.swift */,
 			);
 			path = Infrastructure;
@@ -319,7 +316,6 @@
 				0FB9CB292999015000AAA276 /* FeedListGroups.swift in Sources */,
 				0FB9CB50299F15A400AAA276 /* FeedUpdater.swift in Sources */,
 				0FB9CB4C299F155200AAA276 /* FeedCreater.swift in Sources */,
-				0F3312A529A349DA0032EA92 /* ToDDoUser.swift in Sources */,
 				0FB9CB5C29A345EA00AAA276 /* ToDDolist.swift in Sources */,
 				0FB9CB37299A327800AAA276 /* LocalFeedLoader.swift in Sources */,
 				0FB9CB35299A31C000AAA276 /* FeedStore.swift in Sources */,

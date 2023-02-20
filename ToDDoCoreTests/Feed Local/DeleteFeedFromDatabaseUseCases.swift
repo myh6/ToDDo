@@ -18,7 +18,7 @@ class DeleteFeedFromDatabaseUseCases: XCTestCase {
 
     func test_delete_doesNotDeleteOnNonMatchedData() {
         let (sut, store) = makeSUT()
-        let nonMatchedData = uniqueItem()
+        let nonMatchedData = uniqueList()
 
         store.completeWithNoMatchingItem()
         sut.delete(nonMatchedData.model) { _ in }
@@ -28,7 +28,7 @@ class DeleteFeedFromDatabaseUseCases: XCTestCase {
 
     func test_delete_failsOnDeletionError() {
         let (sut, store) = makeSUT()
-        let listGroup = uniqueItem()
+        let listGroup = uniqueList()
         let deletionError = anyNSError()
 
         store.completeWithMatchingItem()
@@ -39,7 +39,7 @@ class DeleteFeedFromDatabaseUseCases: XCTestCase {
 
     func test_delete_succeedOnDeletingMatchedData() {
         let (sut, store) = makeSUT()
-        let matchedData = uniqueItem()
+        let matchedData = uniqueList()
 
         store.completeWithMatchingItem()
         expect(sut, delete: matchedData.model, toCompleteWith: .success(())) {
