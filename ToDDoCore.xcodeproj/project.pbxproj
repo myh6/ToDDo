@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F3312A529A349DA0032EA92 /* ToDDoUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F3312A429A349DA0032EA92 /* ToDDoUser.swift */; };
+		0F3312A729A34B180032EA92 /* CoreDataFeedStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F3312A629A34B180032EA92 /* CoreDataFeedStoreTests.swift */; };
+		0F3312A929A3512E0032EA92 /* CoreDataFeedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F3312A829A3512E0032EA92 /* CoreDataFeedStore.swift */; };
+		0F3312AB29A359610032EA92 /* ToDDoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F3312AA29A359610032EA92 /* ToDDoItem.swift */; };
 		0FB9CB0C29962ED900AAA276 /* ToDDoCore.docc in Sources */ = {isa = PBXBuildFile; fileRef = 0FB9CB0B29962ED900AAA276 /* ToDDoCore.docc */; };
 		0FB9CB1229962ED900AAA276 /* ToDDoCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FB9CB0729962ED900AAA276 /* ToDDoCore.framework */; };
 		0FB9CB1829962ED900AAA276 /* ToDDoCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FB9CB0A29962ED900AAA276 /* ToDDoCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -25,6 +29,8 @@
 		0FB9CB4C299F155200AAA276 /* FeedCreater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB9CB4B299F155200AAA276 /* FeedCreater.swift */; };
 		0FB9CB4E299F158100AAA276 /* FeedDeleter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB9CB4D299F158100AAA276 /* FeedDeleter.swift */; };
 		0FB9CB50299F15A400AAA276 /* FeedUpdater.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB9CB4F299F15A400AAA276 /* FeedUpdater.swift */; };
+		0FB9CB5A29A343F500AAA276 /* ToDDoStore.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 0FB9CB5829A343F500AAA276 /* ToDDoStore.xcdatamodeld */; };
+		0FB9CB5C29A345EA00AAA276 /* ToDDolist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB9CB5B29A345EA00AAA276 /* ToDDolist.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,6 +44,10 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0F3312A429A349DA0032EA92 /* ToDDoUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDDoUser.swift; sourceTree = "<group>"; };
+		0F3312A629A34B180032EA92 /* CoreDataFeedStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataFeedStoreTests.swift; sourceTree = "<group>"; };
+		0F3312A829A3512E0032EA92 /* CoreDataFeedStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataFeedStore.swift; sourceTree = "<group>"; };
+		0F3312AA29A359610032EA92 /* ToDDoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDDoItem.swift; sourceTree = "<group>"; };
 		0FB9CB0729962ED900AAA276 /* ToDDoCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ToDDoCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FB9CB0A29962ED900AAA276 /* ToDDoCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ToDDoCore.h; sourceTree = "<group>"; };
 		0FB9CB0B29962ED900AAA276 /* ToDDoCore.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = ToDDoCore.docc; sourceTree = "<group>"; };
@@ -57,6 +67,8 @@
 		0FB9CB4B299F155200AAA276 /* FeedCreater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedCreater.swift; sourceTree = "<group>"; };
 		0FB9CB4D299F158100AAA276 /* FeedDeleter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedDeleter.swift; sourceTree = "<group>"; };
 		0FB9CB4F299F15A400AAA276 /* FeedUpdater.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedUpdater.swift; sourceTree = "<group>"; };
+		0FB9CB5929A343F500AAA276 /* ToDDoStore.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ToDDoStore.xcdatamodel; sourceTree = "<group>"; };
+		0FB9CB5B29A345EA00AAA276 /* ToDDolist.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDDolist.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +90,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0F3312AC29A35AB40032EA92 /* Helpers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Helpers;
+			sourceTree = "<group>";
+		};
 		0FB9CAFD29962ED900AAA276 = {
 			isa = PBXGroup;
 			children = (
@@ -144,6 +163,7 @@
 				0FB9CB38299A3CEA00AAA276 /* SaveFeedToDatabaseUseCases.swift */,
 				0FB9CB45299E008100AAA276 /* DeleteFeedFromDatabaseUseCases.swift */,
 				0FB9CB49299E24AF00AAA276 /* UpdateFeedInDatabaseUseCases.swift */,
+				0F3312A629A34B180032EA92 /* CoreDataFeedStoreTests.swift */,
 			);
 			path = "Feed Local";
 			sourceTree = "<group>";
@@ -160,11 +180,25 @@
 		0FB9CB40299C811600AAA276 /* Feed Local */ = {
 			isa = PBXGroup;
 			children = (
+				0FB9CB5729A343C000AAA276 /* Infrastructure */,
 				0FB9CB41299C814F00AAA276 /* LocalFeedListGroup.swift */,
 				0FB9CB34299A31C000AAA276 /* FeedStore.swift */,
 				0FB9CB36299A327800AAA276 /* LocalFeedLoader.swift */,
 			);
 			path = "Feed Local";
+			sourceTree = "<group>";
+		};
+		0FB9CB5729A343C000AAA276 /* Infrastructure */ = {
+			isa = PBXGroup;
+			children = (
+				0F3312AC29A35AB40032EA92 /* Helpers */,
+				0FB9CB5829A343F500AAA276 /* ToDDoStore.xcdatamodeld */,
+				0F3312AA29A359610032EA92 /* ToDDoItem.swift */,
+				0FB9CB5B29A345EA00AAA276 /* ToDDolist.swift */,
+				0F3312A429A349DA0032EA92 /* ToDDoUser.swift */,
+				0F3312A829A3512E0032EA92 /* CoreDataFeedStore.swift */,
+			);
+			path = Infrastructure;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -279,13 +313,18 @@
 			files = (
 				0FB9CB44299C8A2500AAA276 /* FeedLoader.swift in Sources */,
 				0FB9CB0C29962ED900AAA276 /* ToDDoCore.docc in Sources */,
+				0FB9CB5A29A343F500AAA276 /* ToDDoStore.xcdatamodeld in Sources */,
+				0F3312AB29A359610032EA92 /* ToDDoItem.swift in Sources */,
 				0FB9CB4E299F158100AAA276 /* FeedDeleter.swift in Sources */,
 				0FB9CB292999015000AAA276 /* FeedListGroups.swift in Sources */,
 				0FB9CB50299F15A400AAA276 /* FeedUpdater.swift in Sources */,
 				0FB9CB4C299F155200AAA276 /* FeedCreater.swift in Sources */,
+				0F3312A529A349DA0032EA92 /* ToDDoUser.swift in Sources */,
+				0FB9CB5C29A345EA00AAA276 /* ToDDolist.swift in Sources */,
 				0FB9CB37299A327800AAA276 /* LocalFeedLoader.swift in Sources */,
 				0FB9CB35299A31C000AAA276 /* FeedStore.swift in Sources */,
 				0FB9CB42299C814F00AAA276 /* LocalFeedListGroup.swift in Sources */,
+				0F3312A929A3512E0032EA92 /* CoreDataFeedStore.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -299,6 +338,7 @@
 				0FB9CB272998E42C00AAA276 /* XCTestCase+MemoryLeakTracking.swift in Sources */,
 				0FB9CB3F299B1CEC00AAA276 /* SharedTestHelpers.swift in Sources */,
 				0FB9CB3D299A3E9A00AAA276 /* FeedStoreSpy.swift in Sources */,
+				0F3312A729A34B180032EA92 /* CoreDataFeedStoreTests.swift in Sources */,
 				0FB9CB39299A3CEA00AAA276 /* SaveFeedToDatabaseUseCases.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -568,6 +608,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		0FB9CB5829A343F500AAA276 /* ToDDoStore.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				0FB9CB5929A343F500AAA276 /* ToDDoStore.xcdatamodel */,
+			);
+			currentVersion = 0FB9CB5929A343F500AAA276 /* ToDDoStore.xcdatamodel */;
+			path = ToDDoStore.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = 0FB9CAFE29962ED900AAA276 /* Project object */;
 }
