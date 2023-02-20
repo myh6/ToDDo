@@ -41,9 +41,14 @@ class CoreDataFeedStoreTests: XCTestCase {
         }
     }
     
+    func test_retrieve_deliversFoundValueOnNonEmptyDatabase() {
+        
+    }
+    
     //MARK: - Helpers
     private func makeSUT() -> FeedStore {
-        let sut = CoreDataFeedStore()
+        let storeBundle = Bundle(for: CoreDataFeedStore.self)
+        let sut = try! CoreDataFeedStore(bundle: storeBundle)
         trackForMemoryLeaks(sut)
         return sut
     }
