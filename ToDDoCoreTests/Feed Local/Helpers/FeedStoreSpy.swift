@@ -14,13 +14,17 @@ class FeedStoreSpy: FeedStore {
     private var insertCompletion = [InsertionCompletion]()
     private var removeCompletion = [RemovalCompletion]()
     private var updateCompletion = [UpdateCompletion]()
+    private typealias CheckCompletion = (Bool) -> Void
+    private var checkComletion = [CheckCompletion]()
     
     enum ReceivedMessage: Equatable {
         case retrieve
         case insert(LocalFeedListGroup)
         case remove(LocalFeedListGroup)
         case update(LocalFeedListGroup)
+        case check(Bool)
     }
+    private(set) var hasData = false
     
     //MARK: - Retrieve
     func retrieve(completion: @escaping RetrievalCompletion) {
@@ -52,6 +56,20 @@ class FeedStoreSpy: FeedStore {
     
     func completeInsertionSuccessfully(at index: Int = 0) {
         insertCompletion[index](.success(()))
+    }
+    
+    //MARK: - Matching
+    func hasItem(withID: UUID) -> Bool {
+        receivedMessage.append(.check(hasData))
+        return hasData
+    }
+    
+    func completeWithMatchingItem() {
+        hasData = true
+    }
+    
+    func completeWithNoMatchingItem() {
+        hasData = false
     }
     
     //MARK: - Remove

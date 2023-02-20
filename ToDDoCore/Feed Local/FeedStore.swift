@@ -17,4 +17,5 @@ public protocol FeedStore {
     func insert(_ feed: LocalFeedListGroup, completion: @escaping InsertionCompletion)
     func remove(_ feed: LocalFeedListGroup, completion: @escaping RemovalCompletion)
     func update(_ feed: LocalFeedListGroup, completion: @escaping UpdateCompletion)
+    func hasItem(withID: UUID) -> Bool
 }

@@ -57,16 +57,8 @@ extension LocalFeedLoader: FeedDeleter {
     public typealias DeleteResult = FeedDeleter.Result
     
     public func delete(_ feed: FeedListGroup, completion: @escaping (DeleteResult) -> Void) {
-        store.retrieve { [weak self] result in
-            guard let self = self else { return }
-            switch result {
-            case let .success(database):
-                if let database = database?.toModel(), FeedMatchingPolicy.hasData(self.map(feed), in: database.toLocal()) {
-                    self.store.remove(self.map(feed), completion: completion)
-                }
-            case let .failure(retrievalError):
-                completion(.failure(retrievalError))
-            }
+        if store.hasItem(withID: feed.id) {
+            store.remove(map(feed), completion: completion)
         }
     }
 }

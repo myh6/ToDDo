@@ -15,73 +15,38 @@ class DeleteFeedFromDatabaseUseCases: XCTestCase {
         
         XCTAssertTrue(store.receivedMessage.isEmpty)
     }
-    
-    func test_delete_doesNotDeleteOnEmptyDatabase() {
-        let (sut, store) = makeSUT()
-        let listGroup = uniqueItem()
-        
-        sut.delete(listGroup.model) { _ in }
-        store.completeRetrievalWithEmptyDatabase()
 
-        XCTAssertEqual(store.receivedMessage, [.retrieve])
-    }
-    
-    func test_delete_doesNotDeleteOnRetrievalError() {
-        let (sut, store) = makeSUT()
-        let listGroup = uniqueItem()
-        let retrievalError = anyNSError()
-        
-        sut.delete(listGroup.model) { _ in }
-        store.completeRetrieval(with: retrievalError)
-        
-        XCTAssertEqual(store.receivedMessage, [.retrieve])
-    }
-    
     func test_delete_doesNotDeleteOnNonMatchedData() {
         let (sut, store) = makeSUT()
-        let listGroups = uniqueItems()
         let nonMatchedData = uniqueItem()
-        
+
+        store.completeWithNoMatchingItem()
         sut.delete(nonMatchedData.model) { _ in }
-        store.completeRetrieval(with: listGroups.locals)
-        
-        XCTAssertEqual(store.receivedMessage, [.retrieve])
+
+        XCTAssertEqual(store.receivedMessage, [.check(false)])
     }
-    
+
     func test_delete_failsOnDeletionError() {
         let (sut, store) = makeSUT()
         let listGroup = uniqueItem()
         let deletionError = anyNSError()
-        
+
+        store.completeWithMatchingItem()
         expect(sut, delete: listGroup.model, toCompleteWith: .failure(deletionError)) {
-            store.completeRetrieval(with: [listGroup.local])
             store.completeDelete(with: deletionError)
         }
     }
-    
+
     func test_delete_succeedOnDeletingMatchedData() {
         let (sut, store) = makeSUT()
         let matchedData = uniqueItem()
-        
+
+        store.completeWithMatchingItem()
         expect(sut, delete: matchedData.model, toCompleteWith: .success(())) {
-            store.completeRetrieval(with: [matchedData.local])
             store.completeDeletionSuccessfully()
         }
-        
-        XCTAssertEqual(store.receivedMessage, [.retrieve, .remove(matchedData.local)])
-    }
-    
-    func test_delete_doesNotDeliverResultAfterSUTInstanceHasBeenDeallocated() {
-        let store = FeedStoreSpy()
-        var sut: LocalFeedLoader? = LocalFeedLoader(store: store)
-        let listGroup = uniqueItem()
-        var receivedResult = [LocalFeedLoader.DeleteResult]()
-        sut?.delete(listGroup.model) { receivedResult.append($0) }
-        
-        sut = nil
-        store.completeRetrieval(with: [listGroup.local])
-        
-        XCTAssertTrue(receivedResult.isEmpty)
+
+        XCTAssertEqual(store.receivedMessage, [.check(true), .remove(matchedData.local)])
     }
     
     //MARK: - Helpers
