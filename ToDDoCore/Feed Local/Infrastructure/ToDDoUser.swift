@@ -9,6 +9,7 @@ import CoreData
 
 @objc(ToDDoUser)
 class ToDDoUser: NSManagedObject {
+    @NSManaged var id: UUID
     @NSManaged var userName: String?
     @NSManaged var lists: NSOrderedSet
 }

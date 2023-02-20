@@ -14,6 +14,7 @@
         <relationship name="user" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ToDDoUser" inverseName="lists" inverseEntity="ToDDoUser"/>
     </entity>
     <entity name="ToDDoUser" representedClassName="ToDDoUser" syncable="YES">
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="userName" optional="YES" attributeType="String"/>
         <relationship name="lists" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="ToDDoList" inverseName="user" inverseEntity="ToDDoList"/>
     </entity>
