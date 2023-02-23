@@ -41,7 +41,7 @@ class FeedStoreSpy: FeedStore {
     }
     
     func completeRetrievalWithEmptyDatabase(at index: Int = 0) {
-        retrieveCompletion[index](.success(.none))
+        retrieveCompletion[index](.success([]))
     }
     
     //MARK: - Insert

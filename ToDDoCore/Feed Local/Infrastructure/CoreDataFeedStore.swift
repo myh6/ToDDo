@@ -19,18 +19,40 @@ public class CoreDataFeedStore: FeedStore {
     }
     
     public func retrieve(completion: @escaping RetrievalCompletion) {
-        completion(.success(.none))
+        let context = self.context
+        context.perform {
+            do {
+                let request = NSFetchRequest<ToDDoList>(entityName: ToDDoList.entity().name!)
+                request.returnsObjectsAsFaults = false
+                let lists = try context.fetch(request)
+                completion(.success(lists.map { $0.localList }))
+            } catch {
+                completion(.failure(error))
+            }
+        }
     }
     
-    public func insert(_ feed: ToDDoCore.LocalFeedListGroup, completion: @escaping InsertionCompletion) {
+    public func insert(_ feed: LocalFeedListGroup, completion: @escaping InsertionCompletion) {
+        let context = self.context
+        context.perform {
+            do {
+                let list = ToDDoList(context: context)
+                list.id = feed.id
+                list.title = feed.listTitle
+                list.image = feed.listImage
+                try context.save()
+                completion(.success(()))
+            } catch {
+                completion(.failure(error))
+            }
+        }
+    }
+    
+    public func remove(_ feed: LocalFeedListGroup, completion: @escaping RemovalCompletion) {
         
     }
     
-    public func remove(_ feed: ToDDoCore.LocalFeedListGroup, completion: @escaping RemovalCompletion) {
-        
-    }
-    
-    public func update(_ feed: ToDDoCore.LocalFeedListGroup, completion: @escaping UpdateCompletion) {
+    public func update(_ feed: LocalFeedListGroup, completion: @escaping UpdateCompletion) {
         
     }
     

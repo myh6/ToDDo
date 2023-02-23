@@ -29,7 +29,7 @@ extension LocalFeedLoader: FeedLoader {
             case let .failure(error):
                 completion(.failure(error))
             case let .success(feedItem):
-                completion(.success(feedItem?.toModel()))
+                completion(.success(feedItem.toModel()))
             }
         }
     }

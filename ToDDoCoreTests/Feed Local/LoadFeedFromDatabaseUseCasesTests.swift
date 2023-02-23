@@ -45,7 +45,7 @@ class LoadFeedFromDatabaseUseCasesTests: XCTestCase {
     func test_load_deliversNoItemOnEmptyDatabase() {
         let (sut, store) = makeSUT()
         
-        expect(sut, toCompleteWith: .success(.none)) {
+        expect(sut, toCompleteWith: .success([])) {
             store.completeRetrievalWithEmptyDatabase()
         }
     }
