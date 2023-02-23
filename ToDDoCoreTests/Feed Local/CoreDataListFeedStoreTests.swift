@@ -15,7 +15,7 @@ class CoreDataListFeedStoreTests: XCTestCase {
         
         sut.retrieve { result in
             if case let .success(item) = result {
-                XCTAssertNil(item)
+                XCTAssertTrue(item.isEmpty)
             } else {
                 XCTFail("Expected no item delivered from empty database")
             }
