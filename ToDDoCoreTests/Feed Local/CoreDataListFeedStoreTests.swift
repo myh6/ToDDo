@@ -8,7 +8,7 @@
 import XCTest
 import ToDDoCore
 
-class CoreDataFeedStoreTests: XCTestCase {
+class CoreDataListFeedStoreTests: XCTestCase {
     
     func test_retrieve_deliversEmptyOnEmptyDatabase() {
         let sut = makeSUT()
@@ -45,7 +45,7 @@ class CoreDataFeedStoreTests: XCTestCase {
         wait(for: [exp], timeout: 1.0)
     }
     
-    func test_retrieve_deliversFoundValueOnNonEmptyDatabase() {
+    func test_retrieve_deliversFoundListValueOnNonEmptyDatabase() {
         let sut = makeSUT()
         
         let list = uniquePureList().local
