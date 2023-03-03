@@ -45,7 +45,7 @@ class CoreDataListFeedStoreTests: XCTestCase {
         wait(for: [exp], timeout: 1.0)
     }
     
-    func test_retrieve_deliversFoundListValueOnNonEmptyDatabase() {
+    func test_retrieve_deliversFoundPureListValueOnNonEmptyDatabase() {
         let sut = makeSUT()
         let list = uniquePureList().local
         insert(list, to: sut)
