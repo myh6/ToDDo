@@ -47,25 +47,17 @@ class CoreDataListFeedStoreTests: XCTestCase {
     
     func test_retrieve_deliversFoundListValueOnNonEmptyDatabase() {
         let sut = makeSUT()
-        
         let list = uniquePureList().local
+        insert(list, to: sut)
         
-        let exp1 = expectation(description: "Wait for insertion result")
-        let exp2 = expectation(description: "Wait for retrieval result")
-        sut.insert(list) { result in
-            exp1.fulfill()
-            if case .success = result {
-                sut.retrieve { result in
-                    let receivedList = try? result.get()
-                    XCTAssertEqual([list], receivedList)
-                    exp2.fulfill()
-                }
-            } else {
-                XCTFail("Expected to successfully insert \(list), got \(result) instead")
-                exp1.fulfill()
-            }
+        let exp = expectation(description: "Wait for retrieval result")
+        sut.retrieve { result in
+            let receivedList = try? result.get()
+            XCTAssertEqual(receivedList, [list])
+            exp.fulfill()
         }
-        wait(for: [exp1,exp2], timeout: 1.0)
+        
+        wait(for: [exp], timeout: 1.0)
     }
     
     //MARK: - Helpers
@@ -81,6 +73,21 @@ class CoreDataListFeedStoreTests: XCTestCase {
         let model = uniqueFeedListGroup(items: [])
         let local = LocalFeedListGroup(id: model.id, listTitle: model.listTitle, listImage: model.listImage, items: [])
         return (model, local)
+    }
+    
+    @discardableResult
+    private func insert(_ list: LocalFeedListGroup, to sut: FeedStore) -> Error? {
+        let exp = expectation(description: "Wait for insertion")
+        var insertionError: Error?
+        sut.insert(list) { result in
+            if case let Result.failure(error) = result {
+                insertionError = error
+            }
+            exp.fulfill()
+        }
+        
+        wait(for: [exp], timeout: 1.0)
+        return insertionError
     }
     
 }
