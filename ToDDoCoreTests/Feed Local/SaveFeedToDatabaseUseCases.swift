@@ -16,7 +16,7 @@ class SaveFeedToDatabaseUseCases: XCTestCase {
         XCTAssertEqual(store.receivedMessage, [])
     }
     
-    func test_save_requestStoreInsertion() {
+    func test_createList_requestStoreInsertion() {
         let (sut, store) = makeSUT()
         let listGroup = uniqueList()
         
@@ -25,7 +25,7 @@ class SaveFeedToDatabaseUseCases: XCTestCase {
         XCTAssertEqual(store.receivedMessage, [.insert(listGroup.local)])
     }
     
-    func test_save_failsOnSaveError() {
+    func test_createList_failsOnSaveError() {
         let (sut, store) = makeSUT()
         let saveError = anyNSError()
         
@@ -34,7 +34,7 @@ class SaveFeedToDatabaseUseCases: XCTestCase {
         }
     }
     
-    func test_save_succeedOnSuccessfulInsertion() {
+    func test_createList_succeedOnSuccessfulInsertion() {
         let (sut, store) = makeSUT()
         
         expect(sut, toCompleteWithError: .none) {
@@ -42,7 +42,7 @@ class SaveFeedToDatabaseUseCases: XCTestCase {
         }
     }
     
-    func test_save_doesNotDeliverResultAfterSUTInstanceHasBeenDeallocated() {
+    func test_createList_doesNotDeliverResultAfterSUTInstanceHasBeenDeallocated() {
         let store = FeedStoreSpy()
         var sut: LocalFeedLoader? = LocalFeedLoader(store: store)
         
