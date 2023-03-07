@@ -32,6 +32,16 @@ class CoreDataListFeedStoreTests: XCTestCase {
         expect(sut, toRetrieve: .success([list]))
     }
     
+    func test_retrieve_hasNoSideEffectOnNonEmptyDatabase() {
+        let sut = makeSUT()
+        let list = uniquePureList().local
+        
+        insert(list, to: sut)
+        
+        expect(sut, toRetrieve: .success([list]))
+        expect(sut, toRetrieve: .success([list]))
+    }
+    
     //MARK: - Helpers
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> FeedStore {
         let storeBundle = Bundle(for: CoreDataFeedStore.self)
