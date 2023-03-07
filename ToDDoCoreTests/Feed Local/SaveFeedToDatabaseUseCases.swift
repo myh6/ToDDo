@@ -73,6 +73,23 @@ class SaveFeedToDatabaseUseCases: XCTestCase {
         XCTAssertEqual(receivedError as NSError?, anyError)
     }
     
+    func test_createItemToList_succeedOnSuccessFulInsertion() {
+        let (sut, store) = makeSUT()
+        let item = uniqueItem()
+        let list = uniqueList()
+    
+        let exp = expectation(description: "Wait for add complete")
+        sut.add(item.model, to: list.model) { result in
+            if case let Result.failure(error) = result {
+                XCTFail("Expected to successfully add item to list, got \(error) instead")
+            }
+            exp.fulfill()
+        }
+        
+        store.completeInsertionSuccessfully()
+        wait(for: [exp], timeout: 1.0)
+    }
+    
     func test_createList_doesNotDeliverResultAfterSUTInstanceHasBeenDeallocated() {
         let store = FeedStoreSpy()
         var sut: LocalFeedLoader? = LocalFeedLoader(store: store)
