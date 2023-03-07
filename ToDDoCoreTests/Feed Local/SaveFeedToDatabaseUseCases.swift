@@ -42,7 +42,7 @@ class SaveFeedToDatabaseUseCases: XCTestCase {
         }
     }
     
-    func test_createItemToList_requestStoreInsertion() {
+    func test_addItemToList_requestStoreInsertion() {
         let (sut, store) = makeSUT()
         let item = uniqueItem()
         let list = uniqueList()
@@ -52,7 +52,7 @@ class SaveFeedToDatabaseUseCases: XCTestCase {
         XCTAssertEqual(store.receivedMessage, [.add(FeedStoreSpy.AddItemList(list: list.local, item: item.local))])
     }
     
-    func test_createItemToList_failsOnSaveError() {
+    func test_addItemToList_failsOnSaveError() {
         let (sut, store) = makeSUT()
         let anyError = anyNSError()
         
@@ -61,7 +61,7 @@ class SaveFeedToDatabaseUseCases: XCTestCase {
         }
     }
     
-    func test_createItemToList_succeedOnSuccessFulInsertion() {
+    func test_addItemToList_succeedOnSuccessFulInsertion() {
         let (sut, store) = makeSUT()
     
         expect(sut, toCompleteAddItemToListWithError: nil) {
