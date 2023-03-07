@@ -82,6 +82,19 @@ class SaveFeedToDatabaseUseCases: XCTestCase {
         XCTAssertTrue(receivedResult.isEmpty)
     }
     
+    func test_addItemToList_doesNotDeliverResultAfterSUTInstanceHasBeenDeallocated() {
+        let store = FeedStoreSpy()
+        var sut: LocalFeedLoader? = LocalFeedLoader(store: store)
+        
+        var receivedResult = [LocalFeedLoader.SaveResult]()
+        sut?.add(uniqueItem().model, to: uniqueList().model) { receivedResult.append($0) }
+        
+        sut = nil
+        store.completeInsertionSuccessfully()
+        
+        XCTAssertTrue(receivedResult.isEmpty)
+    }
+    
     //MARK: - Helpers
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: FeedCreater, store: FeedStoreSpy) {
         let store = FeedStoreSpy()
