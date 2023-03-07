@@ -42,6 +42,16 @@ class SaveFeedToDatabaseUseCases: XCTestCase {
         }
     }
     
+    func test_createItemToList_requestStoreInsertion() {
+        let (sut, store) = makeSUT()
+        let item = uniqueItem()
+        let list = uniqueList()
+        
+        sut.add(item.model, to: list.model)
+        
+        XCTAssertEqual(store.receivedMessage, [.add(FeedStoreSpy.AddItemList(list: list.local, item: item.local))])
+    }
+    
     func test_createList_doesNotDeliverResultAfterSUTInstanceHasBeenDeallocated() {
         let store = FeedStoreSpy()
         var sut: LocalFeedLoader? = LocalFeedLoader(store: store)

@@ -17,9 +17,15 @@ class FeedStoreSpy: FeedStore {
     private typealias CheckCompletion = (Bool) -> Void
     private var checkComletion = [CheckCompletion]()
     
+    struct AddItemList: Equatable {
+        let list: LocalFeedListGroup
+        let item: LocalToDoItem
+    }
+    
     enum ReceivedMessage: Equatable {
         case retrieve
         case insert(LocalFeedListGroup)
+        case add(AddItemList)
         case remove(LocalFeedListGroup)
         case update(LocalFeedListGroup)
         case check(Bool)
@@ -48,6 +54,10 @@ class FeedStoreSpy: FeedStore {
     func insert(_ feed: LocalFeedListGroup, completion: @escaping FeedStore.InsertionCompletion) {
         receivedMessage.append(.insert(feed))
         insertCompletion.append(completion)
+    }
+    
+    func insert(_ item: LocalToDoItem, to list: LocalFeedListGroup) {
+        receivedMessage.append(.add(AddItemList(list: list, item: item)))
     }
     
     func completeSave(with error: Error, at index: Int = 0) {

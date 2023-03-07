@@ -48,3 +48,16 @@ public struct FeedToDoItem: Equatable {
     }
     
 }
+
+
+extension FeedListGroup {
+    func toLocal() -> LocalFeedListGroup {
+        LocalFeedListGroup(id: id, listTitle: listTitle, listImage: listImage, items: items.toCoreModel())
+    }
+}
+
+extension FeedToDoItem {
+    func toLocal() -> LocalToDoItem {
+        LocalToDoItem(id: id, title: title, isDone: isDone, expectedDate: expectedDate, finishedDate: finishedDate, priority: priority, url: url, note: note)
+    }
+}

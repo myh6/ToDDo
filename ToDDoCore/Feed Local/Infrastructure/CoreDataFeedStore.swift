@@ -48,6 +48,9 @@ public class CoreDataFeedStore: FeedStore {
         }
     }
     
+    public func insert(_ item: LocalToDoItem, to list: LocalFeedListGroup) {
+    }
+    
     public func remove(_ feed: LocalFeedListGroup, completion: @escaping RemovalCompletion) {
         
     }

@@ -17,6 +17,10 @@ public class LocalFeedLoader {
     private func map(_ feed: FeedListGroup) -> LocalFeedListGroup {
         return LocalFeedListGroup(id: feed.id, listTitle: feed.listTitle, listImage: feed.listImage, items: feed.items.toCoreModel())
     }
+    
+    private func map(_ item: FeedToDoItem) -> LocalToDoItem {
+        return LocalToDoItem(id: item.id, title: item.title, isDone: item.isDone, expectedDate: item.expectedDate, finishedDate: item.finishedDate, priority: item.priority, url: item.url, note: item.note)
+    }
 }
 
 extension LocalFeedLoader: FeedLoader {
@@ -39,7 +43,7 @@ extension LocalFeedLoader: FeedCreater {
     public typealias SaveResult = FeedCreater.Result
     
     public func create(_ feed: FeedListGroup, completion: @escaping (SaveResult) -> Void) {
-        store.insert(map(feed)) { [weak self] insertionResult in
+        store.insert(feed.toLocal()) { [weak self] insertionResult in
             guard self != nil else { return }
             switch insertionResult {
             case let .failure(insertionError):
@@ -49,6 +53,10 @@ extension LocalFeedLoader: FeedCreater {
                 completion(.success(()))
             }
         }
+    }
+    
+    public func add(_ item: FeedToDoItem, to list: FeedListGroup) {
+        store.insert(item.toLocal(), to: list.toLocal())
     }
     
 }
