@@ -13,14 +13,6 @@ public class LocalFeedLoader {
     public init(store: FeedStore) {
         self.store = store
     }
-    
-    private func map(_ feed: FeedListGroup) -> LocalFeedListGroup {
-        return LocalFeedListGroup(id: feed.id, listTitle: feed.listTitle, listImage: feed.listImage, items: feed.items.toCoreModel())
-    }
-    
-    private func map(_ item: FeedToDoItem) -> LocalToDoItem {
-        return LocalToDoItem(id: item.id, title: item.title, isDone: item.isDone, expectedDate: item.expectedDate, finishedDate: item.finishedDate, priority: item.priority, url: item.url, note: item.note)
-    }
 }
 
 extension LocalFeedLoader: FeedLoader {
@@ -55,8 +47,8 @@ extension LocalFeedLoader: FeedCreater {
         }
     }
     
-    public func add(_ item: FeedToDoItem, to list: FeedListGroup) {
-        store.insert(item.toLocal(), to: list.toLocal())
+    public func add(_ item: FeedToDoItem, to list: FeedListGroup, completion: @escaping (SaveResult) -> Void) {
+        store.insert(item.toLocal(), to: list.toLocal(), completion: completion)
     }
     
 }
@@ -66,7 +58,7 @@ extension LocalFeedLoader: FeedDeleter {
     
     public func delete(_ feed: FeedListGroup, completion: @escaping (DeleteResult) -> Void) {
         if store.hasItem(withID: feed.id) {
-            store.remove(map(feed), completion: completion)
+            store.remove(feed.toLocal(), completion: completion)
         }
     }
 }
@@ -76,7 +68,7 @@ extension LocalFeedLoader: FeedUpdater {
     
     public func update(_ feed: FeedListGroup, completion: @escaping (UpdateResult) -> Void) {
         if store.hasItem(withID: feed.id) {
-            store.update(map(feed), completion: completion)
+            store.update(feed.toLocal(), completion: completion)
         }
     }
 }

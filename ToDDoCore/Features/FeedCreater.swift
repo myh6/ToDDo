@@ -12,7 +12,7 @@ public protocol FeedCreater {
     
     func create(_ list: FeedListGroup, completion: @escaping (Result) -> Void)
     
-    func add(_ item: FeedToDoItem, to list: FeedListGroup)
+    func add(_ item: FeedToDoItem, to list: FeedListGroup, completion: @escaping (Result) -> Void)
 }
 
 extension FeedCreater {

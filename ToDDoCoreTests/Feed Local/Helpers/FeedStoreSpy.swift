@@ -56,8 +56,9 @@ class FeedStoreSpy: FeedStore {
         insertCompletion.append(completion)
     }
     
-    func insert(_ item: LocalToDoItem, to list: LocalFeedListGroup) {
+    func insert(_ item: LocalToDoItem, to list: LocalFeedListGroup, completion: @escaping FeedStore.InsertionCompletion) {
         receivedMessage.append(.add(AddItemList(list: list, item: item)))
+        insertCompletion.append(completion)
     }
     
     func completeSave(with error: Error, at index: Int = 0) {

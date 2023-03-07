@@ -16,7 +16,7 @@ public protocol FeedStore {
     func retrieve(completion: @escaping RetrievalCompletion)
     
     func insert(_ list: LocalFeedListGroup, completion: @escaping InsertionCompletion)
-    func insert(_ item: LocalToDoItem, to list: LocalFeedListGroup)
+    func insert(_ item: LocalToDoItem, to list: LocalFeedListGroup, completion: @escaping InsertionCompletion)
     
     func remove(_ list: LocalFeedListGroup, completion: @escaping RemovalCompletion)
     
