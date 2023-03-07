@@ -51,8 +51,8 @@ class FeedStoreSpy: FeedStore {
     }
     
     //MARK: - Insert
-    func insert(_ feed: LocalFeedListGroup, completion: @escaping FeedStore.InsertionCompletion) {
-        receivedMessage.append(.insert(feed))
+    func insert(_ list: LocalFeedListGroup, completion: @escaping FeedStore.InsertionCompletion) {
+        receivedMessage.append(.insert(list))
         insertCompletion.append(completion)
     }
     

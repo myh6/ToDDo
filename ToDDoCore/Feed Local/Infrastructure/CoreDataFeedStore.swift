@@ -32,14 +32,14 @@ public class CoreDataFeedStore: FeedStore {
         }
     }
     
-    public func insert(_ feed: LocalFeedListGroup, completion: @escaping InsertionCompletion) {
+    public func insert(_ list: LocalFeedListGroup, completion: @escaping InsertionCompletion) {
         let context = self.context
         context.perform {
             do {
-                let list = ToDDoList(context: context)
-                list.id = feed.id
-                list.title = feed.listTitle
-                list.image = feed.listImage
+                let toDoList = ToDDoList(context: context)
+                toDoList.id = list.id
+                toDoList.title = list.listTitle
+                toDoList.image = list.listImage
                 try context.save()
                 completion(.success(()))
             } catch {
