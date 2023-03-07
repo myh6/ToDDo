@@ -13,51 +13,23 @@ class CoreDataListFeedStoreTests: XCTestCase {
     func test_retrieve_deliversEmptyOnEmptyDatabase() {
         let sut = makeSUT()
         
-        sut.retrieve { result in
-            if case let .success(item) = result {
-                XCTAssertTrue(item.isEmpty)
-            } else {
-                XCTFail("Expected no item delivered from empty database")
-            }
-        }
+        expect(sut, toRetrieve: .success([]))
     }
     
     func test_retrieve_hasNoSideEffectOnEmptyDatabase() {
         let sut = makeSUT()
         
-        let exp = expectation(description: "Wait for retrieval result")
-        sut.retrieve { result in
-            if case let .success(item) = result {
-                XCTAssertTrue(item.isEmpty)
-                sut.retrieve { result in
-                    if case let .success(item) = result {
-                        XCTAssertTrue(item.isEmpty)
-                    } else {
-                        XCTFail("Expected no item on second retrieve")
-                    }
-                    exp.fulfill()
-                }
-            } else {
-                XCTFail("Expected no item on first retrieve")
-                exp.fulfill()
-            }
-        }
-        wait(for: [exp], timeout: 1.0)
+        expect(sut, toRetrieve: .success([]))
+        expect(sut, toRetrieve: .success([]))
     }
     
     func test_retrieve_deliversFoundPureListValueOnNonEmptyDatabase() {
         let sut = makeSUT()
         let list = uniquePureList().local
+        
         insert(list, to: sut)
         
-        let exp = expectation(description: "Wait for retrieval result")
-        sut.retrieve { result in
-            let receivedList = try? result.get()
-            XCTAssertEqual(receivedList, [list])
-            exp.fulfill()
-        }
-        
-        wait(for: [exp], timeout: 1.0)
+        expect(sut, toRetrieve: .success([list]))
     }
     
     //MARK: - Helpers
@@ -88,6 +60,25 @@ class CoreDataListFeedStoreTests: XCTestCase {
         
         wait(for: [exp], timeout: 1.0)
         return insertionError
+    }
+    
+    private func expect(_ sut: FeedStore, toRetrieve expectedResult: Result<[LocalFeedListGroup], Error>, file: StaticString = #file, line: UInt = #line) {
+        let exp = expectation(description: "Wait for retrieve complete")
+        sut.retrieve { retrievedResult in
+            switch (expectedResult, retrievedResult) {
+            case let (.success(expected), .success(retireved)):
+                XCTAssertEqual(expected, retireved)
+                
+            case (.failure, .failure):
+                break
+                
+            default:
+                XCTFail("Expected to retrieve \(expectedResult), got \(retrievedResult) instead")
+            }
+            exp.fulfill()
+        }
+        
+        wait(for: [exp], timeout: 1.0)
     }
     
 }
