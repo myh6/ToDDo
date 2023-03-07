@@ -29,7 +29,7 @@ class SaveFeedToDatabaseUseCases: XCTestCase {
         let (sut, store) = makeSUT()
         let saveError = anyNSError()
         
-        expect(sut, toCompleteWithError: saveError) {
+        expect(sut, toCompleteCreateListWithError: saveError) {
             store.completeSave(with: saveError)
         }
     }
@@ -37,7 +37,7 @@ class SaveFeedToDatabaseUseCases: XCTestCase {
     func test_createList_succeedOnSuccessfulInsertion() {
         let (sut, store) = makeSUT()
         
-        expect(sut, toCompleteWithError: .none) {
+        expect(sut, toCompleteCreateListWithError: .none) {
             store.completeInsertionSuccessfully()
         }
     }
@@ -54,40 +54,19 @@ class SaveFeedToDatabaseUseCases: XCTestCase {
     
     func test_createItemToList_failsOnSaveError() {
         let (sut, store) = makeSUT()
-        let item = uniqueItem()
-        let list = uniqueList()
         let anyError = anyNSError()
         
-        var receivedError: Error?
-        let exp = expectation(description: "Wait for add complete")
-        sut.add(item.model, to: list.model) { result in
-            if case let Result.failure(error) = result {
-                receivedError = error
-            }
-            exp.fulfill()
+        expect(sut, toCompleteAddItemToListWithError: anyError) {
+            store.completeSave(with: anyNSError())
         }
-        
-        store.completeSave(with: anyError)
-        wait(for: [exp], timeout: 1.0)
-        
-        XCTAssertEqual(receivedError as NSError?, anyError)
     }
     
     func test_createItemToList_succeedOnSuccessFulInsertion() {
         let (sut, store) = makeSUT()
-        let item = uniqueItem()
-        let list = uniqueList()
     
-        let exp = expectation(description: "Wait for add complete")
-        sut.add(item.model, to: list.model) { result in
-            if case let Result.failure(error) = result {
-                XCTFail("Expected to successfully add item to list, got \(error) instead")
-            }
-            exp.fulfill()
+        expect(sut, toCompleteAddItemToListWithError: nil) {
+            store.completeInsertionSuccessfully()
         }
-        
-        store.completeInsertionSuccessfully()
-        wait(for: [exp], timeout: 1.0)
     }
     
     func test_createList_doesNotDeliverResultAfterSUTInstanceHasBeenDeallocated() {
@@ -112,10 +91,24 @@ class SaveFeedToDatabaseUseCases: XCTestCase {
         return (sut, store)
     }
     
-    private func expect(_ sut: FeedCreater, toCompleteWithError expectedError: NSError?, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
+    private func expect(_ sut: FeedCreater, toCompleteCreateListWithError expectedError: NSError?, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
         let exp = expectation(description: "Wait for description")
         var receivedError: Error?
         sut.create (uniqueList().model) { result in
+            if case let Result.failure(error) = result { receivedError = error }
+            exp.fulfill()
+        }
+        
+        action()
+        
+        wait(for: [exp], timeout: 1.0)
+        XCTAssertEqual(receivedError as NSError?, expectedError, file: file, line: line)
+    }
+    
+    private func expect(_ sut: FeedCreater, toCompleteAddItemToListWithError expectedError: NSError?, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
+        let exp = expectation(description: "Wait for description")
+        var receivedError: Error?
+        sut.add(uniqueItem().model, to: uniqueList().model) { result in
             if case let Result.failure(error) = result { receivedError = error }
             exp.fulfill()
         }
