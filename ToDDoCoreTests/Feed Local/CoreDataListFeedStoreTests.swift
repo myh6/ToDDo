@@ -42,6 +42,14 @@ class CoreDataListFeedStoreTests: XCTestCase {
         expect(sut, toRetrieve: .success([list]))
     }
     
+    func test_insert_list_deliversNoErrorOnEmptyDatabase() {
+        let sut = makeSUT()
+        let list = uniquePureList().local
+        
+        let receivedError = insert(list, to: sut)
+        XCTAssertNil(receivedError)
+    }
+    
     //MARK: - Helpers
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> FeedStore {
         let storeBundle = Bundle(for: CoreDataFeedStore.self)
