@@ -36,6 +36,7 @@ public class CoreDataFeedStore: FeedStore {
         let context = self.context
         context.perform {
             do {
+                guard !self.hasItem(with: list.id) else { return completion(.success(())) }
                 ToDDoList.list(from: list, in: context)
                 try context.save()
                 completion(.success(()))
@@ -79,7 +80,16 @@ public class CoreDataFeedStore: FeedStore {
     }
     
     public func hasItem(with id: UUID) -> Bool {
-        return ToDDoItem.find(with: id, in: context)
+        switch (ToDDoList.find(with: id, in: context), ToDDoItem.find(with: id, in: context)) {
+        case (true, _):
+            return true
+            
+        case (_, true):
+            return true
+            
+        default:
+            return false
+        }
     }
     
 }

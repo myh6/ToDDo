@@ -54,6 +54,19 @@ extension ToDDoList {
             completion(.failure(error))
         }
     }
+    
+    static func find(with id: UUID, in context: NSManagedObjectContext) -> Bool {
+        let request = NSFetchRequest<ToDDoList>(entityName: entity().name!)
+        request.predicate = NSPredicate(format: "%K = %@", argumentArray: [#keyPath(ToDDoList.id), id])
+        request.returnsObjectsAsFaults = false
+        request.fetchLimit = 1
+        do {
+            let list = try context.fetch(request).first
+            return list == nil ? false : true
+        } catch {
+            return false
+        }
+    }
 
     var localList: LocalFeedListGroup {
         return LocalFeedListGroup(id: id, listTitle: title, listImage: image ?? Data(), items: item.compactMap { ($0 as? ToDDoItem)?.localItem } )

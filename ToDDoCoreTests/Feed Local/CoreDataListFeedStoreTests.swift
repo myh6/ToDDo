@@ -97,6 +97,16 @@ class CoreDataListFeedStoreTests: XCTestCase {
         XCTAssertNil(receivedError)
     }
     
+    func test_insert_sameListTwice_deliversNoRepeatedListData() {
+        let sut = makeSUT()
+        let list = uniqueList().local
+        
+        insert(list, to: sut)
+        insert(list, to: sut)
+        
+        expect(sut, toRetrieve: .success([list]))
+    }
+    
     func test_insert_item_deliversNoErrorOnEmptyDatabse() {
         let sut = makeSUT()
         let item = uniqueItem()
