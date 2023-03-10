@@ -23,6 +23,18 @@ class ToDDoItem: NSManagedObject {
 
 extension ToDDoItem {
     
+    static func find(with id: UUID, in context: NSManagedObjectContext) -> Bool {
+        let request = NSFetchRequest<ToDDoItem>(entityName: entity().name!)
+        request.predicate = NSPredicate(format: "%K = %@", argumentArray: [#keyPath(ToDDoItem.id), id])
+        request.returnsObjectsAsFaults = false
+        request.fetchLimit = 1
+        do {
+            let list = try context.fetch(request).first
+            return list == nil ? false : true
+        } catch {
+            return false
+        }
+    }
     static func item(from localItem: [LocalToDoItem], in context: NSManagedObjectContext) -> NSOrderedSet {
         let item = NSOrderedSet(array: localItem.map { local in
             let managed = ToDDoItem(context: context)

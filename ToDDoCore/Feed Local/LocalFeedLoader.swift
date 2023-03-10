@@ -66,7 +66,7 @@ extension LocalFeedLoader: FeedDeleter {
     public typealias DeleteResult = FeedDeleter.Result
     
     public func delete(_ feed: FeedListGroup, completion: @escaping (DeleteResult) -> Void) {
-        if store.hasItem(withID: feed.id) {
+        if store.hasItem(with: feed.id) {
             store.remove(feed.toLocal(), completion: completion)
         }
     }
@@ -76,7 +76,7 @@ extension LocalFeedLoader: FeedUpdater {
     public typealias UpdateResult = FeedUpdater.Result
     
     public func update(_ feed: FeedListGroup, completion: @escaping (UpdateResult) -> Void) {
-        if store.hasItem(withID: feed.id) {
+        if store.hasItem(with: feed.id) {
             store.update(feed.toLocal(), completion: completion)
         }
     }

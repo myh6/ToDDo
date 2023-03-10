@@ -52,6 +52,7 @@ public class CoreDataFeedStore: FeedStore {
             case let .success(coreList):
                 context.perform {
                     do {
+                        guard !self.hasItem(with: item.id) else { return completion(.success(())) }
                         if let coreList = coreList {
                             coreList.addToItem(ToDDoItem.item(from: item, in: context))
                         } else {
@@ -77,8 +78,8 @@ public class CoreDataFeedStore: FeedStore {
         
     }
     
-    public func hasItem(withID: UUID) -> Bool {
-        return false
+    public func hasItem(with id: UUID) -> Bool {
+        return ToDDoItem.find(with: id, in: context)
     }
     
 }

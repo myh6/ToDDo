@@ -70,7 +70,7 @@ class FeedStoreSpy: FeedStore {
     }
     
     //MARK: - Matching
-    func hasItem(withID: UUID) -> Bool {
+    func hasItem(with id: UUID) -> Bool {
         receivedMessage.append(.check(hasData))
         return hasData
     }

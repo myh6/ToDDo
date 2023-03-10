@@ -22,5 +22,5 @@ public protocol FeedStore {
     
     func update(_ list: LocalFeedListGroup, completion: @escaping UpdateCompletion)
     
-    func hasItem(withID: UUID) -> Bool
+    func hasItem(with id: UUID) -> Bool
 }
