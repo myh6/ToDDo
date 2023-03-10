@@ -36,7 +36,7 @@ class CoreDataListFeedStoreTests: XCTestCase {
         let sut = makeSUT()
         let list = uniquePureList().local
         let item = uniqueItem().local
-        let combineList = LocalFeedListGroup(id: list.id, listTitle: list.listTitle, listImage: list.listImage, items: [item])
+        let combineList = combineList(list: list, item: item)
 
         insert(item, to: list, to: sut)
         
@@ -49,7 +49,7 @@ class CoreDataListFeedStoreTests: XCTestCase {
         insert(list, to: sut)
         
         let item = uniqueItem().local
-        let combinedList = LocalFeedListGroup(id: list.id, listTitle: list.listTitle, listImage: list.listImage, items: [item])
+        let combinedList = combineList(list: list, item: item)
         
         insert(item, to: list, to: sut)
         
@@ -62,9 +62,7 @@ class CoreDataListFeedStoreTests: XCTestCase {
         insert(list, to: sut)
         
         let item = uniqueItem().local
-        var listItems = list.items
-        listItems.append(item)
-        let combinedList = LocalFeedListGroup(id: list.id, listTitle: list.listTitle, listImage: list.listImage, items: listItems)
+        let combinedList = combineList(list: list, item: item)
         
         insert(item, to: list, to: sut)
         
@@ -121,6 +119,12 @@ class CoreDataListFeedStoreTests: XCTestCase {
         let model = uniqueFeedListGroup(items: [])
         let local = LocalFeedListGroup(id: model.id, listTitle: model.listTitle, listImage: model.listImage, items: [])
         return (model, local)
+    }
+    
+    private func combineList(list: LocalFeedListGroup, item: LocalToDoItem) -> LocalFeedListGroup {
+        var listItems = list.items
+        listItems.append(item)
+        return LocalFeedListGroup(id: list.id, listTitle: list.listTitle, listImage: list.listImage, items: listItems)
     }
     
     @discardableResult
