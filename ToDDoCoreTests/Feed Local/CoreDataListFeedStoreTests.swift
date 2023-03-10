@@ -32,6 +32,15 @@ class CoreDataListFeedStoreTests: XCTestCase {
         expect(sut, toRetrieve: .success([list]))
     }
     
+    func test_retrieve_deliversFoundListValueOnNonEmptyDatabase() {
+        let sut = makeSUT()
+        let list = uniqueList().local
+        
+        insert(list, to: sut)
+        
+        expect(sut, toRetrieve: .success([list]))
+    }
+    
     func test_retrieve_deliversFoundListValueAfterInsertingItemOnEmptyDatabase() {
         let sut = makeSUT()
         let list = uniquePureList().local
