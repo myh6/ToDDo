@@ -37,16 +37,9 @@ class CoreDataListFeedStoreTests: XCTestCase {
         let list = uniquePureList().local
         let item = uniqueItem().local
         let combineList = LocalFeedListGroup(id: list.id, listTitle: list.listTitle, listImage: list.listImage, items: [item])
-        let exp = expectation(description: "Wait for insert complete")
+
+        insert(item, to: list, to: sut)
         
-        sut.insert(item, to: list) { result in
-            if case let Result.failure(error) = result {
-                XCTFail("Expected to insert successfully, got \(error) instead")
-            }
-            exp.fulfill()
-        }
-        
-        wait(for: [exp], timeout: 1.0)
         expect(sut, toRetrieve: .success([combineList]))
     }
     
@@ -55,17 +48,11 @@ class CoreDataListFeedStoreTests: XCTestCase {
         let list = uniquePureList().local
         insert(list, to: sut)
         
-        let exp = expectation(description: "Wait for insert complete")
         let item = uniqueItem().local
         let combinedList = LocalFeedListGroup(id: list.id, listTitle: list.listTitle, listImage: list.listImage, items: [item])
-        sut.insert(item, to: list) { result in
-            if case let Result.failure(error) = result {
-                XCTFail("Expected to insert successfully, got \(error) instead")
-            }
-            exp.fulfill()
-        }
         
-        wait(for: [exp], timeout: 1.0)
+        insert(item, to: list, to: sut)
+        
         expect(sut, toRetrieve: .success([combinedList]))
     }
     
@@ -74,20 +61,13 @@ class CoreDataListFeedStoreTests: XCTestCase {
         let list = uniqueList().local
         insert(list, to: sut)
         
-        let exp = expectation(description: "Wait for insert complete")
         let item = uniqueItem().local
         var listItems = list.items
         listItems.append(item)
         let combinedList = LocalFeedListGroup(id: list.id, listTitle: list.listTitle, listImage: list.listImage, items: listItems)
         
-        sut.insert(item, to: list) { result in
-            if case let Result.failure(error) = result {
-                XCTFail("Expected to insert successfully, got \(error) instead")
-            }
-            exp.fulfill()
-        }
+        insert(item, to: list, to: sut)
         
-        wait(for: [exp], timeout: 1.0)
         expect(sut, toRetrieve: .success([combinedList]))
     }
     
@@ -124,17 +104,7 @@ class CoreDataListFeedStoreTests: XCTestCase {
         let item = uniqueItem()
         let list = uniquePureList()
         
-        var receivedError: Error?
-        let exp = expectation(description: "Wait for insert complete")
-        sut.insert(item.local, to: list.local) { result in
-            if case let Result.failure(error) = result {
-                receivedError = error
-            }
-            
-            exp.fulfill()
-        }
-        
-        wait(for: [exp], timeout: 1.0)
+        let receivedError = insert(item.local, to: list.local, to: sut)
         XCTAssertNil(receivedError)
     }
     
@@ -164,6 +134,21 @@ class CoreDataListFeedStoreTests: XCTestCase {
             exp.fulfill()
         }
         
+        wait(for: [exp], timeout: 1.0)
+        return insertionError
+    }
+    
+    @discardableResult
+    private func insert(_ item: LocalToDoItem, to list: LocalFeedListGroup, to sut: FeedStore) -> Error? {
+        let exp = expectation(description: "Wait for insertion")
+        var insertionError: Error?
+        
+        sut.insert(item, to: list) { result in
+            if case let Result.failure(error) = result {
+                insertionError = error
+            }
+            exp.fulfill()
+        }
         wait(for: [exp], timeout: 1.0)
         return insertionError
     }
