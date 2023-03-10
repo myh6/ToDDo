@@ -60,6 +60,25 @@ class CoreDataListFeedStoreTests: XCTestCase {
         XCTAssertNil(receivedError)
     }
     
+    func test_insert_item_deliversNoErrorOnEmptyDatabse() {
+        let sut = makeSUT()
+        let item = uniqueItem()
+        let list = uniquePureList()
+        
+        var receivedError: Error?
+        let exp = expectation(description: "Wait for insert complete")
+        sut.insert(item.local, to: list.local) { result in
+            if case let Result.failure(error) = result {
+                receivedError = error
+            }
+            
+            exp.fulfill()
+        }
+        
+        wait(for: [exp], timeout: 1.0)
+        XCTAssertNil(receivedError)
+    }
+    
     //MARK: - Helpers
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> FeedStore {
         let storeBundle = Bundle(for: CoreDataFeedStore.self)
