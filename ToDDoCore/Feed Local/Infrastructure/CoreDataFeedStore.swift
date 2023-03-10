@@ -49,10 +49,14 @@ public class CoreDataFeedStore: FeedStore {
         let context = self.context
         ToDDoList.find(with: list.id, in: context, completion: { result in
             switch result {
-            case .success(_):
+            case let .success(coreList):
                 context.perform {
                     do {
-                        ToDDoList.list(from: list, and: item, in: context)
+                        if let coreList = coreList {
+                            coreList.addToItem(ToDDoItem.item(from: item, in: context))
+                        } else {
+                            ToDDoList.list(from: list, and: item, in: context)
+                        }
                         try context.save()
                         completion(.success(()))
                     } catch {

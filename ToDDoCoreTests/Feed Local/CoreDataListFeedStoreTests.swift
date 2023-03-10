@@ -50,6 +50,25 @@ class CoreDataListFeedStoreTests: XCTestCase {
         expect(sut, toRetrieve: .success([combineList]))
     }
     
+    func test_retrieve_deliversFoundListValueAfterInsertingItemOnNonEmptyDatabase() {
+        let sut = makeSUT()
+        let list = uniquePureList().local
+        insert(list, to: sut)
+        
+        let exp = expectation(description: "Wait for insert complete")
+        let item = uniqueItem().local
+        let combinedList = LocalFeedListGroup(id: list.id, listTitle: list.listTitle, listImage: list.listImage, items: [item])
+        sut.insert(item, to: list) { result in
+            if case let Result.failure(error) = result {
+                XCTFail("Expected to insert successfully, got \(error) instead")
+            }
+            exp.fulfill()
+        }
+        
+        wait(for: [exp], timeout: 1.0)
+        expect(sut, toRetrieve: .success([combinedList]))
+    }
+    
     func test_retrieve_hasNoSideEffectOnNonEmptyDatabase() {
         let sut = makeSUT()
         let list = uniquePureList().local
