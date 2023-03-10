@@ -32,6 +32,24 @@ class CoreDataListFeedStoreTests: XCTestCase {
         expect(sut, toRetrieve: .success([list]))
     }
     
+    func test_retrieve_deliversFoundListValueAfterInsertingItemOnEmptyDatabase() {
+        let sut = makeSUT()
+        let list = uniquePureList().local
+        let item = uniqueItem().local
+        let combineList = LocalFeedListGroup(id: list.id, listTitle: list.listTitle, listImage: list.listImage, items: [item])
+        let exp = expectation(description: "Wait for insert complete")
+        
+        sut.insert(item, to: list) { result in
+            if case let Result.failure(error) = result {
+                XCTFail("Expected to insert successfully, got \(error) instead")
+            }
+            exp.fulfill()
+        }
+        
+        wait(for: [exp], timeout: 1.0)
+        expect(sut, toRetrieve: .success([combineList]))
+    }
+    
     func test_retrieve_hasNoSideEffectOnNonEmptyDatabase() {
         let sut = makeSUT()
         let list = uniquePureList().local
@@ -114,13 +132,13 @@ class CoreDataListFeedStoreTests: XCTestCase {
         sut.retrieve { retrievedResult in
             switch (expectedResult, retrievedResult) {
             case let (.success(expected), .success(retireved)):
-                XCTAssertEqual(expected, retireved)
+                XCTAssertEqual(expected, retireved, file: file, line: line)
                 
             case (.failure, .failure):
                 break
                 
             default:
-                XCTFail("Expected to retrieve \(expectedResult), got \(retrievedResult) instead")
+                XCTFail("Expected to retrieve \(expectedResult), got \(retrievedResult) instead", file: file, line: line)
             }
             exp.fulfill()
         }

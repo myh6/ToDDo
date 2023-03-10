@@ -36,10 +36,7 @@ public class CoreDataFeedStore: FeedStore {
         let context = self.context
         context.perform {
             do {
-                let toDoList = ToDDoList(context: context)
-                toDoList.id = list.id
-                toDoList.title = list.listTitle
-                toDoList.image = list.listImage
+                ToDDoList.list(from: list, in: context)
                 try context.save()
                 completion(.success(()))
             } catch {
@@ -49,8 +46,23 @@ public class CoreDataFeedStore: FeedStore {
     }
     
     public func insert(_ item: LocalToDoItem, to list: LocalFeedListGroup, completion: @escaping InsertionCompletion) {
-        
-        completion(.success(()))
+        let context = self.context
+        ToDDoList.find(with: list.id, in: context, completion: { result in
+            switch result {
+            case .success(_):
+                context.perform {
+                    do {
+                        ToDDoList.list(from: list, and: item, in: context)
+                        try context.save()
+                        completion(.success(()))
+                    } catch {
+                        completion(.failure(error))
+                    }
+                }
+            case let .failure(error):
+                completion(.failure(error))
+            }
+        })
     }
     
     public func remove(_ feed: LocalFeedListGroup, completion: @escaping RemovalCompletion) {
