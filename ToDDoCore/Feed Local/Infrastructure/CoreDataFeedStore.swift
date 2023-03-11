@@ -72,7 +72,7 @@ public class CoreDataFeedStore: FeedStore {
     }
     
     public func remove(_ feed: LocalFeedListGroup, completion: @escaping RemovalCompletion) {
-        
+        completion(.success(()))
     }
     
     public func update(_ feed: LocalFeedListGroup, completion: @escaping UpdateCompletion) {
