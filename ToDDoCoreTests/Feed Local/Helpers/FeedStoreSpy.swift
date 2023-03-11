@@ -89,6 +89,10 @@ class FeedStoreSpy: FeedStore {
         removeCompletion.append(completion)
     }
     
+    func remove(_ item: LocalToDoItem, completion: @escaping RemovalCompletion) {
+        
+    }
+    
     func completeDelete(with error: Error, at index: Int = 0) {
         removeCompletion[index](.failure(error))
     }

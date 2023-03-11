@@ -65,9 +65,15 @@ extension LocalFeedLoader: FeedCreater {
 extension LocalFeedLoader: FeedDeleter {
     public typealias DeleteResult = FeedDeleter.Result
     
-    public func delete(_ feed: FeedListGroup, completion: @escaping (DeleteResult) -> Void) {
-        if store.hasItem(with: feed.id) {
-            store.remove(feed.toLocal(), completion: completion)
+    public func delete(_ list: FeedListGroup, completion: @escaping (DeleteResult) -> Void) {
+        if store.hasItem(with: list.id) {
+            store.remove(list.toLocal(), completion: completion)
+        }
+    }
+    
+    public func delete(_ item: FeedToDoItem, completion: @escaping (Result<Void, Error>) -> Void) {
+        if store.hasItem(with: item.id) {
+            store.remove(item.toLocal(), completion: completion)
         }
     }
 }

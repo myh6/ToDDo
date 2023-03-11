@@ -49,6 +49,16 @@ class DeleteFeedFromDatabaseUseCases: XCTestCase {
         XCTAssertEqual(store.receivedMessage, [.check(true), .remove(matchedData.local)])
     }
     
+    func test_delete_item_doesNotDeleteOnNonMatchedData() {
+        let (sut, store) = makeSUT()
+        let nonMatchedData = uniqueItem().model
+
+        store.completeWithNoMatchingItem()
+        
+        sut.delete(nonMatchedData) { _ in }
+        XCTAssertEqual(store.receivedMessage, [.check(false)])
+    }
+    
     //MARK: - Helpers
     
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: FeedDeleter, store: FeedStoreSpy) {
