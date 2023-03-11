@@ -145,6 +145,24 @@ class CoreDataListFeedStoreTests: XCTestCase {
         XCTAssertNil(receivedError)
     }
     
+    func test_remove_hasNoSideEffectOnEmptyDatabase() {
+        let sut = makeSUT()
+        let list = uniqueList().local
+        
+        let exp = expectation(description: "Wait for remove complete")
+        sut.remove(list) { result in
+            if case let Result.failure(error) = result {
+                XCTFail("Expected to remove successfully, got \(error) instead")
+            }
+            
+            exp.fulfill()
+        }
+        
+        wait(for: [exp], timeout: 1.0)
+        
+        expect(sut, toRetrieve: .success([]))
+    }
+    
     //MARK: - Helpers
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> FeedStore {
         let storeBundle = Bundle(for: CoreDataFeedStore.self)
