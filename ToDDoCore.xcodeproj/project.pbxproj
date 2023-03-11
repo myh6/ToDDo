@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F0038AD29BCCA4C00CB0A86 /* ToDDoListMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0038AC29BCCA4C00CB0A86 /* ToDDoListMapper.swift */; };
 		0F3312A729A34B180032EA92 /* CoreDataListFeedStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F3312A629A34B180032EA92 /* CoreDataListFeedStoreTests.swift */; };
 		0F3312A929A3512E0032EA92 /* CoreDataFeedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F3312A829A3512E0032EA92 /* CoreDataFeedStore.swift */; };
 		0F3312AB29A359610032EA92 /* ToDDoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F3312AA29A359610032EA92 /* ToDDoItem.swift */; };
@@ -43,6 +44,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0F0038AC29BCCA4C00CB0A86 /* ToDDoListMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDDoListMapper.swift; sourceTree = "<group>"; };
 		0F3312A629A34B180032EA92 /* CoreDataListFeedStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataListFeedStoreTests.swift; sourceTree = "<group>"; };
 		0F3312A829A3512E0032EA92 /* CoreDataFeedStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataFeedStore.swift; sourceTree = "<group>"; };
 		0F3312AA29A359610032EA92 /* ToDDoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDDoItem.swift; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 		0F3312AC29A35AB40032EA92 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				0F0038AC29BCCA4C00CB0A86 /* ToDDoListMapper.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -315,6 +318,7 @@
 				0FB9CB4E299F158100AAA276 /* FeedDeleter.swift in Sources */,
 				0FB9CB292999015000AAA276 /* FeedListGroups.swift in Sources */,
 				0FB9CB50299F15A400AAA276 /* FeedUpdater.swift in Sources */,
+				0F0038AD29BCCA4C00CB0A86 /* ToDDoListMapper.swift in Sources */,
 				0FB9CB4C299F155200AAA276 /* FeedCreater.swift in Sources */,
 				0FB9CB5C29A345EA00AAA276 /* ToDDolist.swift in Sources */,
 				0FB9CB37299A327800AAA276 /* LocalFeedLoader.swift in Sources */,

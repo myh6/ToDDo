@@ -15,20 +15,6 @@ class ToDDoList: NSManagedObject {
     @NSManaged var item: NSOrderedSet
 }
 
-enum ToDDoListMapper {
-    
-    static func map(item: LocalToDoItem?, with list: LocalFeedListGroup) -> LocalFeedListGroup {
-        guard let item = item else { return list }
-        
-        var localListItems = list.items
-        localListItems.append(item)
-        let combineList = LocalFeedListGroup(id: list.id, listTitle: list.listTitle, listImage: list.listImage, items: localListItems)
-        
-        return list.items.contains(item) ? list : combineList
-    }
-    
-}
-
 extension ToDDoList {
     
     @discardableResult
