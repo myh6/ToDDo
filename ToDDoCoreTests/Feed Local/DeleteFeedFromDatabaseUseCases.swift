@@ -16,7 +16,7 @@ class DeleteFeedFromDatabaseUseCases: XCTestCase {
         XCTAssertTrue(store.receivedMessage.isEmpty)
     }
 
-    func test_delete_doesNotDeleteOnNonMatchedData() {
+    func test_delete_list_doesNotDeleteOnNonMatchedData() {
         let (sut, store) = makeSUT()
         let nonMatchedData = uniqueList()
 
@@ -26,7 +26,7 @@ class DeleteFeedFromDatabaseUseCases: XCTestCase {
         XCTAssertEqual(store.receivedMessage, [.check(false)])
     }
 
-    func test_delete_failsOnDeletionError() {
+    func test_delete_list_failsOnDeletionError() {
         let (sut, store) = makeSUT()
         let listGroup = uniqueList()
         let deletionError = anyNSError()
@@ -37,7 +37,7 @@ class DeleteFeedFromDatabaseUseCases: XCTestCase {
         }
     }
 
-    func test_delete_succeedOnDeletingMatchedData() {
+    func test_delete_list_succeedOnDeletingMatchedData() {
         let (sut, store) = makeSUT()
         let matchedData = uniqueList()
 
