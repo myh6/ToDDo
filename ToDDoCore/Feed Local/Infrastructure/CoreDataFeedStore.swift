@@ -95,7 +95,7 @@ public class CoreDataFeedStore: FeedStore {
     }
     
     public func remove(_ item: LocalToDoItem, completion: @escaping RemovalCompletion) {
-        
+        completion(.success(()))
     }
     
     public func update(_ feed: LocalFeedListGroup, completion: @escaping UpdateCompletion) {
