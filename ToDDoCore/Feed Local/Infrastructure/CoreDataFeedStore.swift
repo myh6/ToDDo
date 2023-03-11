@@ -85,7 +85,7 @@ public class CoreDataFeedStore: FeedStore {
         }
     }
     
-    public func remove(_ item: LocalToDoItem, completion: @escaping RemovalCompletion) {
+    public func remove(_ item: LocalToDoItem, from list: LocalFeedListGroup, completion: @escaping RemovalCompletion) {
         let context = self.context
         if hasItem(with: item.id) {
             ToDDoItem.find(with: item.id, in: context) { result in

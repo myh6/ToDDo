@@ -55,7 +55,7 @@ class DeleteFeedFromDatabaseUseCases: XCTestCase {
 
         store.completeWithNoMatchingItem()
         
-        sut.delete(nonMatchedData) { _ in }
+        sut.delete(nonMatchedData, from: uniqueList().model) { _ in }
         XCTAssertEqual(store.receivedMessage, [.check(false)])
     }
     
@@ -66,7 +66,7 @@ class DeleteFeedFromDatabaseUseCases: XCTestCase {
 
         store.completeWithMatchingItem()
         
-        expect(sut, delete: item, toCompleteWith: .failure(deletionError)) {
+        expect(sut, delete: item, from: uniqueList().model, toCompleteWith: .failure(deletionError)) {
             store.completeDelete(with: deletionError)
         }
     }
@@ -76,7 +76,7 @@ class DeleteFeedFromDatabaseUseCases: XCTestCase {
         let matchedData = uniqueItem()
 
         store.completeWithMatchingItem()
-        expect(sut, delete: matchedData.model, toCompleteWith: .success(())) {
+        expect(sut, delete: matchedData.model, from: uniqueList().model, toCompleteWith: .success(())) {
             store.completeDeletionSuccessfully()
         }
 
@@ -114,9 +114,9 @@ class DeleteFeedFromDatabaseUseCases: XCTestCase {
         wait(for: [exp], timeout: 1.0)
     }
     
-    private func expect(_ sut: FeedDeleter, delete item: FeedToDoItem, toCompleteWith expectedResult: FeedDeleter.Result, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
+    private func expect(_ sut: FeedDeleter, delete item: FeedToDoItem, from list: FeedListGroup, toCompleteWith expectedResult: FeedDeleter.Result, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
         let exp = expectation(description: "Wait for delete completion")
-        sut.delete(item) { receivedResult in
+        sut.delete(item, from: list) { receivedResult in
             switch (receivedResult, expectedResult) {
             case let (.failure(receivedError), .failure(expectedError)):
                 

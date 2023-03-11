@@ -170,8 +170,9 @@ class CoreDataListFeedStoreTests: XCTestCase {
     func test_remove_item_deliversNoErrorOnEmptyDatabase() {
         let sut = makeSUT()
         let item = uniqueItem().local
+        let list = uniqueList().local
         
-        let receivedError = remove(item, from: sut)
+        let receivedError = remove(item, from: list, from: sut)
         
         XCTAssertNil(receivedError)
     }
@@ -179,8 +180,9 @@ class CoreDataListFeedStoreTests: XCTestCase {
     func test_remove_item_hasNoSideEffectOnEmptyDatabase() {
         let sut = makeSUT()
         let item = uniqueItem().local
+        let list = uniqueList().local
         
-        remove(item, from: sut)
+        remove(item, from: list, from: sut)
         
         expect(sut, toRetrieve: .success([]))
     }
@@ -189,9 +191,10 @@ class CoreDataListFeedStoreTests: XCTestCase {
         let sut = makeSUT()
         let savedItem = uniqueItem().local
         let deletedItem = uniqueItem().local
+        let list = uniqueList().local
         
-        insert(savedItem, to: uniqueList().local, to: sut)
-        let recievedError = remove(deletedItem, from: sut)
+        insert(savedItem, to: list, to: sut)
+        let recievedError = remove(deletedItem, from: list, from: sut)
         
         XCTAssertNil(recievedError)
     }
@@ -203,7 +206,7 @@ class CoreDataListFeedStoreTests: XCTestCase {
         
         insert(item, to: list, to: sut)
         expect(sut, toRetrieve: .success([combineList(list: list, item: item)]))
-        remove(item, from: sut)
+        remove(item, from: list, from: sut)
         
         expect(sut, toRetrieve: .success([list]))
     }
@@ -275,10 +278,10 @@ class CoreDataListFeedStoreTests: XCTestCase {
     }
     
     @discardableResult
-    private func remove(_ item: LocalToDoItem, from sut: FeedStore) -> Error? {
+    private func remove(_ item: LocalToDoItem, from list: LocalFeedListGroup, from sut: FeedStore) -> Error? {
         let exp = expectation(description: "Wait for remove completion")
         var receiverError: Error?
-        sut.remove(item) { result in
+        sut.remove(item, from: list) { result in
             if case let Result.failure(error) = result {
                 receiverError = error
             }

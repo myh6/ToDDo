@@ -11,5 +11,5 @@ public protocol FeedDeleter {
     typealias Result = Swift.Result<Void, Error>
     
     func delete(_ list: FeedListGroup, completion: @escaping (FeedDeleter.Result) -> Void)
-    func delete(_ item: FeedToDoItem, completion: @escaping (FeedDeleter.Result) -> Void)
+    func delete(_ item: FeedToDoItem, from list: FeedListGroup, completion: @escaping (FeedDeleter.Result) -> Void)
 }

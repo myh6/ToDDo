@@ -71,9 +71,9 @@ extension LocalFeedLoader: FeedDeleter {
         }
     }
     
-    public func delete(_ item: FeedToDoItem, completion: @escaping (Result<Void, Error>) -> Void) {
+    public func delete(_ item: FeedToDoItem, from list: FeedListGroup, completion: @escaping (Result<Void, Error>) -> Void) {
         if store.hasItem(with: item.id) {
-            store.remove(item.toLocal(), completion: completion)
+            store.remove(item.toLocal(), from: list.toLocal(), completion: completion)
         }
     }
 }

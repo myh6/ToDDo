@@ -90,7 +90,7 @@ class FeedStoreSpy: FeedStore {
         removeCompletion.append(completion)
     }
     
-    func remove(_ item: LocalToDoItem, completion: @escaping RemovalCompletion) {
+    func remove(_ item: LocalToDoItem, from list: LocalFeedListGroup, completion: @escaping RemovalCompletion) {
         receivedMessage.append(.delete(item))
         removeCompletion.append(completion)
     }

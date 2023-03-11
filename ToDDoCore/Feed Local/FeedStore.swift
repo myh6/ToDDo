@@ -19,7 +19,7 @@ public protocol FeedStore {
     func insert(_ item: LocalToDoItem, to list: LocalFeedListGroup, completion: @escaping InsertionCompletion)
     
     func remove(_ list: LocalFeedListGroup, completion: @escaping RemovalCompletion)
-    func remove(_ item: LocalToDoItem, completion: @escaping RemovalCompletion)
+    func remove(_ item: LocalToDoItem, from list: LocalFeedListGroup, completion: @escaping RemovalCompletion)
     
     func update(_ list: LocalFeedListGroup, completion: @escaping UpdateCompletion)
     
