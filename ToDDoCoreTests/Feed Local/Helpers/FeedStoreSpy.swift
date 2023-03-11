@@ -27,6 +27,7 @@ class FeedStoreSpy: FeedStore {
         case insert(LocalFeedListGroup)
         case add(AddItemList)
         case remove(LocalFeedListGroup)
+        case delete(LocalToDoItem)
         case update(LocalFeedListGroup)
         case check(Bool)
     }

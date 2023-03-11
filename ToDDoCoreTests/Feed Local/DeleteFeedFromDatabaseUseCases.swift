@@ -66,19 +66,9 @@ class DeleteFeedFromDatabaseUseCases: XCTestCase {
 
         store.completeWithMatchingItem()
         
-        var receivedError: Error?
-        let exp = expectation(description: "Wait for delete complete")
-        sut.delete(item) { result in
-            if case let Result.failure(error) = result {
-                receivedError = error
-            }
-            
-            exp.fulfill()
+        expect(sut, delete: item, toCompleteWith: .failure(deletionError)) {
+            store.completeDelete(with: deletionError)
         }
-        
-        store.completeDelete(with: deletionError)
-        wait(for: [exp], timeout: 1.0)
-        XCTAssertEqual(receivedError as NSError?, deletionError)
     }
     
     //MARK: - Helpers
@@ -97,15 +87,37 @@ class DeleteFeedFromDatabaseUseCases: XCTestCase {
             switch (receivedResult, expectedResult) {
             case let (.failure(receivedError), .failure(expectedError)):
                 
-                XCTAssertEqual(receivedError as NSError?, expectedError as NSError?)
+                XCTAssertEqual(receivedError as NSError?, expectedError as NSError?, file: file, line: line)
                 
             case (.success, .success):
                 break
                 
             default:
-                XCTFail("Expecte to get result: \(expectedResult), got \(receivedResult) instead")
+                XCTFail("Expecte to get result: \(expectedResult), got \(receivedResult) instead", file: file, line: line)
             }
             exp.fulfill()
+        }
+        
+        action()
+        wait(for: [exp], timeout: 1.0)
+    }
+    
+    private func expect(_ sut: FeedDeleter, delete item: FeedToDoItem, toCompleteWith expectedResult: FeedDeleter.Result, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
+        let exp = expectation(description: "Wait for delete completion")
+        sut.delete(item) { receivedResult in
+            switch (receivedResult, expectedResult) {
+            case let (.failure(receivedError), .failure(expectedError)):
+                
+                XCTAssertEqual(receivedError as NSError?, expectedError as NSError?, file: file, line: line)
+                
+            case (.success, .success):
+                break
+                
+            default:
+                XCTFail("Expecte to get result: \(expectedResult), got \(receivedResult) instead", file: file, line: line)
+            }
+            exp.fulfill()
+            
         }
         
         action()
