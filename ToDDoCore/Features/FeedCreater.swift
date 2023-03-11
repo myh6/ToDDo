@@ -14,7 +14,3 @@ public protocol FeedCreater {
     
     func add(_ item: FeedToDoItem, to list: FeedListGroup, completion: @escaping (Result) -> Void)
 }
-
-extension FeedCreater {
-    func add(_ item: FeedToDoItem, to list: FeedListGroup) {}
-}
