@@ -71,8 +71,27 @@ public class CoreDataFeedStore: FeedStore {
         })
     }
     
-    public func remove(_ feed: LocalFeedListGroup, completion: @escaping RemovalCompletion) {
-        completion(.success(()))
+    public func remove(_ list: LocalFeedListGroup, completion: @escaping RemovalCompletion) {
+        let context = self.context
+        ToDDoList.find(with: list.id, in: context) { result in
+            switch result {
+            case let .success(foundList):
+                context.perform {
+                    do {
+                        if let foundList = foundList {
+                            context.delete(foundList)
+                        }
+                        
+                        try context.save()
+                        completion(.success(()))
+                    } catch {
+                        completion(.failure(error))
+                    }
+                }
+            case let .failure(error):
+                completion(.failure(error))
+            }
+        }
     }
     
     public func update(_ feed: LocalFeedListGroup, completion: @escaping UpdateCompletion) {
