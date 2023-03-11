@@ -128,7 +128,7 @@ class CoreDataListFeedStoreTests: XCTestCase {
         expect(sut, toRetrieve: .success([combinedList]))
     }
     
-    func test_remove_deliversNoErrorOnEmptyDatabase() {
+    func test_remove_list_deliversNoErrorOnEmptyDatabase() {
         let sut = makeSUT()
         let list = uniqueList().local
         
@@ -137,7 +137,7 @@ class CoreDataListFeedStoreTests: XCTestCase {
         XCTAssertNil(receivedError)
     }
     
-    func test_remove_hasNoSideEffectOnEmptyDatabase() {
+    func test_remove_list_hasNoSideEffectOnEmptyDatabase() {
         let sut = makeSUT()
         let list = uniqueList().local
         
@@ -146,7 +146,7 @@ class CoreDataListFeedStoreTests: XCTestCase {
         expect(sut, toRetrieve: .success([]))
     }
     
-    func test_remove_deliversNoErrorOnNonEmptyDatabaseWithNoMatchingList() {
+    func test_remove_list_deliversNoErrorOnNonEmptyDatabaseWithNoMatchingList() {
         let sut = makeSUT()
         let savedlist = uniqueList().local
         let deleteList = uniqueList().local
@@ -157,7 +157,7 @@ class CoreDataListFeedStoreTests: XCTestCase {
         XCTAssertNil(receivedError)
     }
     
-    func test_remove_deletesMatchingListInDatabase() {
+    func test_remove_list_deletesMatchingListInDatabase() {
         let sut = makeSUT()
         let list = uniqueList().local
         
