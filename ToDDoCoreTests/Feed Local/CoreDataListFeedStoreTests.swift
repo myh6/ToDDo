@@ -196,6 +196,18 @@ class CoreDataListFeedStoreTests: XCTestCase {
         XCTAssertNil(recievedError)
     }
     
+    func test_remove_item_deletesMatchingItemInDatabase() {
+        let sut = makeSUT()
+        let item = uniqueItem().local
+        let list = uniqueList().local
+        
+        insert(item, to: list, to: sut)
+        expect(sut, toRetrieve: .success([combineList(list: list, item: item)]))
+        remove(item, from: sut)
+        
+        expect(sut, toRetrieve: .success([list]))
+    }
+    
     //MARK: - Helpers
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> FeedStore {
         let storeBundle = Bundle(for: CoreDataFeedStore.self)

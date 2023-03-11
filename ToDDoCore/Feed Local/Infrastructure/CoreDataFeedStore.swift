@@ -95,7 +95,22 @@ public class CoreDataFeedStore: FeedStore {
     }
     
     public func remove(_ item: LocalToDoItem, completion: @escaping RemovalCompletion) {
-        completion(.success(()))
+        let context = self.context
+        if hasItem(with: item.id) {
+            ToDDoItem.find(with: item.id, in: context) { result in
+                context.perform {
+                    do {
+                        try result.get().map(context.delete).map(context.save)
+                        completion(.success(()))
+                    } catch {
+                        completion(.failure(error))
+                    }
+                }
+            }
+        } else {
+            completion(.success(()))
+        }
+        
     }
     
     public func update(_ feed: LocalFeedListGroup, completion: @escaping UpdateCompletion) {

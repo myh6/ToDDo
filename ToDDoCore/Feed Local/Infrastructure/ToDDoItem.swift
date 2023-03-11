@@ -35,6 +35,19 @@ extension ToDDoItem {
             return false
         }
     }
+    static func find(with id: UUID, in context: NSManagedObjectContext, completion: @escaping (Result<ToDDoItem?, Error>) -> Void) {
+        let request = NSFetchRequest<ToDDoItem>(entityName: entity().name!)
+        request.predicate = NSPredicate(format: "%K = %@", argumentArray: [#keyPath(ToDDoItem.id), id])
+        request.returnsObjectsAsFaults = false
+        request.fetchLimit = 1
+        do {
+            let list = try context.fetch(request).first
+            completion(.success(list))
+        } catch {
+            completion(.failure(error))
+        }
+    }
+    
     static func item(from localItem: [LocalToDoItem], in context: NSManagedObjectContext) -> NSOrderedSet {
         let item = NSOrderedSet(array: localItem.map { local in
             let managed = ToDDoItem(context: context)
