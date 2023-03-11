@@ -34,8 +34,8 @@ extension LocalFeedLoader: FeedLoader {
 extension LocalFeedLoader: FeedCreater {
     public typealias SaveResult = FeedCreater.Result
     
-    public func create(_ feed: FeedListGroup, completion: @escaping (SaveResult) -> Void) {
-        store.insert(feed.toLocal()) { [weak self] insertionResult in
+    public func create(_ list: FeedListGroup, completion: @escaping (SaveResult) -> Void) {
+        store.insert(list.toLocal()) { [weak self] insertionResult in
             guard self != nil else { return }
             switch insertionResult {
             case let .failure(insertionError):
@@ -81,9 +81,9 @@ extension LocalFeedLoader: FeedDeleter {
 extension LocalFeedLoader: FeedUpdater {
     public typealias UpdateResult = FeedUpdater.Result
     
-    public func update(_ feed: FeedListGroup, completion: @escaping (UpdateResult) -> Void) {
-        if store.hasItem(with: feed.id) {
-            store.update(feed.toLocal(), completion: completion)
+    public func update(_ list: FeedListGroup, completion: @escaping (UpdateResult) -> Void) {
+        if store.hasItem(with: list.id) {
+            store.update(list.toLocal(), completion: completion)
         }
     }
 }

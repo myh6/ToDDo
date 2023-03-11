@@ -108,7 +108,7 @@ public class CoreDataFeedStore: FeedStore {
         
     }
     
-    public func update(_ feed: LocalFeedListGroup, completion: @escaping UpdateCompletion) {
+    public func update(_ list: LocalFeedListGroup, completion: @escaping UpdateCompletion) {
         
     }
     

@@ -10,5 +10,5 @@ import Foundation
 public protocol FeedUpdater {
     typealias Result = Swift.Result<Void, Error>
     
-    func update(_ feed: FeedListGroup, completion: @escaping (FeedUpdater.Result) -> Void)
+    func update(_ list: FeedListGroup, completion: @escaping (FeedUpdater.Result) -> Void)
 }
