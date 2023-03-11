@@ -171,16 +171,8 @@ class CoreDataListFeedStoreTests: XCTestCase {
         let sut = makeSUT()
         let item = uniqueItem().local
         
-        let exp = expectation(description: "Wait for remove complete")
-        var receivedError: Error?
-        sut.remove(item) { result in
-            if case let Result.failure(error) = result {
-                receivedError = error
-            }
-            exp.fulfill()
-        }
+        let receivedError = remove(item, from: sut)
         
-        wait(for: [exp], timeout: 1.0)
         XCTAssertNil(receivedError)
     }
     
@@ -240,6 +232,21 @@ class CoreDataListFeedStoreTests: XCTestCase {
         let exp = expectation(description: "Wait for remove completion")
         var receiverError: Error?
         sut.remove(list) { result in
+            if case let Result.failure(error) = result {
+                receiverError = error
+            }
+            exp.fulfill()
+        }
+        
+        wait(for: [exp], timeout: 1.0)
+        return receiverError
+    }
+    
+    @discardableResult
+    private func remove(_ item: LocalToDoItem, from sut: FeedStore) -> Error? {
+        let exp = expectation(description: "Wait for remove completion")
+        var receiverError: Error?
+        sut.remove(item) { result in
             if case let Result.failure(error) = result {
                 receiverError = error
             }
