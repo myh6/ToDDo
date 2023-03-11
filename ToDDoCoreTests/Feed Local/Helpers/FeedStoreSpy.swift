@@ -91,6 +91,7 @@ class FeedStoreSpy: FeedStore {
     }
     
     func remove(_ item: LocalToDoItem, completion: @escaping RemovalCompletion) {
+        receivedMessage.append(.delete(item))
         removeCompletion.append(completion)
     }
     

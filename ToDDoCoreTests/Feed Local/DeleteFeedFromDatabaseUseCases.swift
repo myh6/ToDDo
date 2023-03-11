@@ -71,6 +71,18 @@ class DeleteFeedFromDatabaseUseCases: XCTestCase {
         }
     }
     
+    func test_delete_item_succeedOnDeletingMatchedData() {
+        let (sut, store) = makeSUT()
+        let matchedData = uniqueItem()
+
+        store.completeWithMatchingItem()
+        expect(sut, delete: matchedData.model, toCompleteWith: .success(())) {
+            store.completeDeletionSuccessfully()
+        }
+
+        XCTAssertEqual(store.receivedMessage, [.check(true), .delete(matchedData.local)])
+    }
+    
     //MARK: - Helpers
     
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: FeedDeleter, store: FeedStoreSpy) {
