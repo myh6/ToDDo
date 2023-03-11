@@ -178,11 +178,22 @@ class CoreDataListFeedStoreTests: XCTestCase {
     
     func test_remove_item_hasNoSideEffectOnEmptyDatabase() {
         let sut = makeSUT()
-        let list = uniqueList().local
+        let item = uniqueItem().local
         
-        remove(list, from: sut)
+        remove(item, from: sut)
         
         expect(sut, toRetrieve: .success([]))
+    }
+    
+    func test_remove_item_deliversNoErrorOnNonEmptyDatabaseWithNoMatchingItem() {
+        let sut = makeSUT()
+        let savedItem = uniqueItem().local
+        let deletedItem = uniqueItem().local
+        
+        insert(savedItem, to: uniqueList().local, to: sut)
+        let recievedError = remove(deletedItem, from: sut)
+        
+        XCTAssertNil(recievedError)
     }
     
     //MARK: - Helpers
