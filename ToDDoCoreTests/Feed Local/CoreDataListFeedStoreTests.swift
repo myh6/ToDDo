@@ -132,16 +132,8 @@ class CoreDataListFeedStoreTests: XCTestCase {
         let sut = makeSUT()
         let list = uniqueList().local
         
-        let exp = expectation(description: "Wait for remove complete")
-        var receivedError: Error?
-        sut.remove(list) { result in
-            if case let Result.failure(error) = result {
-                receivedError = error
-            }
-            exp.fulfill()
-        }
+        let receivedError = remove(list, from: sut)
         
-        wait(for: [exp], timeout: 1.0)
         XCTAssertNil(receivedError)
     }
     
@@ -149,17 +141,8 @@ class CoreDataListFeedStoreTests: XCTestCase {
         let sut = makeSUT()
         let list = uniqueList().local
         
-        let exp = expectation(description: "Wait for remove complete")
-        sut.remove(list) { result in
-            if case let Result.failure(error) = result {
-                XCTFail("Expected to remove successfully, got \(error) instead")
-            }
-            
-            exp.fulfill()
-        }
-        
-        wait(for: [exp], timeout: 1.0)
-        
+        remove(list, from: sut)
+
         expect(sut, toRetrieve: .success([]))
     }
     
@@ -212,6 +195,21 @@ class CoreDataListFeedStoreTests: XCTestCase {
         }
         wait(for: [exp], timeout: 1.0)
         return insertionError
+    }
+    
+    @discardableResult
+    private func remove(_ list: LocalFeedListGroup, from sut: FeedStore) -> Error? {
+        let exp = expectation(description: "Wait for remove completion")
+        var receiverError: Error?
+        sut.remove(list) { result in
+            if case let Result.failure(error) = result {
+                receiverError = error
+            }
+            exp.fulfill()
+        }
+        
+        wait(for: [exp], timeout: 1.0)
+        return receiverError
     }
     
     private func expect(_ sut: FeedStore, toRetrieve expectedResult: Result<[LocalFeedListGroup], Error>, file: StaticString = #file, line: UInt = #line) {
