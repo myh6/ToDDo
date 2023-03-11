@@ -91,9 +91,9 @@ class DeleteFeedFromDatabaseUseCases: XCTestCase {
         return (sut, store)
     }
     
-    private func expect(_ sut: FeedDeleter, delete item: FeedListGroup, toCompleteWith expectedResult: FeedDeleter.Result, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
+    private func expect(_ sut: FeedDeleter, delete list: FeedListGroup, toCompleteWith expectedResult: FeedDeleter.Result, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
         let exp = expectation(description: "Wait for delete completion")
-        sut.delete(item) { receivedResult in
+        sut.delete(list) { receivedResult in
             switch (receivedResult, expectedResult) {
             case let (.failure(receivedError), .failure(expectedError)):
                 
