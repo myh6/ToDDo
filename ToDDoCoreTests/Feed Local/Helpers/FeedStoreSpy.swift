@@ -84,13 +84,13 @@ class FeedStoreSpy: FeedStore {
     }
     
     //MARK: - Remove
-    func remove(_ feed: LocalFeedListGroup, completion: @escaping RemovalCompletion) {
-        receivedMessage.append(.remove(feed))
+    func remove(_ list: LocalFeedListGroup, completion: @escaping RemovalCompletion) {
+        receivedMessage.append(.remove(list))
         removeCompletion.append(completion)
     }
     
     func remove(_ item: LocalToDoItem, completion: @escaping RemovalCompletion) {
-        
+        removeCompletion.append(completion)
     }
     
     func completeDelete(with error: Error, at index: Int = 0) {
@@ -102,8 +102,8 @@ class FeedStoreSpy: FeedStore {
     }
     
     //MARK: - Update
-    func update(_ feed: LocalFeedListGroup, completion: @escaping UpdateCompletion) {
-        receivedMessage.append(.update(feed))
+    func update(_ list: LocalFeedListGroup, completion: @escaping UpdateCompletion) {
+        receivedMessage.append(.update(list))
         updateCompletion.append(completion)
     }
     
