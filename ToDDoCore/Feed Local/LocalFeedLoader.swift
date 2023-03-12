@@ -50,18 +50,19 @@ extension LocalFeedLoader: FeedCreater {
     }
     
     public func add(_ item: FeedToDoItem, to list: FeedListGroup, completion: @escaping (SaveResult) -> Void) {
-        store.insert(item.toLocal(), to: list.toLocal()) { [weak self] insertionResult in
-            guard self != nil else { return }
-            switch insertionResult {
-            case let .failure(error):
-                completion(.failure(error))
-                
-            case .success:
-                completion(.success(()))
+        if !store.hasItem(with: item.id) {
+            store.insert(item.toLocal(), to: list.toLocal()) { [weak self] insertionResult in
+                guard self != nil else { return }
+                switch insertionResult {
+                case let .failure(error):
+                    completion(.failure(error))
+                    
+                case .success:
+                    completion(.success(()))
+                }
             }
         }
     }
-    
 }
 
 extension LocalFeedLoader: FeedDeleter {

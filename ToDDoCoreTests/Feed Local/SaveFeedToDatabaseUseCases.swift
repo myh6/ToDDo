@@ -53,14 +53,15 @@ class SaveFeedToDatabaseUseCases: XCTestCase {
         }
     }
     
-    func test_addItemToList_requestStoreInsertion() {
+    func test_addItemToList_withNonMatchingData_requestStoreInsertion() {
         let (sut, store) = makeSUT()
         let item = uniqueItem()
         let list = uniqueList()
         
+        store.completeWithNoMatchingItem()
         sut.add(item.model, to: list.model) { _ in }
         
-        XCTAssertEqual(store.receivedMessage, [.add(FeedStoreSpy.AddItemList(list: list.local, item: item.local))])
+        XCTAssertEqual(store.receivedMessage, [.check(false), .add(FeedStoreSpy.AddItemList(list: list.local, item: item.local))])
     }
     
     func test_addItemToList_failsOnSaveError() {
