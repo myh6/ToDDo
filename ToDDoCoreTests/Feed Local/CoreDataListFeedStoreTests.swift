@@ -219,6 +219,15 @@ class CoreDataListFeedStoreTests: XCTestCase {
         XCTAssertNil(receivedError)
     }
     
+    func test_update_hasNoSideEffectOnEmptyDatabase() {
+        let sut = makeSUT()
+        let list = uniqueList().local
+        
+        update(list, in: sut)
+        
+        expect(sut, toRetrieve: .success([]))
+    }
+    
     //MARK: - Helpers
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> FeedStore {
         let storeBundle = Bundle(for: CoreDataFeedStore.self)
@@ -300,6 +309,7 @@ class CoreDataListFeedStoreTests: XCTestCase {
         return receiverError
     }
     
+    @discardableResult
     private func update(_ list: LocalFeedListGroup, in sut: FeedStore) -> Error? {
         let exp = expectation(description: "Wait for update complete")
         var receivedError: Error?
