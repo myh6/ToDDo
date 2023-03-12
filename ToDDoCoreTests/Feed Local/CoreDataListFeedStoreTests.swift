@@ -97,16 +97,6 @@ class CoreDataListFeedStoreTests: XCTestCase {
         XCTAssertNil(receivedError)
     }
     
-    func test_insert_sameListTwice_deliversNoRepeatedListData() {
-        let sut = makeSUT()
-        let list = uniqueList().local
-        
-        insert(list, to: sut)
-        insert(list, to: sut)
-        
-        expect(sut, toRetrieve: .success([list]))
-    }
-    
     func test_insert_item_deliversNoErrorOnEmptyDatabse() {
         let sut = makeSUT()
         let item = uniqueItem()
@@ -114,18 +104,6 @@ class CoreDataListFeedStoreTests: XCTestCase {
         
         let receivedError = insert(item.local, to: list.local, to: sut)
         XCTAssertNil(receivedError)
-    }
-    
-    func test_insert_sameItemTwice_deliversNoRepeatedListData() {
-        let sut = makeSUT()
-        let item = uniqueItem().local
-        let list = uniqueList().local
-        
-        let combinedList = combineList(list: list, item: item)
-        insert(item, to: list, to: sut)
-        insert(item, to: list, to: sut)
-        
-        expect(sut, toRetrieve: .success([combinedList]))
     }
     
     func test_remove_list_deliversNoErrorOnEmptyDatabase() {

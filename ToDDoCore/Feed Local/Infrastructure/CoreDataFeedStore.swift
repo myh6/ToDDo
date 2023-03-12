@@ -36,7 +36,6 @@ public class CoreDataFeedStore: FeedStore {
         let context = self.context
         context.perform {
             do {
-                guard !self.hasItem(with: list.id) else { return completion(.success(())) }
                 ToDDoList.list(from: list, in: context)
                 try context.save()
                 completion(.success(()))
@@ -53,7 +52,6 @@ public class CoreDataFeedStore: FeedStore {
                 switch result {
                 case let .success(coreList):
                     do {
-                        guard !self.hasItem(with: item.id) else { return completion(.success(())) }
                         if let coreList = coreList {
                             coreList.addToItem(ToDDoItem.item(from: item, in: context))
                         } else {
