@@ -25,6 +25,16 @@ class UpdateFeedInDatabaseUseCases: XCTestCase {
 
         XCTAssertEqual(store.receivedMessage, [.check(false)])
     }
+    
+    func test_update_item_doesNotUpdateOnNonMatchedData() {
+        let (sut, store) = makeSUT()
+        let nonMatchedData = uniqueItem()
+        
+        store.completeWithNoMatchingItem()
+        sut.update(nonMatchedData.model) { _ in }
+        
+        XCTAssertEqual(store.receivedMessage, [.check(false)])
+    }
 
     func test_update_list_failsOnUpdateError() {
         let (sut, store) = makeSUT()

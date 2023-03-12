@@ -88,7 +88,9 @@ extension LocalFeedLoader: FeedUpdater {
     }
     
     public func update(_ item: FeedToDoItem, completion: @escaping (Result<Void, Error>) -> Void) {
-        
+        if store.hasItem(with: item.id) {
+            
+        }
     }
 }
 
