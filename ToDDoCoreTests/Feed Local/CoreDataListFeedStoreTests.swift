@@ -10,6 +10,7 @@ import ToDDoCore
 
 class CoreDataListFeedStoreTests: XCTestCase {
     
+    //MARK: - Retrieve
     func test_retrieve_deliversEmptyOnEmptyDatabase() {
         let sut = makeSUT()
         
@@ -79,6 +80,7 @@ class CoreDataListFeedStoreTests: XCTestCase {
         expect(sut, toRetrieve: .success([list]))
     }
     
+    //MARK: - Insert
     func test_insert_list_deliversNoErrorOnEmptyDatabase() {
         let sut = makeSUT()
         let list = uniquePureList().local
@@ -106,6 +108,7 @@ class CoreDataListFeedStoreTests: XCTestCase {
         XCTAssertNil(receivedError)
     }
     
+    //MARK: - Remove
     func test_remove_list_deliversNoErrorOnEmptyDatabase() {
         let sut = makeSUT()
         let list = uniqueList().local
@@ -166,6 +169,7 @@ class CoreDataListFeedStoreTests: XCTestCase {
         expect(sut, toRetrieve: .success([list]))
     }
     
+    //MARK: - Update
     func test_update_list_deliversNoErrorOnEmptyDatabase() {
         let sut = makeSUT()
         let list = uniqueList().local
@@ -212,6 +216,7 @@ class CoreDataListFeedStoreTests: XCTestCase {
         expect(sut, toRetrieve: .success([updateList]))
     }
     
+    //MARK: - HasItem
     func test_hasItem_returnsTrueWithSavedList() {
         let sut = makeSUT()
         let saveList = uniqueList().local
