@@ -118,7 +118,27 @@ public class CoreDataFeedStore: FeedStore {
     }
     
     public func update(_ item: LocalToDoItem, completion: @escaping UpdateCompletion) {
-        
+        let context = self.context
+        context.perform {
+            ToDDoItem.find(with: item.id, in: context) { result in
+                do {
+                    let savedItem = try result.get()
+                    if let savedItem = savedItem {
+                        savedItem.setValue(item.title, forKey: "title")
+                        savedItem.setValue(item.priority, forKey: "priority")
+                        savedItem.setValue(item.expectedDate, forKey: "expectedDate")
+                        savedItem.setValue(item.finishedDate, forKey: "finishedDate")
+                        savedItem.setValue(item.url, forKey: "url")
+                        savedItem.setValue(item.isDone, forKey: "isDone")
+                        savedItem.setValue(item.note, forKey: "note")
+                    }
+                    try context.save()
+                    completion(.success(()))
+                } catch {
+                    completion(.failure(error))
+                }
+            }
+        }
     }
     
     public func hasItem(with id: UUID) -> Bool {

@@ -208,7 +208,7 @@ class CoreDataListFeedStoreTests: XCTestCase {
         let updateItem = LocalToDoItem(id: savedItem.id, title: "Update Title", isDone: true, expectedDate: Date(), finishedDate: Date(), priority: "Update Priority", url: URL(string: "https://update-url.com"), note: "update note")
         let updateList = combineList(list: list, item: updateItem)
         
-        update(updateList, in: sut)
+        update(updateItem, in: sut)
         expect(sut, toRetrieve: .success([updateList]))
     }
     
@@ -298,6 +298,22 @@ class CoreDataListFeedStoreTests: XCTestCase {
         let exp = expectation(description: "Wait for update complete")
         var receivedError: Error?
         sut.update(list) { result in
+            if case let Result.failure(error) = result {
+                receivedError = error
+            }
+            
+            exp.fulfill()
+        }
+        
+        wait(for: [exp], timeout: 1.0)
+        return receivedError
+    }
+    
+    @discardableResult
+    private func update(_ item: LocalToDoItem, in sut: FeedStore) -> Error? {
+        let exp = expectation(description: "Wait for update complete")
+        var receivedError: Error?
+        sut.update(item) { result in
             if case let Result.failure(error) = result {
                 receivedError = error
             }
