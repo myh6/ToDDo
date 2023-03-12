@@ -26,6 +26,16 @@ class SaveFeedToDatabaseUseCases: XCTestCase {
         XCTAssertEqual(store.receivedMessage, [.check(false), .insert(listGroup.local)])
     }
     
+    func test_createList_withMatchingData_doesNotRequestStoreInsertion() {
+        let (sut, store) = makeSUT()
+        let listGroup = uniqueList()
+        
+        store.completeWithMatchingItem()
+        sut.create(listGroup.model) { _ in }
+        
+        XCTAssertEqual(store.receivedMessage, [.check(true)])
+    }
+    
     func test_createList_failsOnSaveError() {
         let (sut, store) = makeSUT()
         let saveError = anyNSError()
