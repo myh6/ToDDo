@@ -212,6 +212,18 @@ class CoreDataListFeedStoreTests: XCTestCase {
         expect(sut, toRetrieve: .success([updateList]))
     }
     
+    func test_hasItem_returnTrueWithSavedList() {
+        let sut = makeSUT()
+        let saveList = uniqueList().local
+        
+        XCTAssertFalse(sut.hasItem(with: saveList.id))
+        
+        insert(saveList, to: sut)
+        expect(sut, toRetrieve: .success([saveList]))
+        
+        XCTAssertTrue(sut.hasItem(with: saveList.id))
+    }
+    
     //MARK: - Helpers
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> FeedStore {
         let storeBundle = Bundle(for: CoreDataFeedStore.self)
