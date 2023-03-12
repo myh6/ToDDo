@@ -218,6 +218,22 @@ class CoreDataListFeedStoreTests: XCTestCase {
         expect(sut, toRetrieve: .success([updateList]))
     }
     
+    func test_update_item_updatesMatchingItemInDatabase() {
+        let sut = makeSUT()
+        let savedItem = uniqueItem().local
+        let list = uniqueList().local
+        let savedList = combineList(list: list, item: savedItem)
+        
+        insert(savedList, to: sut)
+        expect(sut, toRetrieve: .success([savedList]))
+        
+        let updateItem = LocalToDoItem(id: savedItem.id, title: "Update Title", isDone: true, expectedDate: Date(), finishedDate: Date(), priority: "Update Priority", url: URL(string: "https://update-url.com"), note: "update note")
+        let updateList = combineList(list: list, item: updateItem)
+        
+        update(updateList, in: sut)
+        expect(sut, toRetrieve: .success([updateList]))
+    }
+    
     //MARK: - Helpers
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> FeedStore {
         let storeBundle = Bundle(for: CoreDataFeedStore.self)
