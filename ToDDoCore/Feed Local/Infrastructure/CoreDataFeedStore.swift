@@ -48,10 +48,10 @@ public class CoreDataFeedStore: FeedStore {
     
     public func insert(_ item: LocalToDoItem, to list: LocalFeedListGroup, completion: @escaping InsertionCompletion) {
         let context = self.context
-        ToDDoList.find(with: list.id, in: context, completion: { result in
-            switch result {
-            case let .success(coreList):
-                context.perform {
+        context.perform {
+            ToDDoList.find(with: list.id, in: context, completion: { result in
+                switch result {
+                case let .success(coreList):
                     do {
                         guard !self.hasItem(with: item.id) else { return completion(.success(())) }
                         if let coreList = coreList {
@@ -64,17 +64,17 @@ public class CoreDataFeedStore: FeedStore {
                     } catch {
                         completion(.failure(error))
                     }
+                case let .failure(error):
+                    completion(.failure(error))
                 }
-            case let .failure(error):
-                completion(.failure(error))
-            }
-        })
+            })
+        }
     }
     
     public func remove(_ list: LocalFeedListGroup, completion: @escaping RemovalCompletion) {
         let context = self.context
-        ToDDoList.find(with: list.id, in: context) { result in
-            context.perform {
+        context.perform {
+            ToDDoList.find(with: list.id, in: context) { result in
                 do {
                     try result.get().map(context.delete).map(context.save)
                     completion(.success(()))
@@ -87,8 +87,8 @@ public class CoreDataFeedStore: FeedStore {
     
     public func remove(_ item: LocalToDoItem, from list: LocalFeedListGroup, completion: @escaping RemovalCompletion) {
         let context = self.context
-        ToDDoItem.find(with: item.id, in: context) { result in
-            context.perform {
+        context.perform {
+            ToDDoItem.find(with: item.id, in: context) { result in
                 do {
                     try result.get().map(context.delete).map(context.save)
                     completion(.success(()))
@@ -101,8 +101,8 @@ public class CoreDataFeedStore: FeedStore {
     
     public func update(_ list: LocalFeedListGroup, completion: @escaping UpdateCompletion) {
         let context = self.context
-        ToDDoList.find(with: list.id, in: context) { result in
-            context.perform {
+        context.perform {
+            ToDDoList.find(with: list.id, in: context) { result in
                 do {
                     let savedList = try result.get()
                     if let savedList = savedList {
