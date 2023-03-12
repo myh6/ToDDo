@@ -16,7 +16,7 @@ class UpdateFeedInDatabaseUseCases: XCTestCase {
         XCTAssertTrue(store.receivedMessage.isEmpty)
     }
 
-    func test_update_doesNotUpdateOnNonMatchedData() {
+    func test_update_list_doesNotUpdateOnNonMatchedData() {
         let (sut, store) = makeSUT()
         let nonMatchedData = uniqueList()
         
@@ -26,7 +26,7 @@ class UpdateFeedInDatabaseUseCases: XCTestCase {
         XCTAssertEqual(store.receivedMessage, [.check(false)])
     }
 
-    func test_update_failsOnUpdateError() {
+    func test_update_list_failsOnUpdateError() {
         let (sut, store) = makeSUT()
         let listGroup = uniqueList()
         let updateError = anyNSError()
@@ -37,7 +37,7 @@ class UpdateFeedInDatabaseUseCases: XCTestCase {
         }
     }
 
-    func test_update_succeedOnUpdatingMatchedData() {
+    func test_update_list_succeedOnUpdatingMatchedData() {
         let (sut, store) = makeSUT()
         let matchedData = uniqueList()
 
