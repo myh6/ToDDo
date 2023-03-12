@@ -29,6 +29,7 @@ class FeedStoreSpy: FeedStore {
         case remove(LocalFeedListGroup)
         case delete(LocalToDoItem)
         case update(LocalFeedListGroup)
+        case renew(LocalToDoItem)
         case check(Bool)
     }
     private(set) var hasData = false
@@ -110,6 +111,7 @@ class FeedStoreSpy: FeedStore {
     }
     
     func update(_ item: LocalToDoItem, completion: @escaping UpdateCompletion) {
+        receivedMessage.append(.renew(item))
         updateCompletion.append(completion)
     }
     

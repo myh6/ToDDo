@@ -71,6 +71,18 @@ class UpdateFeedInDatabaseUseCases: XCTestCase {
         XCTAssertEqual(store.receivedMessage, [.check(true), .update(matchedData.local)])
     }
     
+    func test_update_item_succeedOnUpdatingMatchedData() {
+        let (sut, store) = makeSUT()
+        let matchedData = uniqueItem()
+
+        store.completeWithMatchingItem()
+        expect(sut, update: matchedData.model, toCompleteWith: .success(())) {
+            store.completeUpdateSuccessfully()
+        }
+
+        XCTAssertEqual(store.receivedMessage, [.check(true), .renew(matchedData.local)])
+    }
+    
     //MARK: - Helpers
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> (sut: FeedUpdater, store: FeedStoreSpy) {
         let store = FeedStoreSpy()
