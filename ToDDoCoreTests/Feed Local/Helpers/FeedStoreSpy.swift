@@ -109,6 +109,10 @@ class FeedStoreSpy: FeedStore {
         updateCompletion.append(completion)
     }
     
+    func update(_ item: LocalToDoItem, completion: @escaping UpdateCompletion) {
+        
+    }
+    
     func completeUpdateSuccessfully(at index: Int = 0) {
         updateCompletion[index](.success(()))
     }

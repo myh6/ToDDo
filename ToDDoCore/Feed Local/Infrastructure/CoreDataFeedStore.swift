@@ -132,6 +132,10 @@ public class CoreDataFeedStore: FeedStore {
         }
     }
     
+    public func update(_ item: LocalToDoItem, completion: @escaping UpdateCompletion) {
+        
+    }
+    
     public func hasItem(with id: UUID) -> Bool {
         switch (ToDDoList.find(with: id, in: context), ToDDoItem.find(with: id, in: context)) {
         case (true, _):

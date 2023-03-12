@@ -86,6 +86,10 @@ extension LocalFeedLoader: FeedUpdater {
             store.update(list.toLocal(), completion: completion)
         }
     }
+    
+    public func update(_ item: FeedToDoItem, completion: @escaping (Result<Void, Error>) -> Void) {
+        
+    }
 }
 
 private extension Array where Element == LocalFeedListGroup {
