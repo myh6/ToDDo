@@ -211,6 +211,24 @@ class CoreDataListFeedStoreTests: XCTestCase {
         expect(sut, toRetrieve: .success([list]))
     }
     
+    func test_update_list_deliversNoErrorOnEmptyDatabase() {
+        let sut = makeSUT()
+        let list = uniqueList().local
+        
+        let exp = expectation(description: "Wait for update complete")
+        var receivedError: Error?
+        sut.update(list) { result in
+            if case let Result.failure(error) = result {
+                receivedError = error
+            }
+            
+            exp.fulfill()
+        }
+        
+        wait(for: [exp], timeout: 1.0)
+        XCTAssertNil(receivedError)
+    }
+    
     //MARK: - Helpers
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> FeedStore {
         let storeBundle = Bundle(for: CoreDataFeedStore.self)

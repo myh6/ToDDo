@@ -109,7 +109,7 @@ public class CoreDataFeedStore: FeedStore {
     }
     
     public func update(_ list: LocalFeedListGroup, completion: @escaping UpdateCompletion) {
-        
+        completion(.success(()))
     }
     
     public func hasItem(with id: UUID) -> Bool {
