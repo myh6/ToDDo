@@ -46,6 +46,18 @@ class UpdateFeedInDatabaseUseCases: XCTestCase {
             store.completeUpdate(with: updateError)
         }
     }
+    
+    func test_update_item_failsOnUpdateError() {
+        let (sut, store) = makeSUT()
+        let item = uniqueItem()
+        let updateError = anyNSError()
+
+        store.completeWithMatchingItem()
+        expect(sut, update: item.model, toCompleteWith: .failure(updateError)) {
+            store.completeUpdate(with: updateError)
+        }
+
+    }
 
     func test_update_list_succeedOnUpdatingMatchedData() {
         let (sut, store) = makeSUT()
@@ -68,7 +80,28 @@ class UpdateFeedInDatabaseUseCases: XCTestCase {
         return (sut, store)
     }
     
-    private func expect(_ sut: FeedUpdater, update item: FeedListGroup, toCompleteWith expectedResult: FeedUpdater.Result, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
+    private func expect(_ sut: FeedUpdater, update list: FeedListGroup, toCompleteWith expectedResult: FeedUpdater.Result, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
+        let exp = expectation(description: "Wait for update completion")
+        sut.update(list) { receivedResult in
+            switch (receivedResult, expectedResult) {
+            case let (.failure(receivedError), .failure(expectedError)):
+                
+                XCTAssertEqual(receivedError as NSError?, expectedError as NSError?)
+                
+            case (.success, .success):
+                break
+                
+            default:
+                XCTFail("Expecte to get result: \(expectedResult), got \(receivedResult) instead")
+            }
+            exp.fulfill()
+        }
+        
+        action()
+        wait(for: [exp], timeout: 1.0)
+    }
+    
+    private func expect(_ sut: FeedUpdater, update item: FeedToDoItem, toCompleteWith expectedResult: FeedUpdater.Result, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
         let exp = expectation(description: "Wait for update completion")
         sut.update(item) { receivedResult in
             switch (receivedResult, expectedResult) {

@@ -110,7 +110,7 @@ class FeedStoreSpy: FeedStore {
     }
     
     func update(_ item: LocalToDoItem, completion: @escaping UpdateCompletion) {
-        
+        updateCompletion.append(completion)
     }
     
     func completeUpdateSuccessfully(at index: Int = 0) {
