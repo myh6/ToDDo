@@ -215,17 +215,7 @@ class CoreDataListFeedStoreTests: XCTestCase {
         let sut = makeSUT()
         let list = uniqueList().local
         
-        let exp = expectation(description: "Wait for update complete")
-        var receivedError: Error?
-        sut.update(list) { result in
-            if case let Result.failure(error) = result {
-                receivedError = error
-            }
-            
-            exp.fulfill()
-        }
-        
-        wait(for: [exp], timeout: 1.0)
+        let receivedError = update(list, in: sut)
         XCTAssertNil(receivedError)
     }
     
@@ -308,6 +298,21 @@ class CoreDataListFeedStoreTests: XCTestCase {
         
         wait(for: [exp], timeout: 1.0)
         return receiverError
+    }
+    
+    private func update(_ list: LocalFeedListGroup, in sut: FeedStore) -> Error? {
+        let exp = expectation(description: "Wait for update complete")
+        var receivedError: Error?
+        sut.update(list) { result in
+            if case let Result.failure(error) = result {
+                receivedError = error
+            }
+            
+            exp.fulfill()
+        }
+        
+        wait(for: [exp], timeout: 1.0)
+        return receivedError
     }
     
     private func expect(_ sut: FeedStore, toRetrieve expectedResult: Result<[LocalFeedListGroup], Error>, file: StaticString = #file, line: UInt = #line) {
