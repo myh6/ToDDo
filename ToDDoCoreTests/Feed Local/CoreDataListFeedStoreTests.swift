@@ -212,7 +212,7 @@ class CoreDataListFeedStoreTests: XCTestCase {
         expect(sut, toRetrieve: .success([updateList]))
     }
     
-    func test_hasItem_returnTrueWithSavedList() {
+    func test_hasItem_returnsTrueWithSavedList() {
         let sut = makeSUT()
         let saveList = uniqueList().local
         
@@ -222,6 +222,19 @@ class CoreDataListFeedStoreTests: XCTestCase {
         expect(sut, toRetrieve: .success([saveList]))
         
         XCTAssertTrue(sut.hasItem(with: saveList.id))
+    }
+    
+    func test_hasItem_returnsTrueWithSavedItem() {
+        let sut = makeSUT()
+        let saveItem = uniqueItem().local
+        let saveList = uniqueList().local
+        
+        XCTAssertFalse(sut.hasItem(with: saveItem.id))
+        
+        insert(saveItem, to: saveList, to: sut)
+        expect(sut, toRetrieve: .success([combineList(list: saveList, item: saveItem)]))
+        
+        XCTAssertTrue(sut.hasItem(with: saveItem.id))
     }
     
     //MARK: - Helpers
