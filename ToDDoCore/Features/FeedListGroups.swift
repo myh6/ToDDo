@@ -12,9 +12,6 @@ public struct FeedListGroup: Equatable {
     public let id: UUID
     public let listTitle: String
     public let listImage: Data
-    public var itemsCount: Int {
-        items.count
-    }
     public let items: [FeedToDoItem]
     
     public init(id: UUID, listTitle: String, listImage: Data, items: [FeedToDoItem]) {

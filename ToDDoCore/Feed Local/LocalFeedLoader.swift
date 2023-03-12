@@ -103,12 +103,6 @@ private extension Array where Element == LocalFeedListGroup {
     }
 }
 
-private extension Array where Element == FeedListGroup {
-    func toLocal() -> [LocalFeedListGroup] {
-        return map { LocalFeedListGroup(id: $0.id, listTitle: $0.listTitle, listImage: $0.listImage, items: $0.items.toCoreModel()) }
-    }
-}
-
 public extension Array where Element == LocalToDoItem {
     func toPresentedModel() -> [FeedToDoItem] {
         return map {
