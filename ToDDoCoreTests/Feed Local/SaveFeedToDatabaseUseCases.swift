@@ -16,13 +16,14 @@ class SaveFeedToDatabaseUseCases: XCTestCase {
         XCTAssertEqual(store.receivedMessage, [])
     }
     
-    func test_createList_requestStoreInsertion() {
+    func test_createList_withNoMatchingData_requestStoreInsertion() {
         let (sut, store) = makeSUT()
         let listGroup = uniqueList()
         
+        store.completeWithNoMatchingItem()
         sut.create (listGroup.model) { _ in }
         
-        XCTAssertEqual(store.receivedMessage, [.insert(listGroup.local)])
+        XCTAssertEqual(store.receivedMessage, [.check(false), .insert(listGroup.local)])
     }
     
     func test_createList_failsOnSaveError() {

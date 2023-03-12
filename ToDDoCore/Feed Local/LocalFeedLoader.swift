@@ -35,14 +35,16 @@ extension LocalFeedLoader: FeedCreater {
     public typealias SaveResult = FeedCreater.Result
     
     public func create(_ list: FeedListGroup, completion: @escaping (SaveResult) -> Void) {
-        store.insert(list.toLocal()) { [weak self] insertionResult in
-            guard self != nil else { return }
-            switch insertionResult {
-            case let .failure(insertionError):
-                completion(.failure(insertionError))
-                
-            case .success:
-                completion(.success(()))
+        if !store.hasItem(with: list.id) {
+            store.insert(list.toLocal()) { [weak self] insertionResult in
+                guard self != nil else { return }
+                switch insertionResult {
+                case let .failure(insertionError):
+                    completion(.failure(insertionError))
+                    
+                case .success:
+                    completion(.success(()))
+                }
             }
         }
     }
