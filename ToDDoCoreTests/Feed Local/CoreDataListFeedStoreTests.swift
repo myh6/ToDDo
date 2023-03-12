@@ -242,6 +242,39 @@ class CoreDataListFeedStoreTests: XCTestCase {
         XCTAssertTrue(sut.hasItem(with: saveItem.id))
     }
     
+    func test_storeSideEffectsRunSerially() {
+        let sut = makeSUT()
+        let list = uniqueList().local
+        
+        var completedOperationsInOrder = [XCTestExpectation]()
+        
+        let op1 = expectation(description: "Operation 1")
+        sut.insert(list) { _ in
+            completedOperationsInOrder.append(op1)
+            op1.fulfill()
+        }
+        
+        let op2 = expectation(description: "Operation 2")
+        sut.update(list) { _ in
+            completedOperationsInOrder.append(op2)
+            op2.fulfill()
+        }
+        
+        let op3 = expectation(description: "Operation 3")
+        sut.retrieve { _ in
+            completedOperationsInOrder.append(op3)
+            op3.fulfill()
+        }
+        
+        let op4 = expectation(description: "Operation 4")
+        sut.remove(list) { _ in
+            completedOperationsInOrder.append(op4)
+            op4.fulfill()
+        }
+        
+        wait(for: [op1, op2, op3, op4], timeout: 5.0)
+        XCTAssertEqual(completedOperationsInOrder, [op1, op2, op3, op4], "Expected side-effect to run serially but operations finnished in the wrong order")
+    }
     //MARK: - Helpers
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> FeedStore {
         let storeBundle = Bundle(for: CoreDataFeedStore.self)
