@@ -73,62 +73,49 @@ public class CoreDataFeedStore: FeedStore {
     
     public func remove(_ list: LocalFeedListGroup, completion: @escaping RemovalCompletion) {
         let context = self.context
-        if hasItem(with: list.id) {
-            ToDDoList.find(with: list.id, in: context) { result in
-                context.perform {
-                    do {
-                        try result.get().map(context.delete).map(context.save)
-                        completion(.success(()))
-                    } catch {
-                        completion(.failure(error))
-                    }
+        ToDDoList.find(with: list.id, in: context) { result in
+            context.perform {
+                do {
+                    try result.get().map(context.delete).map(context.save)
+                    completion(.success(()))
+                } catch {
+                    completion(.failure(error))
                 }
             }
-        } else {
-            completion(.success(()))
         }
     }
     
     public func remove(_ item: LocalToDoItem, from list: LocalFeedListGroup, completion: @escaping RemovalCompletion) {
         let context = self.context
-        if hasItem(with: item.id) {
-            ToDDoItem.find(with: item.id, in: context) { result in
-                context.perform {
-                    do {
-                        try result.get().map(context.delete).map(context.save)
-                        completion(.success(()))
-                    } catch {
-                        completion(.failure(error))
-                    }
+        ToDDoItem.find(with: item.id, in: context) { result in
+            context.perform {
+                do {
+                    try result.get().map(context.delete).map(context.save)
+                    completion(.success(()))
+                } catch {
+                    completion(.failure(error))
                 }
             }
-        } else {
-            completion(.success(()))
         }
-        
     }
     
     public func update(_ list: LocalFeedListGroup, completion: @escaping UpdateCompletion) {
         let context = self.context
-        if hasItem(with: list.id) {
-            ToDDoList.find(with: list.id, in: context) { result in
-                context.perform {
-                    do {
-                        let savedList = try result.get()
-                        if let savedList = savedList {
-                            savedList.setValue(list.listTitle, forKey: "title")
-                            savedList.setValue(list.listImage, forKey: "image")
-                            savedList.setValue(ToDDoItem.item(from: list.items, in: context), forKey: "item")
-                        }
-                        try context.save()
-                        completion(.success(()))
-                    } catch {
-                        completion(.failure(error))
+        ToDDoList.find(with: list.id, in: context) { result in
+            context.perform {
+                do {
+                    let savedList = try result.get()
+                    if let savedList = savedList {
+                        savedList.setValue(list.listTitle, forKey: "title")
+                        savedList.setValue(list.listImage, forKey: "image")
+                        savedList.setValue(ToDDoItem.item(from: list.items, in: context), forKey: "item")
                     }
+                    try context.save()
+                    completion(.success(()))
+                } catch {
+                    completion(.failure(error))
                 }
             }
-        } else {
-            completion(.success(()))
         }
     }
     

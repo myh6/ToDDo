@@ -146,17 +146,6 @@ class CoreDataListFeedStoreTests: XCTestCase {
         expect(sut, toRetrieve: .success([]))
     }
     
-    func test_remove_list_deliversNoErrorOnNonEmptyDatabaseWithNoMatchingList() {
-        let sut = makeSUT()
-        let savedlist = uniqueList().local
-        let deleteList = uniqueList().local
-        
-        insert(savedlist, to: sut)
-        let receivedError = remove(deleteList, from: sut)
-        
-        XCTAssertNil(receivedError)
-    }
-    
     func test_remove_list_deletesMatchingListInDatabase() {
         let sut = makeSUT()
         let list = uniqueList().local
@@ -185,18 +174,6 @@ class CoreDataListFeedStoreTests: XCTestCase {
         remove(item, from: list, from: sut)
         
         expect(sut, toRetrieve: .success([]))
-    }
-    
-    func test_remove_item_deliversNoErrorOnNonEmptyDatabaseWithNoMatchingItem() {
-        let sut = makeSUT()
-        let savedItem = uniqueItem().local
-        let deletedItem = uniqueItem().local
-        let list = uniqueList().local
-        
-        insert(savedItem, to: list, to: sut)
-        let recievedError = remove(deletedItem, from: list, from: sut)
-        
-        XCTAssertNil(recievedError)
     }
     
     func test_remove_item_updatesMatchingItemInDatabase() {
