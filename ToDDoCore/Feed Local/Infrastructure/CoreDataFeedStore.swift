@@ -109,7 +109,27 @@ public class CoreDataFeedStore: FeedStore {
     }
     
     public func update(_ list: LocalFeedListGroup, completion: @escaping UpdateCompletion) {
-        completion(.success(()))
+        let context = self.context
+        if hasItem(with: list.id) {
+            ToDDoList.find(with: list.id, in: context) { result in
+                context.perform {
+                    do {
+                        let savedList = try result.get()
+                        if let savedList = savedList {
+                            savedList.setValue(list.listTitle, forKey: "title")
+                            savedList.setValue(list.listImage, forKey: "image")
+                            savedList.setValue(ToDDoItem.item(from: list.items, in: context), forKey: "item")
+                        }
+                        try context.save()
+                        completion(.success(()))
+                    } catch {
+                        completion(.failure(error))
+                    }
+                }
+            }
+        } else {
+            completion(.success(()))
+        }
     }
     
     public func hasItem(with id: UUID) -> Bool {

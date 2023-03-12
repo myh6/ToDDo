@@ -239,6 +239,19 @@ class CoreDataListFeedStoreTests: XCTestCase {
         XCTAssertNil(recievedError)
     }
     
+    func test_update_list_deletesMatchingListInDatabase() {
+        let sut = makeSUT()
+        let savedList = uniqueList().local
+        
+        insert(savedList, to: sut)
+        expect(sut, toRetrieve: .success([savedList]))
+        
+        let updateList = LocalFeedListGroup(id: savedList.id, listTitle: "Updated Title", listImage: savedList.listImage, items: savedList.items)
+        update(updateList, in: sut)
+        
+        expect(sut, toRetrieve: .success([updateList]))
+    }
+    
     //MARK: - Helpers
     private func makeSUT(file: StaticString = #file, line: UInt = #line) -> FeedStore {
         let storeBundle = Bundle(for: CoreDataFeedStore.self)
