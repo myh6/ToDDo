@@ -48,8 +48,8 @@ extension ToDDoItem {
         }
     }
     
-    static func item(from localItem: [LocalToDoItem], in context: NSManagedObjectContext) -> NSOrderedSet {
-        let item = NSOrderedSet(array: localItem.map { local in
+    static func item(from localItem: [LocalToDoItem], in context: NSManagedObjectContext) -> NSSet {
+        let item = NSSet(array: localItem.map { local in
             let managed = ToDDoItem(context: context)
             managed.id = local.id
             managed.url = local.url
