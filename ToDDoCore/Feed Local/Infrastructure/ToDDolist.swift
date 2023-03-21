@@ -12,7 +12,7 @@ class ToDDoList: NSManagedObject {
     @NSManaged var id: UUID
     @NSManaged var title: String
     @NSManaged var image: Data?
-    @NSManaged var item: NSSet
+    @NSManaged var item: NSOrderedSet
 }
 
 extension ToDDoList {
