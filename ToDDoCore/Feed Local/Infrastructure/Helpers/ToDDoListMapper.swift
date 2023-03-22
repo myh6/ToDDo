@@ -8,14 +8,9 @@
 
 enum ToDDoListMapper {
     
-    static func map(item: LocalToDoItem?, with list: LocalFeedListGroup) -> LocalFeedListGroup {
-        guard let item = item else { return list }
-        
-        var localListItems = list.items
-        localListItems.append(item)
-        let combineList = LocalFeedListGroup(id: list.id, listTitle: list.listTitle, listImage: list.listImage, items: localListItems)
-        
-        return list.items.contains(item) ? list : combineList
+    static func map(_ list: [ToDDoList]) -> [LocalFeedListGroup] {
+        let orderedList = list.sorted(by: { $0.modificationTime < $1.modificationTime })
+        return orderedList.map({ $0.localList })
     }
     
 }

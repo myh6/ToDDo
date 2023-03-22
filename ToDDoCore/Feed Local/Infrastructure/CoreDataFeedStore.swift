@@ -24,8 +24,8 @@ public class CoreDataFeedStore: FeedStore {
             do {
                 let request = NSFetchRequest<ToDDoList>(entityName: ToDDoList.entity().name!)
                 request.returnsObjectsAsFaults = false
-                let lists = try context.fetch(request).sorted(by: { $0.modificationTime < $1.modificationTime })
-                completion(.success(lists.map { $0.localList }))
+                let lists = try context.fetch(request)
+                completion(.success(ToDDoListMapper.map(lists)))
             } catch {
                 completion(.failure(error))
             }
