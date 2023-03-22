@@ -60,12 +60,14 @@ class CoreDataListFeedStoreTests: XCTestCase {
     func test_retrieve_delviersFoundListValueAfterInsertingItemOnNonEmptyDatabaseWithNonEmptyListItems() {
         let sut = makeSUT()
         let list = uniqueList().local
-        insert(list, to: sut)
+        let now = Date()
+        
+        insert(list, to: sut, timestamp: now)
         
         let item = uniqueItem().local
         let combinedList = combineList(list: list, item: item)
         
-        insert(item, timestamp: Date(), to: list, to: sut)
+        insert(item, timestamp: tenSecondSince(now), to: list, to: sut)
         
         expect(sut, toRetrieve: .success([combinedList]))
     }
@@ -74,11 +76,10 @@ class CoreDataListFeedStoreTests: XCTestCase {
         let sut = makeSUT()
         let list1 = uniqueList().local
         let list2 = uniqueList().local
-        let now = Date()
-        let tenSecondsLater = now.addingTimeInterval(10.0)
+        let now = now()
         
         insert(list1, to: sut, timestamp: now)
-        insert(list2, to: sut, timestamp: tenSecondsLater)
+        insert(list2, to: sut, timestamp: tenSecondSince(now))
         
         expect(sut, toRetrieve: .success([list1, list2]))
     }
@@ -203,14 +204,13 @@ class CoreDataListFeedStoreTests: XCTestCase {
     func test_update_list_updatesMatchingListInDatabase() {
         let sut = makeSUT()
         let savedList = uniqueList().local
-        let now = Date()
-        let tenSecondLater = now.addingTimeInterval(10.0)
+        let now = now()
         
         insert(savedList, to: sut, timestamp: now)
         expect(sut, toRetrieve: .success([savedList]))
         
         let updateList = LocalFeedListGroup(id: savedList.id, listTitle: "Updated Title", listImage: savedList.listImage, items: savedList.items)
-        update(updateList, timestamp: tenSecondLater, in: sut)
+        update(updateList, timestamp: tenSecondSince(now), in: sut)
         
         expect(sut, toRetrieve: .success([updateList]))
     }
@@ -220,18 +220,16 @@ class CoreDataListFeedStoreTests: XCTestCase {
         let savedItem = uniqueItem().local
         let list = uniqueList().local
         let savedList = combineList(list: list, item: savedItem)
-        let now = Date()
-        let tenSecondLater = now.addingTimeInterval(10.0)
+        let now = now()
         
         insert(list, to: sut, timestamp: now)
-        insert(savedItem, timestamp: tenSecondLater, to: list, to: sut)
+        insert(savedItem, timestamp: tenSecondSince(now), to: list, to: sut)
         expect(sut, toRetrieve: .success([savedList]))
         
         let updateItem = LocalToDoItem(id: savedItem.id, title: "Update Title", isDone: true, expectedDate: Date(), finishedDate: Date(), priority: "Update Priority", url: URL(string: "https://update-url.com"), note: "update note")
         let updateList = combineList(list: list, item: updateItem)
         
-        let twentySecondsLater = tenSecondLater.addingTimeInterval(10.0)
-        update(updateItem, in: sut, timestamp: twentySecondsLater)
+        update(updateItem, in: sut, timestamp: twentySecondsSince(now))
         expect(sut, toRetrieve: .success([updateList]))
     }
     
@@ -301,6 +299,18 @@ class CoreDataListFeedStoreTests: XCTestCase {
         let sut = try! CoreDataFeedStore(storeURL: storeURL, bundle: storeBundle)
         trackForMemoryLeaks(sut, file: file, line: line)
         return sut
+    }
+    
+    private func now() -> Date {
+        Date()
+    }
+    
+    private func tenSecondSince(_ date: Date) -> Date {
+        date.addingTimeInterval(10.0)
+    }
+    
+    private func twentySecondsSince(_ date: Date) -> Date {
+        date.addingTimeInterval(10.0)
     }
     
     func uniquePureList() -> (model: FeedListGroup, local: LocalFeedListGroup) {
