@@ -24,7 +24,7 @@ public class CoreDataFeedStore: FeedStore {
             do {
                 let request = NSFetchRequest<ToDDoList>(entityName: ToDDoList.entity().name!)
                 request.returnsObjectsAsFaults = false
-                let lists = try context.fetch(request)
+                let lists = try context.fetch(request).sorted(by: { $0.modificationTime < $1.modificationTime })
                 completion(.success(lists.map { $0.localList }))
             } catch {
                 completion(.failure(error))
@@ -32,11 +32,11 @@ public class CoreDataFeedStore: FeedStore {
         }
     }
     
-    public func insert(_ list: LocalFeedListGroup, completion: @escaping InsertionCompletion) {
+    public func insert(_ list: LocalFeedListGroup, timestamp: Date, completion: @escaping InsertionCompletion) {
         let context = self.context
         context.perform {
             do {
-                ToDDoList.list(from: list, in: context)
+                ToDDoList.list(from: list, timestamp: timestamp, in: context)
                 try context.save()
                 completion(.success(()))
             } catch {
@@ -45,15 +45,16 @@ public class CoreDataFeedStore: FeedStore {
         }
     }
     
-    public func insert(_ item: LocalToDoItem, to list: LocalFeedListGroup, completion: @escaping InsertionCompletion) {
+    public func insert(_ item: LocalToDoItem, timestamp: Date, to list: LocalFeedListGroup, completion: @escaping InsertionCompletion) {
         let context = self.context
         context.perform {
             ToDDoList.find(with: list.id, in: context, completion: { result in
                 do {
                     if let coreList = try? result.get() {
-                        coreList.addToItem(ToDDoItem.item(from: item, in: context))
+                        coreList.addToItem(ToDDoItem.item(from: item, timestamp: timestamp, in: context))
                     } else {
-                        ToDDoList.list(from: list, and: item, in: context)
+                        // TODO: - Fix timestamp
+                        ToDDoList.list(from: list, and: item, timestamp: timestamp, in: context)
                     }
                     try context.save()
                     completion(.success(()))
@@ -92,7 +93,7 @@ public class CoreDataFeedStore: FeedStore {
         }
     }
     
-    public func update(_ list: LocalFeedListGroup, completion: @escaping UpdateCompletion) {
+    public func update(_ list: LocalFeedListGroup, timestamp: Date, completion: @escaping UpdateCompletion) {
         let context = self.context
         context.perform {
             ToDDoList.find(with: list.id, in: context) { result in
@@ -101,7 +102,7 @@ public class CoreDataFeedStore: FeedStore {
                     if let savedList = savedList {
                         savedList.setValue(list.listTitle, forKey: "title")
                         savedList.setValue(list.listImage, forKey: "image")
-                        savedList.setValue(ToDDoItem.item(from: list.items, in: context), forKey: "item")
+                        savedList.setValue(ToDDoItem.item(from: list.items, timestamp: timestamp, in: context), forKey: "item")
                     }
                     try context.save()
                     completion(.success(()))
@@ -112,7 +113,7 @@ public class CoreDataFeedStore: FeedStore {
         }
     }
     
-    public func update(_ item: LocalToDoItem, completion: @escaping UpdateCompletion) {
+    public func update(_ item: LocalToDoItem, timestamp: Date, completion: @escaping UpdateCompletion) {
         let context = self.context
         context.perform {
             ToDDoItem.find(with: item.id, in: context) { result in
@@ -126,6 +127,7 @@ public class CoreDataFeedStore: FeedStore {
                         savedItem.setValue(item.url, forKey: "url")
                         savedItem.setValue(item.isDone, forKey: "isDone")
                         savedItem.setValue(item.note, forKey: "note")
+                        savedItem.setValue(timestamp, forKeyPath: "modificationTime")
                     }
                     try context.save()
                     completion(.success(()))

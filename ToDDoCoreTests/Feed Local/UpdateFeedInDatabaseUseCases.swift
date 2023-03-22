@@ -21,7 +21,7 @@ class UpdateFeedInDatabaseUseCases: XCTestCase {
         let nonMatchedData = uniqueList()
         
         store.completeWithNoMatchingItem()
-        sut.update(nonMatchedData.model) { _ in }
+        sut.update(nonMatchedData.model, timestamp: Date()) { _ in }
 
         XCTAssertEqual(store.receivedMessage, [.check(false)])
     }
@@ -31,7 +31,7 @@ class UpdateFeedInDatabaseUseCases: XCTestCase {
         let nonMatchedData = uniqueItem()
         
         store.completeWithNoMatchingItem()
-        sut.update(nonMatchedData.model) { _ in }
+        sut.update(nonMatchedData.model, timestamp: Date()) { _ in }
         
         XCTAssertEqual(store.receivedMessage, [.check(false)])
     }
@@ -62,25 +62,27 @@ class UpdateFeedInDatabaseUseCases: XCTestCase {
     func test_update_list_succeedOnUpdatingMatchedData() {
         let (sut, store) = makeSUT()
         let matchedData = uniqueList()
-
+        let timestamp = Date()
+        
         store.completeWithMatchingItem()
-        expect(sut, update: matchedData.model, toCompleteWith: .success(())) {
+        expect(sut, update: matchedData.model, timestamp: timestamp, toCompleteWith: .success(())) {
             store.completeUpdateSuccessfully()
         }
 
-        XCTAssertEqual(store.receivedMessage, [.check(true), .update(matchedData.local)])
+        XCTAssertEqual(store.receivedMessage, [.check(true), .update(matchedData.local, timestamp)])
     }
     
     func test_update_item_succeedOnUpdatingMatchedData() {
         let (sut, store) = makeSUT()
         let matchedData = uniqueItem()
-
+        let now = Date()
+        
         store.completeWithMatchingItem()
-        expect(sut, update: matchedData.model, toCompleteWith: .success(())) {
+        expect(sut, update: matchedData.model, timestamp: now, toCompleteWith: .success(())) {
             store.completeUpdateSuccessfully()
         }
 
-        XCTAssertEqual(store.receivedMessage, [.check(true), .renew(matchedData.local)])
+        XCTAssertEqual(store.receivedMessage, [.check(true), .renew(matchedData.local, now)])
     }
     
     //MARK: - Helpers
@@ -92,9 +94,9 @@ class UpdateFeedInDatabaseUseCases: XCTestCase {
         return (sut, store)
     }
     
-    private func expect(_ sut: FeedUpdater, update list: FeedListGroup, toCompleteWith expectedResult: FeedUpdater.Result, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
+    private func expect(_ sut: FeedUpdater, update list: FeedListGroup, timestamp: Date = Date(), toCompleteWith expectedResult: FeedUpdater.Result, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
         let exp = expectation(description: "Wait for update completion")
-        sut.update(list) { receivedResult in
+        sut.update(list, timestamp: timestamp) { receivedResult in
             switch (receivedResult, expectedResult) {
             case let (.failure(receivedError), .failure(expectedError)):
                 
@@ -113,9 +115,9 @@ class UpdateFeedInDatabaseUseCases: XCTestCase {
         wait(for: [exp], timeout: 1.0)
     }
     
-    private func expect(_ sut: FeedUpdater, update item: FeedToDoItem, toCompleteWith expectedResult: FeedUpdater.Result, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
+    private func expect(_ sut: FeedUpdater, update item: FeedToDoItem, timestamp: Date = Date(), toCompleteWith expectedResult: FeedUpdater.Result, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
         let exp = expectation(description: "Wait for update completion")
-        sut.update(item) { receivedResult in
+        sut.update(item, timestamp: timestamp) { receivedResult in
             switch (receivedResult, expectedResult) {
             case let (.failure(receivedError), .failure(expectedError)):
                 

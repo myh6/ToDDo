@@ -24,12 +24,12 @@ class FeedStoreSpy: FeedStore {
     
     enum ReceivedMessage: Equatable {
         case retrieve
-        case insert(LocalFeedListGroup)
-        case add(AddItemList)
+        case insert(LocalFeedListGroup, Date)
+        case add(AddItemList, Date)
         case remove(LocalFeedListGroup)
         case delete(LocalToDoItem)
-        case update(LocalFeedListGroup)
-        case renew(LocalToDoItem)
+        case update(LocalFeedListGroup, Date)
+        case renew(LocalToDoItem, Date)
         case check(Bool)
     }
     private(set) var hasData = false
@@ -53,13 +53,13 @@ class FeedStoreSpy: FeedStore {
     }
     
     //MARK: - Insert
-    func insert(_ list: LocalFeedListGroup, completion: @escaping FeedStore.InsertionCompletion) {
-        receivedMessage.append(.insert(list))
+    func insert(_ list: LocalFeedListGroup, timestamp: Date, completion: @escaping FeedStore.InsertionCompletion) {
+        receivedMessage.append(.insert(list, timestamp))
         insertCompletion.append(completion)
     }
     
-    func insert(_ item: LocalToDoItem, to list: LocalFeedListGroup, completion: @escaping FeedStore.InsertionCompletion) {
-        receivedMessage.append(.add(AddItemList(list: list, item: item)))
+    func insert(_ item: LocalToDoItem, timestamp: Date, to list: LocalFeedListGroup, completion: @escaping FeedStore.InsertionCompletion) {
+        receivedMessage.append(.add(AddItemList(list: list, item: item), timestamp))
         insertCompletion.append(completion)
     }
     
@@ -105,13 +105,13 @@ class FeedStoreSpy: FeedStore {
     }
     
     //MARK: - Update
-    func update(_ list: LocalFeedListGroup, completion: @escaping UpdateCompletion) {
-        receivedMessage.append(.update(list))
+    func update(_ list: LocalFeedListGroup, timestamp: Date, completion: @escaping UpdateCompletion) {
+        receivedMessage.append(.update(list, timestamp))
         updateCompletion.append(completion)
     }
     
-    func update(_ item: LocalToDoItem, completion: @escaping UpdateCompletion) {
-        receivedMessage.append(.renew(item))
+    func update(_ item: LocalToDoItem, timestamp: Date, completion: @escaping UpdateCompletion) {
+        receivedMessage.append(.renew(item, timestamp))
         updateCompletion.append(completion)
     }
     

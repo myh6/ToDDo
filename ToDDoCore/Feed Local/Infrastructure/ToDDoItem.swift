@@ -19,6 +19,7 @@ class ToDDoItem: NSManagedObject {
     @NSManaged var priority: String?
     @NSManaged var url: URL?
     @NSManaged var note: String?
+    @NSManaged var modificationTime: Date
 }
 
 extension ToDDoItem {
@@ -48,8 +49,8 @@ extension ToDDoItem {
         }
     }
     
-    static func item(from localItem: [LocalToDoItem], in context: NSManagedObjectContext) -> NSOrderedSet {
-        let item = NSOrderedSet(array: localItem.map { local in
+    static func item(from localItem: [LocalToDoItem], timestamp: Date, in context: NSManagedObjectContext) -> NSSet {
+        let item = NSSet(array: localItem.map { local in
             let managed = ToDDoItem(context: context)
             managed.id = local.id
             managed.url = local.url
@@ -59,12 +60,13 @@ extension ToDDoItem {
             managed.note = local.note
             managed.finishedDate = local.finishedDate
             managed.expectedDate = local.expectedDate
+            managed.modificationTime = timestamp
             return managed
         })
         return item
     }
     
-    static func item(from localItem: LocalToDoItem, in context: NSManagedObjectContext) -> ToDDoItem {
+    static func item(from localItem: LocalToDoItem, timestamp: Date, in context: NSManagedObjectContext) -> ToDDoItem {
         let item = ToDDoItem(context: context)
         item.id = localItem.id
         item.title = localItem.title
@@ -74,6 +76,7 @@ extension ToDDoItem {
         item.note = localItem.note
         item.priority = localItem.priority
         item.url = localItem.url
+        item.modificationTime = timestamp
         return item
     }
     

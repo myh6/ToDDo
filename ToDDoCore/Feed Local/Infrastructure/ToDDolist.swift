@@ -12,19 +12,23 @@ class ToDDoList: NSManagedObject {
     @NSManaged var id: UUID
     @NSManaged var title: String
     @NSManaged var image: Data?
-    @NSManaged var item: NSOrderedSet
+    @NSManaged var item: NSSet
+    @NSManaged var modificationTime: Date
 }
 
 extension ToDDoList {
     
     @discardableResult
-    static func list(from localList: LocalFeedListGroup, and localItem: LocalToDoItem? = nil, in context: NSManagedObjectContext) -> ToDDoList {
-        let saveList = ToDDoListMapper.map(item: localItem, with: localList)
+    static func list(from localList: LocalFeedListGroup, and localItem: LocalToDoItem? = nil, timestamp: Date, in context: NSManagedObjectContext) -> ToDDoList {
         let list = ToDDoList(context: context)
-        list.id = saveList.id
-        list.title = saveList.listTitle
-        list.image = saveList.listImage
-        list.item = ToDDoItem.item(from: saveList.items, in: context)
+        list.id = localList.id
+        list.title = localList.listTitle
+        list.image = localList.listImage
+        list.item = ToDDoItem.item(from: localList.items, timestamp: timestamp, in: context)
+        list.modificationTime = timestamp
+        if let localItem = localItem {
+            list.addToItem(ToDDoItem.item(from: [localItem], timestamp: timestamp.addingTimeInterval(0.01), in: context))
+        }
         return list
     }
     
@@ -55,7 +59,8 @@ extension ToDDoList {
     }
 
     var localList: LocalFeedListGroup {
-        return LocalFeedListGroup(id: id, listTitle: title, listImage: image ?? Data(), items: item.compactMap { ($0 as? ToDDoItem)?.localItem } )
+        let items = item.compactMap({ $0 as? ToDDoItem }).sorted(by: { $0.modificationTime < $1.modificationTime })
+        return LocalFeedListGroup(id: id, listTitle: title, listImage: image ?? Data(), items: items.map({ $0.localItem }))
     }
     
     

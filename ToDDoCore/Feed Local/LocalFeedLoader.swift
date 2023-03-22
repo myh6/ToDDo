@@ -34,9 +34,9 @@ extension LocalFeedLoader: FeedLoader {
 extension LocalFeedLoader: FeedCreater {
     public typealias SaveResult = FeedCreater.Result
     
-    public func create(_ list: FeedListGroup, completion: @escaping (SaveResult) -> Void) {
+    public func create(_ list: FeedListGroup, timestamp: Date, completion: @escaping (SaveResult) -> Void) {
         if !store.hasItem(with: list.id) {
-            store.insert(list.toLocal()) { [weak self] insertionResult in
+            store.insert(list.toLocal(), timestamp: timestamp) { [weak self] insertionResult in
                 guard self != nil else { return }
                 switch insertionResult {
                 case let .failure(insertionError):
@@ -49,9 +49,9 @@ extension LocalFeedLoader: FeedCreater {
         }
     }
     
-    public func add(_ item: FeedToDoItem, to list: FeedListGroup, completion: @escaping (SaveResult) -> Void) {
+    public func add(_ item: FeedToDoItem, timestamp: Date, to list: FeedListGroup, completion: @escaping (SaveResult) -> Void) {
         if !store.hasItem(with: item.id) {
-            store.insert(item.toLocal(), to: list.toLocal()) { [weak self] insertionResult in
+            store.insert(item.toLocal(), timestamp: timestamp, to: list.toLocal()) { [weak self] insertionResult in
                 guard self != nil else { return }
                 switch insertionResult {
                 case let .failure(error):
@@ -84,15 +84,15 @@ extension LocalFeedLoader: FeedDeleter {
 extension LocalFeedLoader: FeedUpdater {
     public typealias UpdateResult = FeedUpdater.Result
     
-    public func update(_ list: FeedListGroup, completion: @escaping (UpdateResult) -> Void) {
+    public func update(_ list: FeedListGroup, timestamp: Date, completion: @escaping (UpdateResult) -> Void) {
         if store.hasItem(with: list.id) {
-            store.update(list.toLocal(), completion: completion)
+            store.update(list.toLocal(), timestamp: timestamp, completion: completion)
         }
     }
     
-    public func update(_ item: FeedToDoItem, completion: @escaping (Result<Void, Error>) -> Void) {
+    public func update(_ item: FeedToDoItem, timestamp: Date, completion: @escaping (Result<Void, Error>) -> Void) {
         if store.hasItem(with: item.id) {
-            store.update(item.toLocal(), completion: completion)
+            store.update(item.toLocal(), timestamp: timestamp, completion: completion)
         }
     }
 }

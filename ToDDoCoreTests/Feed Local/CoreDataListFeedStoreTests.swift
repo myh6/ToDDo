@@ -65,9 +65,22 @@ class CoreDataListFeedStoreTests: XCTestCase {
         let item = uniqueItem().local
         let combinedList = combineList(list: list, item: item)
         
-        insert(item, to: list, to: sut)
+        insert(item, timestamp: Date(), to: list, to: sut)
         
         expect(sut, toRetrieve: .success([combinedList]))
+    }
+    
+    func test_retrieve_deliversFoundListValueWithCorrectOrderAfterInsertingMoreThanOneListsToDatabase() {
+        let sut = makeSUT()
+        let list1 = uniqueList().local
+        let list2 = uniqueList().local
+        let now = Date()
+        let tenSecondsLater = now.addingTimeInterval(10.0)
+        
+        insert(list1, to: sut, timestamp: now)
+        insert(list2, to: sut, timestamp: tenSecondsLater)
+        
+        expect(sut, toRetrieve: .success([list1, list2]))
     }
     
     func test_retrieve_hasNoSideEffectOnNonEmptyDatabase() {
@@ -190,12 +203,14 @@ class CoreDataListFeedStoreTests: XCTestCase {
     func test_update_list_updatesMatchingListInDatabase() {
         let sut = makeSUT()
         let savedList = uniqueList().local
+        let now = Date()
+        let tenSecondLater = now.addingTimeInterval(10.0)
         
-        insert(savedList, to: sut)
+        insert(savedList, to: sut, timestamp: now)
         expect(sut, toRetrieve: .success([savedList]))
         
         let updateList = LocalFeedListGroup(id: savedList.id, listTitle: "Updated Title", listImage: savedList.listImage, items: savedList.items)
-        update(updateList, in: sut)
+        update(updateList, timestamp: tenSecondLater, in: sut)
         
         expect(sut, toRetrieve: .success([updateList]))
     }
@@ -205,14 +220,18 @@ class CoreDataListFeedStoreTests: XCTestCase {
         let savedItem = uniqueItem().local
         let list = uniqueList().local
         let savedList = combineList(list: list, item: savedItem)
+        let now = Date()
+        let tenSecondLater = now.addingTimeInterval(10.0)
         
-        insert(savedList, to: sut)
+        insert(list, to: sut, timestamp: now)
+        insert(savedItem, timestamp: tenSecondLater, to: list, to: sut)
         expect(sut, toRetrieve: .success([savedList]))
         
         let updateItem = LocalToDoItem(id: savedItem.id, title: "Update Title", isDone: true, expectedDate: Date(), finishedDate: Date(), priority: "Update Priority", url: URL(string: "https://update-url.com"), note: "update note")
         let updateList = combineList(list: list, item: updateItem)
         
-        update(updateItem, in: sut)
+        let twentySecondsLater = tenSecondLater.addingTimeInterval(10.0)
+        update(updateItem, in: sut, timestamp: twentySecondsLater)
         expect(sut, toRetrieve: .success([updateList]))
     }
     
@@ -236,7 +255,7 @@ class CoreDataListFeedStoreTests: XCTestCase {
         
         XCTAssertFalse(sut.hasItem(with: saveItem.id))
         
-        insert(saveItem, to: saveList, to: sut)
+        insert(saveItem, timestamp: Date(), to: saveList, to: sut)
         expect(sut, toRetrieve: .success([combineList(list: saveList, item: saveItem)]))
         
         XCTAssertTrue(sut.hasItem(with: saveItem.id))
@@ -249,13 +268,13 @@ class CoreDataListFeedStoreTests: XCTestCase {
         var completedOperationsInOrder = [XCTestExpectation]()
         
         let op1 = expectation(description: "Operation 1")
-        sut.insert(list) { _ in
+        sut.insert(list, timestamp: Date()) { _ in
             completedOperationsInOrder.append(op1)
             op1.fulfill()
         }
         
         let op2 = expectation(description: "Operation 2")
-        sut.update(list) { _ in
+        sut.update(list, timestamp: Date()) { _ in
             completedOperationsInOrder.append(op2)
             op2.fulfill()
         }
@@ -297,10 +316,10 @@ class CoreDataListFeedStoreTests: XCTestCase {
     }
     
     @discardableResult
-    private func insert(_ list: LocalFeedListGroup, to sut: FeedStore) -> Error? {
+    private func insert(_ list: LocalFeedListGroup, to sut: FeedStore, timestamp: Date = Date()) -> Error? {
         let exp = expectation(description: "Wait for insertion")
         var insertionError: Error?
-        sut.insert(list) { result in
+        sut.insert(list, timestamp: timestamp) { result in
             if case let Result.failure(error) = result {
                 insertionError = error
             }
@@ -312,11 +331,11 @@ class CoreDataListFeedStoreTests: XCTestCase {
     }
     
     @discardableResult
-    private func insert(_ item: LocalToDoItem, to list: LocalFeedListGroup, to sut: FeedStore) -> Error? {
+    private func insert(_ item: LocalToDoItem, timestamp: Date = Date(), to list: LocalFeedListGroup, to sut: FeedStore) -> Error? {
         let exp = expectation(description: "Wait for insertion")
         var insertionError: Error?
         
-        sut.insert(item, to: list) { result in
+        sut.insert(item, timestamp: timestamp, to: list) { result in
             if case let Result.failure(error) = result {
                 insertionError = error
             }
@@ -357,10 +376,10 @@ class CoreDataListFeedStoreTests: XCTestCase {
     }
     
     @discardableResult
-    private func update(_ list: LocalFeedListGroup, in sut: FeedStore) -> Error? {
+    private func update(_ list: LocalFeedListGroup, timestamp: Date = Date(), in sut: FeedStore) -> Error? {
         let exp = expectation(description: "Wait for update complete")
         var receivedError: Error?
-        sut.update(list) { result in
+        sut.update(list, timestamp: timestamp) { result in
             if case let Result.failure(error) = result {
                 receivedError = error
             }
@@ -373,10 +392,10 @@ class CoreDataListFeedStoreTests: XCTestCase {
     }
     
     @discardableResult
-    private func update(_ item: LocalToDoItem, in sut: FeedStore) -> Error? {
+    private func update(_ item: LocalToDoItem, in sut: FeedStore, timestamp: Date) -> Error? {
         let exp = expectation(description: "Wait for update complete")
         var receivedError: Error?
-        sut.update(item) { result in
+        sut.update(item, timestamp: timestamp) { result in
             if case let Result.failure(error) = result {
                 receivedError = error
             }

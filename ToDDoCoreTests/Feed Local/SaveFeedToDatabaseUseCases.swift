@@ -19,11 +19,12 @@ class SaveFeedToDatabaseUseCases: XCTestCase {
     func test_createList_withNoMatchingData_requestStoreInsertion() {
         let (sut, store) = makeSUT()
         let listGroup = uniqueList()
+        let now = Date()
         
         store.completeWithNoMatchingItem()
-        sut.create (listGroup.model) { _ in }
+        sut.create (listGroup.model, timestamp: now) { _ in }
         
-        XCTAssertEqual(store.receivedMessage, [.check(false), .insert(listGroup.local)])
+        XCTAssertEqual(store.receivedMessage, [.check(false), .insert(listGroup.local, now)])
     }
     
     func test_createList_withMatchingData_doesNotRequestStoreInsertion() {
@@ -31,7 +32,7 @@ class SaveFeedToDatabaseUseCases: XCTestCase {
         let listGroup = uniqueList()
         
         store.completeWithMatchingItem()
-        sut.create(listGroup.model) { _ in }
+        sut.create(listGroup.model, timestamp: Date()) { _ in }
         
         XCTAssertEqual(store.receivedMessage, [.check(true)])
     }
@@ -57,11 +58,12 @@ class SaveFeedToDatabaseUseCases: XCTestCase {
         let (sut, store) = makeSUT()
         let item = uniqueItem()
         let list = uniqueList()
+        let timestamp = Date()
         
         store.completeWithNoMatchingItem()
-        sut.add(item.model, to: list.model) { _ in }
+        sut.add(item.model, timestamp: timestamp, to: list.model) { _ in }
         
-        XCTAssertEqual(store.receivedMessage, [.check(false), .add(FeedStoreSpy.AddItemList(list: list.local, item: item.local))])
+        XCTAssertEqual(store.receivedMessage, [.check(false), .add(FeedStoreSpy.AddItemList(list: list.local, item: item.local), timestamp)])
     }
     
     func test_addItemToList_withMatchingData_doesNotRequestStoreInsertion() {
@@ -70,7 +72,7 @@ class SaveFeedToDatabaseUseCases: XCTestCase {
         let list = uniqueList()
         
         store.completeWithMatchingItem()
-        sut.add(item.model, to: list.model) { _ in }
+        sut.add(item.model, timestamp: Date(), to: list.model) { _ in }
         
         XCTAssertEqual(store.receivedMessage, [.check(true)])
     }
@@ -97,7 +99,7 @@ class SaveFeedToDatabaseUseCases: XCTestCase {
         var sut: LocalFeedLoader? = LocalFeedLoader(store: store)
         
         var receivedResult = [LocalFeedLoader.SaveResult]()
-        sut?.create(uniqueList().model) { receivedResult.append($0) }
+        sut?.create(uniqueList().model, timestamp: Date()) { receivedResult.append($0) }
         
         sut = nil
         store.completeInsertionSuccessfully()
@@ -110,7 +112,7 @@ class SaveFeedToDatabaseUseCases: XCTestCase {
         var sut: LocalFeedLoader? = LocalFeedLoader(store: store)
         
         var receivedResult = [LocalFeedLoader.SaveResult]()
-        sut?.add(uniqueItem().model, to: uniqueList().model) { receivedResult.append($0) }
+        sut?.add(uniqueItem().model, timestamp: Date(), to: uniqueList().model) { receivedResult.append($0) }
         
         sut = nil
         store.completeInsertionSuccessfully()
@@ -130,7 +132,7 @@ class SaveFeedToDatabaseUseCases: XCTestCase {
     private func expect(_ sut: FeedCreater, toCompleteCreateListWithError expectedError: NSError?, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
         let exp = expectation(description: "Wait for description")
         var receivedError: Error?
-        sut.create (uniqueList().model) { result in
+        sut.create (uniqueList().model, timestamp: Date()) { result in
             if case let Result.failure(error) = result { receivedError = error }
             exp.fulfill()
         }
@@ -144,7 +146,7 @@ class SaveFeedToDatabaseUseCases: XCTestCase {
     private func expect(_ sut: FeedCreater, toCompleteAddItemToListWithError expectedError: NSError?, when action: () -> Void, file: StaticString = #file, line: UInt = #line) {
         let exp = expectation(description: "Wait for description")
         var receivedError: Error?
-        sut.add(uniqueItem().model, to: uniqueList().model) { result in
+        sut.add(uniqueItem().model, timestamp: Date(), to: uniqueList().model) { result in
             if case let Result.failure(error) = result { receivedError = error }
             exp.fulfill()
         }
