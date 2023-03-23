@@ -8,7 +8,7 @@
 import XCTest
 import ToDDoCore
 
-class CoreDataListFeedStoreTests: XCTestCase {
+class CoreDataFeedStoreTests: XCTestCase {
     
     //MARK: - Retrieve
     func test_retrieve_deliversEmptyOnEmptyDatabase() {
