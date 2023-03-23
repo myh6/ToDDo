@@ -8,10 +8,26 @@
 import XCTest
 import ToDDoiOSPresentation
 
+final class FeedViewController {
+    
+    init(loader: ToDDoiOSPresentationTests.LoaderSpy) {
+        
+    }
+}
+
 final class ToDDoiOSPresentationTests: XCTestCase {
 
     func test_init() {
-        
+        func test_init_doesNotLoadFeed() {
+            let loader = LoaderSpy()
+            _ = FeedViewController(loader: loader)
+            
+            XCTAssertEqual(loader.loadCallCount, 0)
+        }
+    }
+    
+    class LoaderSpy {
+        private(set) var loadCallCount: Int = 0
     }
 
 }
