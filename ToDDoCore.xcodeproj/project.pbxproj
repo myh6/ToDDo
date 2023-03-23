@@ -35,6 +35,7 @@
 		0FCF4B8E29CC03EC00654EEF /* ToDDoiOSPresentation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FCF4B8429CC03EC00654EEF /* ToDDoiOSPresentation.framework */; };
 		0FCF4B9329CC03EC00654EEF /* ToDDoiOSPresentationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCF4B9229CC03EC00654EEF /* ToDDoiOSPresentationTests.swift */; };
 		0FCF4B9429CC03EC00654EEF /* ToDDoiOSPresentation.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FCF4B8629CC03EC00654EEF /* ToDDoiOSPresentation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		0FCF4B9B29CC32E300654EEF /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB9CB262998E42C00AAA276 /* XCTestCase+MemoryLeakTracking.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -474,6 +475,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0FCF4B9329CC03EC00654EEF /* ToDDoiOSPresentationTests.swift in Sources */,
+				0FCF4B9B29CC32E300654EEF /* XCTestCase+MemoryLeakTracking.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
