@@ -17,7 +17,7 @@ final class FeedViewController {
 
 final class ToDDoiOSPresentationTests: XCTestCase {
 
-    func test_init() {
+    func test_init_doesNotLoadFeed() {
         func test_init_doesNotLoadFeed() {
             let loader = LoaderSpy()
             _ = FeedViewController(loader: loader)
