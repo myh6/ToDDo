@@ -264,7 +264,7 @@
 			isa = PBXGroup;
 			children = (
 				0FCF4B8729CC03EC00654EEF /* ToDDoiOSPresentation.docc */,
-				0FCF4B9C29CC38F900654EEF /* FeedTitleView.swift */,
+				0FCF4BA429CC4BE300654EEF /* Views */,
 			);
 			path = ToDDoiOSPresentation;
 			sourceTree = "<group>";
@@ -281,6 +281,14 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		0FCF4BA429CC4BE300654EEF /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				0FCF4B9C29CC38F900654EEF /* FeedTitleView.swift */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
