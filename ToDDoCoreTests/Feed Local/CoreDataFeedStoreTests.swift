@@ -7,6 +7,7 @@
 
 import XCTest
 import ToDDoCore
+import CoreData
 
 class CoreDataFeedStoreTests: XCTestCase {
     
