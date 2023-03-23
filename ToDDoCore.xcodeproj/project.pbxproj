@@ -33,7 +33,6 @@
 		0FB9CB5C29A345EA00AAA276 /* ToDDolist.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB9CB5B29A345EA00AAA276 /* ToDDolist.swift */; };
 		0FCF4B8829CC03EC00654EEF /* ToDDoiOSPresentation.docc in Sources */ = {isa = PBXBuildFile; fileRef = 0FCF4B8729CC03EC00654EEF /* ToDDoiOSPresentation.docc */; };
 		0FCF4B8E29CC03EC00654EEF /* ToDDoiOSPresentation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FCF4B8429CC03EC00654EEF /* ToDDoiOSPresentation.framework */; };
-		0FCF4B9329CC03EC00654EEF /* ToDDoiOSPresentationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCF4B9229CC03EC00654EEF /* ToDDoiOSPresentationTests.swift */; };
 		0FCF4B9429CC03EC00654EEF /* ToDDoiOSPresentation.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FCF4B8629CC03EC00654EEF /* ToDDoiOSPresentation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		0FCF4B9B29CC32E300654EEF /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB9CB262998E42C00AAA276 /* XCTestCase+MemoryLeakTracking.swift */; };
 /* End PBXBuildFile section */
@@ -85,7 +84,6 @@
 		0FCF4B8629CC03EC00654EEF /* ToDDoiOSPresentation.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ToDDoiOSPresentation.h; sourceTree = "<group>"; };
 		0FCF4B8729CC03EC00654EEF /* ToDDoiOSPresentation.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = ToDDoiOSPresentation.docc; sourceTree = "<group>"; };
 		0FCF4B8D29CC03EC00654EEF /* ToDDoiOSPresentationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ToDDoiOSPresentationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		0FCF4B9229CC03EC00654EEF /* ToDDoiOSPresentationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDDoiOSPresentationTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -249,7 +247,6 @@
 		0FCF4B9129CC03EC00654EEF /* ToDDoiOSPresentationTests */ = {
 			isa = PBXGroup;
 			children = (
-				0FCF4B9229CC03EC00654EEF /* ToDDoiOSPresentationTests.swift */,
 			);
 			path = ToDDoiOSPresentationTests;
 			sourceTree = "<group>";
@@ -474,7 +471,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0FCF4B9329CC03EC00654EEF /* ToDDoiOSPresentationTests.swift in Sources */,
 				0FCF4B9B29CC32E300654EEF /* XCTestCase+MemoryLeakTracking.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
