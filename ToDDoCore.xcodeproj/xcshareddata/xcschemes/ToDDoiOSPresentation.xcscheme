@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0FB9CB0629962ED900AAA276"
-               BuildableName = "ToDDoCore.framework"
-               BlueprintName = "ToDDoCore"
+               BlueprintIdentifier = "0FCF4B8329CC03EC00654EEF"
+               BuildableName = "ToDDoiOSPresentation.framework"
+               BlueprintName = "ToDDoiOSPresentation"
                ReferencedContainer = "container:ToDDoCore.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -32,13 +32,6 @@
       <CodeCoverageTargets>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "0FB9CB0629962ED900AAA276"
-            BuildableName = "ToDDoCore.framework"
-            BlueprintName = "ToDDoCore"
-            ReferencedContainer = "container:ToDDoCore.xcodeproj">
-         </BuildableReference>
-         <BuildableReference
-            BuildableIdentifier = "primary"
             BlueprintIdentifier = "0FCF4B8329CC03EC00654EEF"
             BuildableName = "ToDDoiOSPresentation.framework"
             BlueprintName = "ToDDoiOSPresentation"
@@ -46,17 +39,6 @@
          </BuildableReference>
       </CodeCoverageTargets>
       <Testables>
-         <TestableReference
-            skipped = "NO"
-            testExecutionOrdering = "random">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "0FB9CB1029962ED900AAA276"
-               BuildableName = "ToDDoCoreTests.xctest"
-               BlueprintName = "ToDDoCoreTests"
-               ReferencedContainer = "container:ToDDoCore.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
          <TestableReference
             skipped = "NO"
             testExecutionOrdering = "random">
@@ -90,9 +72,9 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "0FB9CB0629962ED900AAA276"
-            BuildableName = "ToDDoCore.framework"
-            BlueprintName = "ToDDoCore"
+            BlueprintIdentifier = "0FCF4B8329CC03EC00654EEF"
+            BuildableName = "ToDDoiOSPresentation.framework"
+            BlueprintName = "ToDDoiOSPresentation"
             ReferencedContainer = "container:ToDDoCore.xcodeproj">
          </BuildableReference>
       </MacroExpansion>

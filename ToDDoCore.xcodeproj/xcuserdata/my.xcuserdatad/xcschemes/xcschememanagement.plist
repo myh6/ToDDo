@@ -14,6 +14,11 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>ToDDoiOSPresentation.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>3</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
@@ -23,6 +28,26 @@
 			<true/>
 		</dict>
 		<key>0FB9CB1029962ED900AAA276</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>0FCF4B6529CC01DC00654EEF</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>0FCF4B6E29CC01DC00654EEF</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>0FCF4B8329CC03EC00654EEF</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>0FCF4B8C29CC03EC00654EEF</key>
 		<dict>
 			<key>primary</key>
 			<true/>
