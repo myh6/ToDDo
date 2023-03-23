@@ -18,6 +18,11 @@ public class CoreDataFeedStore: FeedStore {
         context = container.newBackgroundContext()
     }
     
+    public init(contianer: NSPersistentContainer) {
+        self.container = contianer
+        self.context = container.newBackgroundContext()
+    }
+    
     public func retrieve(completion: @escaping RetrievalCompletion) {
         let context = self.context
         context.perform {
@@ -153,7 +158,7 @@ public class CoreDataFeedStore: FeedStore {
     
 }
 
-private extension NSPersistentContainer {
+public extension NSPersistentContainer {
     enum LoadingError: Swift.Error {
         case modelNotFound
         case failedToLoadPersistentStores(Swift.Error)
@@ -176,7 +181,7 @@ private extension NSPersistentContainer {
     }
 }
 
-private extension NSManagedObjectModel {
+public extension NSManagedObjectModel {
     static func with(name: String, in bundle: Bundle) -> NSManagedObjectModel? {
         return bundle
             .url(forResource: name, withExtension: "momd")
