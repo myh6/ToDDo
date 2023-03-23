@@ -34,6 +34,9 @@
 		0FCF4B8829CC03EC00654EEF /* ToDDoiOSPresentation.docc in Sources */ = {isa = PBXBuildFile; fileRef = 0FCF4B8729CC03EC00654EEF /* ToDDoiOSPresentation.docc */; };
 		0FCF4B8E29CC03EC00654EEF /* ToDDoiOSPresentation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FCF4B8429CC03EC00654EEF /* ToDDoiOSPresentation.framework */; };
 		0FCF4B9B29CC32E300654EEF /* XCTestCase+MemoryLeakTracking.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB9CB262998E42C00AAA276 /* XCTestCase+MemoryLeakTracking.swift */; };
+		0FCF4B9D29CC38F900654EEF /* FeedTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FCF4B9C29CC38F900654EEF /* FeedTitleView.swift */; };
+		0FCF4B9F29CC391900654EEF /* ToDDoCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FB9CB0729962ED900AAA276 /* ToDDoCore.framework */; };
+		0FCF4BA029CC391900654EEF /* ToDDoCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 0FB9CB0729962ED900AAA276 /* ToDDoCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,7 +54,28 @@
 			remoteGlobalIDString = 0FCF4B8329CC03EC00654EEF;
 			remoteInfo = ToDDoiOSPresentation;
 		};
+		0FCF4BA129CC391900654EEF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0FB9CAFE29962ED900AAA276 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0FB9CB0629962ED900AAA276;
+			remoteInfo = ToDDoCore;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		0FCF4BA329CC391900654EEF /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				0FCF4BA029CC391900654EEF /* ToDDoCore.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0F0038AC29BCCA4C00CB0A86 /* ToDDoListMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDDoListMapper.swift; sourceTree = "<group>"; };
@@ -82,6 +106,7 @@
 		0FCF4B8429CC03EC00654EEF /* ToDDoiOSPresentation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ToDDoiOSPresentation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FCF4B8729CC03EC00654EEF /* ToDDoiOSPresentation.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = ToDDoiOSPresentation.docc; sourceTree = "<group>"; };
 		0FCF4B8D29CC03EC00654EEF /* ToDDoiOSPresentationTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ToDDoiOSPresentationTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		0FCF4B9C29CC38F900654EEF /* FeedTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedTitleView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +129,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0FCF4B9F29CC391900654EEF /* ToDDoCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -134,6 +160,7 @@
 				0FCF4B8529CC03EC00654EEF /* ToDDoiOSPresentation */,
 				0FCF4B9129CC03EC00654EEF /* ToDDoiOSPresentationTests */,
 				0FB9CB0829962ED900AAA276 /* Products */,
+				0FCF4B9E29CC391900654EEF /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -237,6 +264,7 @@
 			isa = PBXGroup;
 			children = (
 				0FCF4B8729CC03EC00654EEF /* ToDDoiOSPresentation.docc */,
+				0FCF4B9C29CC38F900654EEF /* FeedTitleView.swift */,
 			);
 			path = ToDDoiOSPresentation;
 			sourceTree = "<group>";
@@ -246,6 +274,13 @@
 			children = (
 			);
 			path = ToDDoiOSPresentationTests;
+			sourceTree = "<group>";
+		};
+		0FCF4B9E29CC391900654EEF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -313,10 +348,12 @@
 				0FCF4B8029CC03EC00654EEF /* Sources */,
 				0FCF4B8129CC03EC00654EEF /* Frameworks */,
 				0FCF4B8229CC03EC00654EEF /* Resources */,
+				0FCF4BA329CC391900654EEF /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				0FCF4BA229CC391900654EEF /* PBXTargetDependency */,
 			);
 			name = ToDDoiOSPresentation;
 			productName = ToDDoiOSPresentation;
@@ -460,6 +497,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0FCF4B8829CC03EC00654EEF /* ToDDoiOSPresentation.docc in Sources */,
+				0FCF4B9D29CC38F900654EEF /* FeedTitleView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -483,6 +521,11 @@
 			isa = PBXTargetDependency;
 			target = 0FCF4B8329CC03EC00654EEF /* ToDDoiOSPresentation */;
 			targetProxy = 0FCF4B8F29CC03EC00654EEF /* PBXContainerItemProxy */;
+		};
+		0FCF4BA229CC391900654EEF /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 0FB9CB0629962ED900AAA276 /* ToDDoCore */;
+			targetProxy = 0FCF4BA129CC391900654EEF /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -787,6 +830,7 @@
 		0FCF4B9929CC03EC00654EEF /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = R5599LYD4Y;
@@ -806,6 +850,7 @@
 		0FCF4B9A29CC03EC00654EEF /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = R5599LYD4Y;
