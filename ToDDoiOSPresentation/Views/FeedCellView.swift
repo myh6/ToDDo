@@ -38,7 +38,7 @@ struct FeedCellView: View {
                 
                 RoundedRectangle(cornerRadius: 20)
                     .fill(.white)
-                    .shadow(color: priority.color.opacity(0.8), radius: 5)
+                    .shadow(color: .black.opacity(0.5), radius: 5)
                 
                 Text(text).foregroundColor(.black)
             }.padding()
