@@ -18,7 +18,7 @@ enum Priority {
         case .high:
             return .red
         case .medium:
-            return .yellow
+            return .orange
         case .low:
             return .blue
         case .none:
@@ -58,7 +58,7 @@ struct FeedCellTestingView: View {
     
     var body: some View {
         VStack {
-            FeedCellView(text: "A text", priority: .high) {
+            FeedCellView(text: "A text", priority: .medium) {
                 count += 1
             }
             Text("Selection count \(count)")
