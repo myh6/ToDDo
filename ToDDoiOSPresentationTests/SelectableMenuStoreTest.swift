@@ -10,12 +10,17 @@ import XCTest
 struct SelectableMenuStore {
     var options: [Option]
     
+    var selectedOption: Option {
+        options.filter({ $0.isSelected }).first ?? options[0]
+    }
+    
     init(options: [String]) {
         self.options = options.map { Option(text: $0) }
     }
+    
 }
 
-struct Option {
+struct Option: Equatable {
     let text: String
     var isSelected: Bool = false
     
@@ -25,6 +30,12 @@ struct Option {
 }
 
 class SelectableMenuStoreTest: XCTestCase {
+    
+    func test_init_selectedOptionIsTheFirstOption() {
+        let sut = SelectableMenuStore(options: ["A option", "B option"])
+        
+        XCTAssertEqual(sut.selectedOption, sut.options[0])
+    }
     
     func test_selectOption_togglesState() {
         var sut = SelectableMenuStore(options: ["A option", "B option"])
