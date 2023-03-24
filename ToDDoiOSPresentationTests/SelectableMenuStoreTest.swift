@@ -6,35 +6,7 @@
 //
 
 import XCTest
-
-struct SelectableMenuStore {
-    private(set) var options: [Option]
-    
-    private(set) var selectedOptionIndex = 0
-    var selectedOptionText: String {
-        options[selectedOptionIndex].text
-    }
-    
-    init(options: [String]) {
-        self.options = options.map { Option(text: $0) }
-    }
-    
-    mutating func selectOption(at index: Int) {
-        guard options.indices.contains(index) else { return }
-        options = options.enumerated().map { i, option in
-            var option = option
-            option.isSelected = (i == index)
-            return option
-        }
-        selectedOptionIndex = index
-    }
-    
-}
-
-struct Option: Equatable {
-    let text: String
-    var isSelected: Bool = false
-}
+import ToDDoiOSPresentation
 
 class SelectableMenuStoreTest: XCTestCase {
     
