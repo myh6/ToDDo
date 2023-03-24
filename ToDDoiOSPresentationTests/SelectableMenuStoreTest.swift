@@ -17,6 +17,7 @@ struct SelectableMenuStore {
     }
     
     mutating func selectOption(at index: Int) {
+        guard options.indices.contains(index) else { return }
         options = options.enumerated().map { i, option in
             var option = option
             option.isSelected = (i == index)
@@ -58,6 +59,15 @@ class SelectableMenuStoreTest: XCTestCase {
         
         sut.selectOption(at: 1)
         XCTAssertEqual(sut.selectedOptionIndex, 1)
+    }
+    
+    func test_selectOption_doesNothingIfIndexIsOutOfRange() {
+        var sut = SelectableMenuStore(options: ["A option", "B option"])
+        
+        XCTAssertEqual(sut.selectedOptionIndex, 0)
+        sut.selectOption(at: 3)
+        
+        XCTAssertEqual(sut.selectedOptionIndex, 0)
     }
     
 }
