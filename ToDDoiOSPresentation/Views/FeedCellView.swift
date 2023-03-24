@@ -7,8 +7,29 @@
 
 import SwiftUI
 
+enum Priority {
+    case high
+    case medium
+    case low
+    case none
+    
+    var color: Color {
+        switch self {
+        case .high:
+            return .red
+        case .medium:
+            return .yellow
+        case .low:
+            return .blue
+        case .none:
+            return .gray
+        }
+    }
+}
+
 struct FeedCellView: View {
     let text: String
+    let priority: Priority
     let selection: () -> Void
     
     var body: some View {
@@ -17,7 +38,7 @@ struct FeedCellView: View {
                 
                 RoundedRectangle(cornerRadius: 20)
                     .fill(.white)
-                    .shadow(color: .black.opacity(0.7), radius: 5, x: 0, y: 5)
+                    .shadow(color: priority.color.opacity(0.8), radius: 5)
                 
                 Text(text).foregroundColor(.black)
             }.padding()
@@ -37,7 +58,7 @@ struct FeedCellTestingView: View {
     
     var body: some View {
         VStack {
-            FeedCellView(text: "A text") {
+            FeedCellView(text: "A text", priority: .high) {
                 count += 1
             }
             Text("Selection count \(count)")
