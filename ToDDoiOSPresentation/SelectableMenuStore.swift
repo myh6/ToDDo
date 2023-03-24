@@ -17,6 +17,7 @@ public struct SelectableMenuStore {
     
     public init(options: [String]) {
         self.options = options.map { Option(text: $0) }
+        self.options[0].isSelected = true
     }
     
     public mutating func selectOption(at index: Int) {
