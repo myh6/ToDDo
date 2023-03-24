@@ -40,7 +40,7 @@ class SelectableMenuStoreTest: XCTestCase {
         XCTAssertEqual(sut.selectedOptionIndex, 0)
     }
     
-    func test_selectOption_togglesState() {
+    func test_selectOption_togglesOptionState() {
         var sut = SelectableMenuStore(options: ["A option", "B option"])
         XCTAssertFalse(sut.options[0].isSelected)
         
