@@ -8,9 +8,12 @@
 import XCTest
 
 struct SelectableMenuStore {
-    var options: [Option]
+    private(set) var options: [Option]
     
-    var selectedOptionIndex = 0
+    private(set) var selectedOptionIndex = 0
+    var selectedOptionText: String {
+        options[selectedOptionIndex].text
+    }
     
     init(options: [String]) {
         self.options = options.map { Option(text: $0) }
@@ -39,6 +42,7 @@ class SelectableMenuStoreTest: XCTestCase {
         let sut = SelectableMenuStore(options: ["A option", "B option"])
         
         XCTAssertEqual(sut.selectedOptionIndex, 0)
+        XCTAssertEqual(sut.selectedOptionText, "A option")
     }
     
     func test_selectOption_togglesOptionState() {
@@ -59,15 +63,18 @@ class SelectableMenuStoreTest: XCTestCase {
         
         sut.selectOption(at: 1)
         XCTAssertEqual(sut.selectedOptionIndex, 1)
+        XCTAssertEqual(sut.selectedOptionText, "B option")
     }
     
     func test_selectOption_doesNothingIfIndexIsOutOfRange() {
         var sut = SelectableMenuStore(options: ["A option", "B option"])
         
         XCTAssertEqual(sut.selectedOptionIndex, 0)
+        XCTAssertEqual(sut.selectedOptionText, "A option")
         sut.selectOption(at: 3)
         
         XCTAssertEqual(sut.selectedOptionIndex, 0)
+        XCTAssertEqual(sut.selectedOptionText, "A option")
     }
     
 }
