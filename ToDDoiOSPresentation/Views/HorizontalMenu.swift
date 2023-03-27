@@ -44,7 +44,7 @@ struct HorizontalMenu_Previews: PreviewProvider {
                     optionText = $0
                 }))
                 
-                Text("Last selected option:" + optionText)
+                Text("Last selected option: " + optionText)
             }.previewLayout(.sizeThatFits)
         }
         
