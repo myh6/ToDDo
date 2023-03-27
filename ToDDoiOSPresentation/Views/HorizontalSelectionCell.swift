@@ -13,10 +13,20 @@ struct HorizontalSelectionCell: View {
     let selection: () -> Void
     
     var body: some View {
-        Button(action: { selection() }) {
+        Button(action: {
+                selection()
+        }) {
             Text(option.text)
                 .foregroundColor(option.isSelected ? selectedColor : Color.gray)
-        }
+                .overlay {
+                    Rectangle()
+                        .frame(width: 40.0, height: 2.0)
+                        .offset(x: 0, y: 20)
+                        .foregroundColor(option.isSelected ? selectedColor : .clear)
+                        
+                }
+                
+        }.padding()
     }
     
 }
