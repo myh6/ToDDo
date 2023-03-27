@@ -9,13 +9,14 @@ import SwiftUI
 
 struct HorizontalMenu: View {
     
+    let selectedColor: Color
     @StateObject var store: SelectableMenuStore
     
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack {
                 ForEach(Array(store.options.enumerated()), id: \.offset) { i, option in
-                    HorizontalSelectionCell(option: $store.options[i]) {
+                    HorizontalSelectionCell(option: $store.options[i], selectedColor: selectedColor) {
                         store.selectOption(at: i)
                     }
                 }
@@ -26,12 +27,13 @@ struct HorizontalMenu: View {
 
 struct HorizontalSelectionCell: View {
     @Binding var option: Option
+    let selectedColor: Color
     let selection: () -> Void
     
     var body: some View {
         Button(action: { selection() }) {
             Text(option.text)
-                .foregroundColor(option.isSelected ? Color.blue : Color.gray)
+                .foregroundColor(option.isSelected ? selectedColor : Color.gray)
         }
     }
     
@@ -47,7 +49,7 @@ struct HorizontalMenu_Previews: PreviewProvider {
         
         var body: some View {
             VStack {
-                HorizontalMenu(store: .init(options: ["A option", "B option", "C option", "D option", "E option", "F option", "G option"], didSelect: {
+                HorizontalMenu(selectedColor: .green, store: .init(options: ["A option", "B option", "C option", "D option", "E option", "F option", "G option"], didSelect: {
                     optionText = $0
                 }))
                 
