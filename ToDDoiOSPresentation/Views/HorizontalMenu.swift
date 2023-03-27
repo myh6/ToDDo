@@ -35,7 +35,7 @@ struct HorizontalMenu_Previews: PreviewProvider {
         
         var body: some View {
             VStack {
-                HorizontalMenu(selectedColor: .green, store: .init(options: ["A option", "B option", "C option", "D option", "E option", "F option", "G option"], didSelect: {
+                HorizontalMenu(selectedColor: .blue, store: .init(options: ["A option", "B option", "C option", "D option", "E option", "F option", "G option"], didSelect: {
                     optionText = $0
                 }))
                 
