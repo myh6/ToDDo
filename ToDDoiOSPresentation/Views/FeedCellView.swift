@@ -7,26 +7,6 @@
 
 import SwiftUI
 
-enum Priority {
-    case high
-    case medium
-    case low
-    case none
-    
-    var color: Color {
-        switch self {
-        case .high:
-            return .red
-        case .medium:
-            return .orange
-        case .low:
-            return .blue
-        case .none:
-            return .gray
-        }
-    }
-}
-
 struct FeedCellView: View {
     let text: String
     let priority: Priority
