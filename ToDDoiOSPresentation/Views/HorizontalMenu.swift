@@ -7,12 +7,17 @@
 
 import SwiftUI
 
-struct HorizontalMenu: View {
+public struct HorizontalMenu: View {
     
     let selectedColor: Color
     @StateObject var store: SelectableMenuStore
     
-    var body: some View {
+    public init(selectedColor: Color, store: SelectableMenuStore) {
+        self.selectedColor = selectedColor
+        self._store = StateObject(wrappedValue: store)
+    }
+    
+    public var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack {
                 ForEach(Array(store.options.enumerated()), id: \.offset) { i, option in
