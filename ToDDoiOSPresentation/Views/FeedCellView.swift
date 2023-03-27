@@ -31,17 +31,17 @@ struct FeedCellView_Previews: PreviewProvider {
         FeedCellTestingView()
             .previewLayout(.sizeThatFits)
     }
-}
-
-struct FeedCellTestingView: View {
-    @State var count: Int = 0
-    
-    var body: some View {
-        VStack {
-            FeedCellView(text: "A text", priority: .medium) {
-                count += 1
-            }
-            Text("Selection count \(count)")
-        }.padding()
+    struct FeedCellTestingView: View {
+        @State var count: Int = 0
+        
+        var body: some View {
+            VStack {
+                FeedCellView(text: "A text", priority: .medium) {
+                    count += 1
+                }
+                Text("Selection count \(count)")
+            }.padding()
+        }
     }
 }
+
