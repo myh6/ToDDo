@@ -7,20 +7,25 @@
 
 import Foundation
 
-public struct SelectableMenuStore {
-    public private(set) var options: [Option]
+public class SelectableMenuStore: ObservableObject {
+    @Published public var options: [Option]
     
     public private(set) var selectedOptionIndex = 0
     public var selectedOptionText: String {
         options[selectedOptionIndex].text
     }
     
-    public init(options: [String]) {
+    private let didSelect: (String) -> Void
+    
+    public init(options: [String], didSelect: @escaping (String) -> Void) {
         self.options = options.map { Option(text: $0) }
+        self.didSelect = didSelect
         self.options[0].isSelected = true
+        
+        didSelect(selectedOptionText)
     }
     
-    public mutating func selectOption(at index: Int) {
+    public func selectOption(at index: Int) {
         guard options.indices.contains(index) else { return }
         options = options.enumerated().map { i, option in
             var option = option
@@ -28,6 +33,7 @@ public struct SelectableMenuStore {
             return option
         }
         selectedOptionIndex = index
+        didSelect(selectedOptionText)
     }
     
 }

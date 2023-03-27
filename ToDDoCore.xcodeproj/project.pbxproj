@@ -15,6 +15,8 @@
 		0F8ECE5129CD8FE0001A539D /* SelectableMenuStoreTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F8ECE5029CD8FE0001A539D /* SelectableMenuStoreTest.swift */; };
 		0F8ECE5329CDA715001A539D /* SelectableMenuStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F8ECE5229CDA715001A539D /* SelectableMenuStore.swift */; };
 		0F8ECE5529CDA8EB001A539D /* HorizontalMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F8ECE5429CDA8EB001A539D /* HorizontalMenu.swift */; };
+		0F8ECE5829D13FB8001A539D /* MultiplSelection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F8ECE5729D13FB8001A539D /* MultiplSelection.swift */; };
+		0F8ECE5A29D13FF8001A539D /* MultipleSelectionStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F8ECE5929D13FF8001A539D /* MultipleSelectionStoreTests.swift */; };
 		0FB9CB0C29962ED900AAA276 /* ToDDoCore.docc in Sources */ = {isa = PBXBuildFile; fileRef = 0FB9CB0B29962ED900AAA276 /* ToDDoCore.docc */; };
 		0FB9CB1229962ED900AAA276 /* ToDDoCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FB9CB0729962ED900AAA276 /* ToDDoCore.framework */; };
 		0FB9CB1829962ED900AAA276 /* ToDDoCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FB9CB0A29962ED900AAA276 /* ToDDoCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -90,6 +92,8 @@
 		0F8ECE5029CD8FE0001A539D /* SelectableMenuStoreTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableMenuStoreTest.swift; sourceTree = "<group>"; };
 		0F8ECE5229CDA715001A539D /* SelectableMenuStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableMenuStore.swift; sourceTree = "<group>"; };
 		0F8ECE5429CDA8EB001A539D /* HorizontalMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalMenu.swift; sourceTree = "<group>"; };
+		0F8ECE5729D13FB8001A539D /* MultiplSelection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiplSelection.swift; sourceTree = "<group>"; };
+		0F8ECE5929D13FF8001A539D /* MultipleSelectionStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleSelectionStoreTests.swift; sourceTree = "<group>"; };
 		0FB9CB0729962ED900AAA276 /* ToDDoCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ToDDoCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FB9CB0A29962ED900AAA276 /* ToDDoCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ToDDoCore.h; sourceTree = "<group>"; };
 		0FB9CB0B29962ED900AAA276 /* ToDDoCore.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = ToDDoCore.docc; sourceTree = "<group>"; };
@@ -282,6 +286,7 @@
 			isa = PBXGroup;
 			children = (
 				0F8ECE5029CD8FE0001A539D /* SelectableMenuStoreTest.swift */,
+				0F8ECE5929D13FF8001A539D /* MultipleSelectionStoreTests.swift */,
 			);
 			path = ToDDoiOSPresentationTests;
 			sourceTree = "<group>";
@@ -299,6 +304,7 @@
 				0FCF4B9C29CC38F900654EEF /* FeedTitleView.swift */,
 				0F8ECE4A29CC4D3D001A539D /* FeedCellView.swift */,
 				0F8ECE5429CDA8EB001A539D /* HorizontalMenu.swift */,
+				0F8ECE5729D13FB8001A539D /* MultiplSelection.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -518,6 +524,7 @@
 			files = (
 				0FCF4B8829CC03EC00654EEF /* ToDDoiOSPresentation.docc in Sources */,
 				0F8ECE4B29CC4D3D001A539D /* FeedCellView.swift in Sources */,
+				0F8ECE5829D13FB8001A539D /* MultiplSelection.swift in Sources */,
 				0F8ECE5329CDA715001A539D /* SelectableMenuStore.swift in Sources */,
 				0FCF4BA529CC4CCA00654EEF /* FeedTitleView.swift in Sources */,
 				0F8ECE5529CDA8EB001A539D /* HorizontalMenu.swift in Sources */,
@@ -530,6 +537,7 @@
 			files = (
 				0F8ECE5129CD8FE0001A539D /* SelectableMenuStoreTest.swift in Sources */,
 				0FCF4B9B29CC32E300654EEF /* XCTestCase+MemoryLeakTracking.swift in Sources */,
+				0F8ECE5A29D13FF8001A539D /* MultipleSelectionStoreTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

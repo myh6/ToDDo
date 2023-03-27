@@ -9,25 +9,51 @@ import SwiftUI
 
 struct HorizontalMenu: View {
     
-    @State var store: SelectableMenuStore
+    @StateObject var store: SelectableMenuStore
+    
     var body: some View {
-        HStack {
-            ForEach(Array(store.options.enumerated()), id: \.offset) { i, option in
-                Button {
-                    store.selectOption(at: i)
-                } label: {
-                    Text(option.text)
-                        .foregroundColor(option.isSelected ? Color.blue : Color.gray)
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack {
+                ForEach(Array(store.options.enumerated()), id: \.offset) { i, option in
+                    HorizontalSelectionCell(option: $store.options[i]) {
+                        store.selectOption(at: i)
+                    }
                 }
-
             }
         }
     }
 }
 
+struct HorizontalSelectionCell: View {
+    @Binding var option: Option
+    let selection: () -> Void
+    
+    var body: some View {
+        Button(action: { selection() }) {
+            Text(option.text)
+                .foregroundColor(option.isSelected ? Color.blue : Color.gray)
+        }
+    }
+    
+}
+
 struct HorizontalMenu_Previews: PreviewProvider {
     static var previews: some View {
-        HorizontalMenu(store: SelectableMenuStore(options: ["A option", "B option", "C option"]))
-            .previewLayout(.sizeThatFits)
+        HorizontalMenuTestView()
+    }
+    
+    struct HorizontalMenuTestView: View {
+        @State var optionText = "none"
+        
+        var body: some View {
+            VStack {
+                HorizontalMenu(store: .init(options: ["A option", "B option", "C option", "D option", "E option", "F option", "G option"], didSelect: {
+                    optionText = $0
+                }))
+                
+                Text("Last selected option:" + optionText)
+            }.previewLayout(.sizeThatFits)
+        }
+        
     }
 }
