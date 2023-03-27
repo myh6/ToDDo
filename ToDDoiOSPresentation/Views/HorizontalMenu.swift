@@ -25,20 +25,6 @@ struct HorizontalMenu: View {
     }
 }
 
-struct HorizontalSelectionCell: View {
-    @Binding var option: Option
-    let selectedColor: Color
-    let selection: () -> Void
-    
-    var body: some View {
-        Button(action: { selection() }) {
-            Text(option.text)
-                .foregroundColor(option.isSelected ? selectedColor : Color.gray)
-        }
-    }
-    
-}
-
 struct HorizontalMenu_Previews: PreviewProvider {
     static var previews: some View {
         HorizontalMenuTestView()
