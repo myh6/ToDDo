@@ -12,14 +12,14 @@ import ToDDoCore
 class ToDDoMainViewModelTests: XCTestCase {
     
     func test_init_renderCorrectFormattedDate() {
-        let date = Date(timeIntervalSince1970: 1679983658)
+        let date = renderExactDate()
         let sut = ToDDoMainViewModel(date: date, lists: uniqueUser().models)
         
         XCTAssertEqual(sut.dateText, "Tuesday, Mar 28, 2023")
     }
     
     func test_init_givenDateRenderTasksCountInThatDate() {
-        let date = Date(timeIntervalSince1970: 1679932800)
+        let date = renderExactDate()
         let sameDayDate = date.addDay(1).addMinute(-1)
         let lists = uniqueUser(date: date).models
         let sut = ToDDoMainViewModel(date: sameDayDate, lists: lists)
@@ -30,10 +30,17 @@ class ToDDoMainViewModelTests: XCTestCase {
     func test_init_givenOldDateToDoCountShouldBeZero() {
         let oldDate = Date(timeIntervalSince1970: 1000000000)
         let lists = uniqueUser(date: oldDate).models
-        let date = Date(timeIntervalSince1970: 1679983658)
+        let date = renderExactDate()
         let sut = ToDDoMainViewModel(date: date, lists: lists)
         
         XCTAssertEqual(sut.toDoCount, 0)
+    }
+    
+    //MARK: - Helpers
+    /// Render date using unix timestamp
+    /// - Returns: 2023-03-28 00:00:00
+    func renderExactDate() -> Date {
+        Date(timeIntervalSince1970: 1679932800)
     }
     
 }
