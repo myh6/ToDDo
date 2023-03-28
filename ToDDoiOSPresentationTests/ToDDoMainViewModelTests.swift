@@ -19,8 +19,8 @@ class ToDDoMainViewModelTests: XCTestCase {
     }
     
     func test_init_givenDateRenderTasksCountInThatDate() {
-        let date = Date(timeIntervalSince1970: 1679983658)
-        let sameDayDate = Date(timeIntervalSince1970: 1679984501)
+        let date = Date(timeIntervalSince1970: 1679932800)
+        let sameDayDate = date.addDay(1).addMinute(-1)
         let lists = uniqueUser(date: date).models
         let sut = ToDDoMainViewModel(date: sameDayDate, lists: lists)
         
@@ -36,4 +36,16 @@ class ToDDoMainViewModelTests: XCTestCase {
         XCTAssertEqual(sut.toDoCount, 0)
     }
     
+}
+
+private extension Date {
+    func addDay(_ value: Int) -> Date {
+        let calendar = Calendar(identifier: .gregorian)
+        return calendar.date(byAdding: .day, value: value, to: self)!
+    }
+    
+    func addMinute(_ value: Int) -> Date {
+        let calendar = Calendar(identifier: .gregorian)
+        return calendar.date(byAdding: .minute, value: value, to: self)!
+    }
 }
