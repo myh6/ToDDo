@@ -16,20 +16,4 @@ jobs:
     - name: Force Xcode 14.1
       run: sudo xcode-select -switch /Applications/Xcode_14.1.app
     - name: Build and test CI iOS
-      run: xcodebuild clean build test -project ToDDoCore.xcodeproj -scheme "CI_iOS" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO -sdk iphonesimulator -destination "platform=iOS Simulator,OS=16.1,name=iPhone 14" ONLY_ACTIVE_ARCH=YES || true
-    - name: Save test report artifact
-      if: ${{ always() }}
-      run: |
-        if [ -d "./test-reports" ]; then
-          cd ./test-reports
-          report_name="CI-${{ env.JOB_NAME }}-$(date +'%Y-%m-%d-%H-%M-%S').xcresult"
-          zip -r "$report_name.zip" ./*
-          echo "::set-output name=report_name::$report_name.zip"
-        fi
-      working-directory: ./test-reports
-    - name: Upload test report artifact
-      if: ${{ always() }}
-      uses: actions/upload-artifact@v2
-      with:
-        name: ${{ env.report_name }}
-        path: ${{ env.report_name }}
+      run: xcodebuild clean build test -project ToDDoCore.xcodeproj -scheme "CI_iOS" CODE_SIGN_IDENTITY="" CODE_SIGNING_REQUIRED=NO -sdk iphonesimulator -destination "platform=iOS Simulator,OS=16.1,name=iPhone 14" ONLY_ACTIVE_ARCH=YES
