@@ -17,6 +17,7 @@ struct HorizontalSelectionCell: View {
                 selection()
         }) {
             Text(option.text)
+                .font(.subheadline)
                 .foregroundColor(option.isSelected ? selectedColor : Color.gray)
                 .overlay {
                     Rectangle()
