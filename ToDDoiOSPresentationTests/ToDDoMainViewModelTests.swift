@@ -18,4 +18,15 @@ class ToDDoMainViewModelTests: XCTestCase {
         XCTAssertEqual(sut.dateText, "Tuesday, Mar 28, 2023")
     }
     
+    func test_init_givenDateRenderTasksCountInThatDate() {
+        let date = Date(timeIntervalSince1970: 1679983658)
+        let sameDayDate = Date(timeIntervalSince1970: 1679984501)
+        let lists = uniqueUser(date: date).models
+        let sut = ToDDoMainViewModel(date: sameDayDate, lists: lists)
+        
+        XCTAssertEqual(sut.toDoCount, 2)
+    }
+    
+    
+    
 }

@@ -15,14 +15,24 @@ public struct ToDDoMainViewModel {
         formatter.locale = Locale(identifier: "en_US_POSIX")
         return formatter
     }()
+    private let calendar: Calendar = {
+        let calendar = Calendar(identifier: .gregorian)
+        return calendar
+    }()
+    
     private let dateInDate: Date
     
     public var dateText: String {
         dateFormatter.string(from: dateInDate)
     }
     
-    var todayNumber: Int {
-        lists.filter{ $0.items.contains{ $0.expectedDate == dateInDate } }.count
+    public var toDoCount: Int {
+        lists.filter{
+            $0.items.contains{
+                guard let expectedDate = $0.expectedDate else { return false }
+                return calendar.dateComponents([.year, .month, .day], from: expectedDate) == calendar.dateComponents([.year, .month, .day], from: dateInDate)
+            }
+        }.count
     }
     let lists: [FeedListGroup]
     
@@ -42,7 +52,7 @@ struct ToDDoMainPageView: View {
                 FeedTitleView(title: "ToDDo", date: viewModel.dateText).padding([.top, .leading, .bottom], 20.0)
                 Spacer()
             }
-            FeedSquareView(width: 120, height: 120, title: "TODAY", number: viewModel.todayNumber).padding(.leading, 20.0)
+            FeedSquareView(width: 120, height: 120, title: "TODAY", number: viewModel.toDoCount).padding(.leading, 20.0)
             
             HorizontalMenu(store: store).padding(.leading, 20.0)
             
