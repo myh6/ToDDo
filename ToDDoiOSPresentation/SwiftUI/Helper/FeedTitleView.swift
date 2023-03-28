@@ -16,13 +16,13 @@ struct FeedTitleView: View {
             Text("\(title)")
                 .font(.largeTitle)
                 .fontWeight(.bold)
-                .foregroundColor(.black)
+                .foregroundColor(.primary)
                 .multilineTextAlignment(.leading)
             
             Text("\(date)")
-                .foregroundColor(.gray)
+                .foregroundColor(.secondary)
                 .multilineTextAlignment(.leading)
-        }.padding()
+        }
     }
 }
 

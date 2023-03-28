@@ -9,11 +9,14 @@ import SwiftUI
 
 public struct HorizontalMenu: View {
     
-    let selectedColor: Color
+    @Environment(\.colorScheme) var colorScheme
+    let selectedColorLight: Color
+    let selectedColorDark: Color
     @StateObject var store: SelectableMenuStore
     
-    public init(selectedColor: Color = .black, store: SelectableMenuStore) {
-        self.selectedColor = selectedColor
+    public init(selectedColorLight: Color = .black, selectedColorDark: Color = .white, store: SelectableMenuStore) {
+        self.selectedColorLight = selectedColorLight
+        self.selectedColorDark = selectedColorDark
         self._store = StateObject(wrappedValue: store)
     }
     
@@ -21,7 +24,7 @@ public struct HorizontalMenu: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack {
                 ForEach(Array(store.options.enumerated()), id: \.offset) { i, option in
-                    HorizontalSelectionCell(option: $store.options[i], selectedColor: selectedColor) {
+                    HorizontalSelectionCell(option: $store.options[i], selectedColorLight: selectedColorLight, selectedColorDark: selectedColorDark) {
                         store.selectOption(at: i)
                     }
                 }
@@ -40,7 +43,7 @@ struct HorizontalMenu_Previews: PreviewProvider {
         
         var body: some View {
             VStack {
-                HorizontalMenu(selectedColor: .black, store: .init(options: ["A option", "B option", "C option", "D option", "E option", "F option", "G option"], didSelect: {
+                HorizontalMenu(selectedColorLight: .black, selectedColorDark: .white, store: .init(options: ["A option", "B option", "C option", "D option", "E option", "F option", "G option"], didSelect: {
                     optionText = $0
                 }))
                 

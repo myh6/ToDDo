@@ -8,8 +8,11 @@
 import SwiftUI
 
 struct HorizontalSelectionCell: View {
+    
+    @Environment(\.colorScheme) var colorScheme
     @Binding var option: Option
-    let selectedColor: Color
+    let selectedColorLight: Color
+    let selectedColorDark: Color
     let selection: () -> Void
     
     var body: some View {
@@ -18,12 +21,12 @@ struct HorizontalSelectionCell: View {
         }) {
             Text(option.text)
                 .font(.subheadline)
-                .foregroundColor(option.isSelected ? selectedColor : Color.gray)
+                .foregroundColor(option.isSelected ? colorScheme == .dark ? selectedColorDark : selectedColorLight : Color.gray)
                 .overlay {
                     Rectangle()
                         .frame(width: 40.0, height: 2.0)
                         .offset(x: 0, y: 20)
-                        .foregroundColor(option.isSelected ? selectedColor : .clear)
+                        .foregroundColor(option.isSelected ? colorScheme == .dark ? selectedColorDark : selectedColorLight : .clear)
                         
                 }
                 
@@ -35,9 +38,9 @@ struct HorizontalSelectionCell: View {
 struct MultiplSelection_Previews: PreviewProvider {
     static var previews: some View {
         VStack {
-            HorizontalSelectionCell(option: .constant(.init(text: "A option")), selectedColor: .indigo, selection: {}).padding()
+            HorizontalSelectionCell(option: .constant(.init(text: "A option")), selectedColorLight: .black, selectedColorDark: .indigo, selection: {}).padding()
             
-            HorizontalSelectionCell(option: .constant(.init(text: "B option", isSelected: true)), selectedColor: .indigo, selection: {}).padding()
+            HorizontalSelectionCell(option: .constant(.init(text: "B option", isSelected: true)), selectedColorLight: .black, selectedColorDark: .indigo, selection: {}).padding()
         }
         .previewLayout(.sizeThatFits)
     }

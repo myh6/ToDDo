@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct FeedCellView: View {
+    @Environment(\.colorScheme) var colorScheme
     let text: String
     let priority: Priority
     let selection: () -> Void
@@ -16,11 +17,11 @@ struct FeedCellView: View {
         Button(action: selection) {
             ZStack {
                 
-                RoundedRectangle(cornerRadius: 20)
-                    .fill(.white)
-                    .shadow(color: .black.opacity(0.5), radius: 5)
+                RoundedRectangle(cornerRadius: 10)
+                    .fill(colorScheme == .dark ? Color.black : Color.white)
+                    .shadow(color: colorScheme == .dark ? Color.white : Color.black, radius: 5)
                 
-                Text(text).font(.body).foregroundColor(.black)
+                Text(text).font(.body).foregroundColor(.primary)
             }.padding()
         }
     }
