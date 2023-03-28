@@ -12,7 +12,7 @@ public struct HorizontalMenu: View {
     let selectedColor: Color
     @StateObject var store: SelectableMenuStore
     
-    public init(selectedColor: Color, store: SelectableMenuStore) {
+    public init(selectedColor: Color = .black, store: SelectableMenuStore) {
         self.selectedColor = selectedColor
         self._store = StateObject(wrappedValue: store)
     }

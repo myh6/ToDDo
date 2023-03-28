@@ -16,7 +16,7 @@ struct FeedSquareView: View {
     let backgroundColor: Color
     let textColor: Color
     
-    init(width: CGFloat = 100, height: CGFloat = 100, title: String, number: Int, backgroundColor: Color, textColor: Color) {
+    init(width: CGFloat = 100, height: CGFloat = 100, title: String, number: Int, backgroundColor: Color = .black, textColor: Color = .white) {
         self.width = width
         self.height = height
         self.title = title
@@ -35,7 +35,7 @@ struct FeedSquareView: View {
                 Text(title).font(.title).foregroundColor(textColor)
                 Text(String(number)).font(.title).foregroundColor(textColor)
             }
-        }.padding()
+        }
     }
 }
 

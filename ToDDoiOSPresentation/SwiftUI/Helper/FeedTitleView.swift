@@ -14,13 +14,13 @@ struct FeedTitleView: View {
     var body: some View {
         VStack(alignment: .leading) {
             Text("\(title)")
-                .font(.title)
+                .font(.largeTitle)
                 .fontWeight(.bold)
-                .foregroundColor(Color(.displayP3, red: 0.255, green: 0.0, blue: 0.0))
+                .foregroundColor(.black)
                 .multilineTextAlignment(.leading)
             
             Text("\(date)")
-                .foregroundColor(Color(red: 0.3764705882352941, green: 0.39215686274509803, blue: 0.4392156862745098))
+                .foregroundColor(.gray)
                 .multilineTextAlignment(.leading)
         }.padding()
     }
