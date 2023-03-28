@@ -15,17 +15,20 @@ public struct ToDDoMainViewModel {
         formatter.locale = Locale(identifier: "en_US_POSIX")
         return formatter
     }()
+    private let dateInDate: Date
     
-    public var date: String
+    public var dateText: String {
+        dateFormatter.string(from: dateInDate)
+    }
     
     var todayNumber: Int {
-        lists.filter{ $0.items.contains{ $0.expectedDate == Date() } }.count
+        lists.filter{ $0.items.contains{ $0.expectedDate == dateInDate } }.count
     }
     let lists: [FeedListGroup]
     
     public init(date: Date, lists: [FeedListGroup]) {
         self.lists = lists
-        self.date = dateFormatter.string(from: date)
+        self.dateInDate = date
     }
 }
 
@@ -36,7 +39,7 @@ struct ToDDoMainPageView: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                FeedTitleView(title: "ToDDo", date: viewModel.date).padding([.top, .leading, .bottom], 20.0)
+                FeedTitleView(title: "ToDDo", date: viewModel.dateText).padding([.top, .leading, .bottom], 20.0)
                 Spacer()
             }
             FeedSquareView(width: 120, height: 120, title: "TODAY", number: viewModel.todayNumber).padding(.leading, 20.0)

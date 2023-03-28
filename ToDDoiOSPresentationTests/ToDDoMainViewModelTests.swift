@@ -15,8 +15,7 @@ class ToDDoMainViewModelTests: XCTestCase {
         let date = Date(timeIntervalSince1970: 1679983658)
         let sut = ToDDoMainViewModel(date: date, lists: uniqueUser().models)
         
-        XCTAssertEqual(sut.date, "Tuesday, Mar 28, 2023")
+        XCTAssertEqual(sut.dateText, "Tuesday, Mar 28, 2023")
     }
-    
     
 }
