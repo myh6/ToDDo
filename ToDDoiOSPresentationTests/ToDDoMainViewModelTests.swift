@@ -28,9 +28,9 @@ class ToDDoMainViewModelTests: XCTestCase {
     }
     
     func test_init_givenOldDateToDoCountShouldBeZero() {
-        let oldDate = Date(timeIntervalSince1970: 1000000000)
-        let lists = uniqueUser(date: oldDate).models
         let date = renderExactDate()
+        let oldDate = date.addMinute(-1)
+        let lists = uniqueUser(date: oldDate).models
         let sut = ToDDoMainViewModel(date: date, lists: lists)
         
         XCTAssertEqual(sut.toDoCount, 0)
