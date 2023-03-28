@@ -20,7 +20,6 @@
 		0F8ECE5329CDA715001A539D /* SelectableMenuStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F8ECE5229CDA715001A539D /* SelectableMenuStore.swift */; };
 		0F8ECE5529CDA8EB001A539D /* HorizontalMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F8ECE5429CDA8EB001A539D /* HorizontalMenu.swift */; };
 		0F8ECE5829D13FB8001A539D /* HorizontalSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F8ECE5729D13FB8001A539D /* HorizontalSelectionCell.swift */; };
-		0F8ECE5E29D19B1F001A539D /* Priority.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F8ECE5D29D19B1F001A539D /* Priority.swift */; };
 		0F8ECE6229D28474001A539D /* FeedSquareView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F8ECE6129D28474001A539D /* FeedSquareView.swift */; };
 		0FB9CB0C29962ED900AAA276 /* ToDDoCore.docc in Sources */ = {isa = PBXBuildFile; fileRef = 0FB9CB0B29962ED900AAA276 /* ToDDoCore.docc */; };
 		0FB9CB1229962ED900AAA276 /* ToDDoCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FB9CB0729962ED900AAA276 /* ToDDoCore.framework */; };
@@ -101,7 +100,6 @@
 		0F8ECE5229CDA715001A539D /* SelectableMenuStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectableMenuStore.swift; sourceTree = "<group>"; };
 		0F8ECE5429CDA8EB001A539D /* HorizontalMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalMenu.swift; sourceTree = "<group>"; };
 		0F8ECE5729D13FB8001A539D /* HorizontalSelectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HorizontalSelectionCell.swift; sourceTree = "<group>"; };
-		0F8ECE5D29D19B1F001A539D /* Priority.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Priority.swift; sourceTree = "<group>"; };
 		0F8ECE6129D28474001A539D /* FeedSquareView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedSquareView.swift; sourceTree = "<group>"; };
 		0FB9CB0729962ED900AAA276 /* ToDDoCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ToDDoCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FB9CB0A29962ED900AAA276 /* ToDDoCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ToDDoCore.h; sourceTree = "<group>"; };
@@ -296,7 +294,6 @@
 				0FCF4B8729CC03EC00654EEF /* ToDDoiOSPresentation.docc */,
 				0F8ECE5229CDA715001A539D /* SelectableMenuStore.swift */,
 				0F0205C729D2C7E500AC7E04 /* ToDDoMainViewModel.swift */,
-				0F8ECE5D29D19B1F001A539D /* Priority.swift */,
 				0F0205C129D2885A00AC7E04 /* SwiftUI */,
 			);
 			path = ToDDoiOSPresentation;
@@ -547,7 +544,6 @@
 				0F0205C329D28F2E00AC7E04 /* ToDDoMainPageView.swift in Sources */,
 				0FCF4B8829CC03EC00654EEF /* ToDDoiOSPresentation.docc in Sources */,
 				0F8ECE4B29CC4D3D001A539D /* FeedCellView.swift in Sources */,
-				0F8ECE5E29D19B1F001A539D /* Priority.swift in Sources */,
 				0F8ECE5829D13FB8001A539D /* HorizontalSelectionCell.swift in Sources */,
 				0F8ECE5329CDA715001A539D /* SelectableMenuStore.swift in Sources */,
 				0FCF4BA529CC4CCA00654EEF /* FeedTitleView.swift in Sources */,

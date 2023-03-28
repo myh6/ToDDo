@@ -10,7 +10,6 @@ import SwiftUI
 struct FeedCellView: View {
     @Environment(\.colorScheme) var colorScheme
     let text: String
-    let priority: Priority
     let selection: () -> Void
     
     var body: some View {
@@ -37,7 +36,7 @@ struct FeedCellView_Previews: PreviewProvider {
         
         var body: some View {
             VStack {
-                FeedCellView(text: "A text", priority: .medium) {
+                FeedCellView(text: "A text") {
                     count += 1
                 }
                 Text("Selection count \(count)")

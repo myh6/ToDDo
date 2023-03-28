@@ -23,7 +23,7 @@ struct ToDDoMainPageView: View {
             HorizontalMenu(store: store).padding(.leading, 20.0)
             
             ForEach(viewModel.lists, id: \.id) { list in
-                FeedCellView(text: list.listTitle, priority: .none) {
+                FeedCellView(text: list.listTitle) {
                     print("Unimplemented operation")
                 }
                 .frame(height: 80.0)
