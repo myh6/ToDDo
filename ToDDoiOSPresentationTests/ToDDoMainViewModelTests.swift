@@ -36,6 +36,15 @@ class ToDDoMainViewModelTests: XCTestCase {
         XCTAssertEqual(sut.toDoCount, 0)
     }
     
+    func test_init_givenNewerDateToDoCountShouldBeZero() {
+        let date = renderExactDate()
+        let newDate = date.addDay(1)
+        let lists = uniqueUser(date: newDate).models
+        let sut = ToDDoMainViewModel(date: date, lists: lists)
+        
+        XCTAssertEqual(sut.toDoCount, 0)
+    }
+    
     //MARK: - Helpers
     /// Render date using unix timestamp
     /// - Returns: 2023-03-28 00:00:00
