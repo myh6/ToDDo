@@ -29,7 +29,7 @@ struct FeedSquareView: View {
                 .foregroundColor(colorScheme == .dark ? Color.white : Color.black)
             
             VStack(spacing: 10.0) {
-                Text(title).font(.title).foregroundColor(colorScheme == .dark ? Color.black : Color.white)
+                Text(title).font(.headline).foregroundColor(colorScheme == .dark ? Color.black : Color.white)
                 Text(String(number)).font(.title).foregroundColor( colorScheme == .dark ? Color.black : Color.white)
             }
         }

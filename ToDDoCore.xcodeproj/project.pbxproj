@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		0F0038AD29BCCA4C00CB0A86 /* ToDDoListMapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0038AC29BCCA4C00CB0A86 /* ToDDoListMapper.swift */; };
+		0F0205C329D28F2E00AC7E04 /* ToDDoMainPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0205C229D28F2E00AC7E04 /* ToDDoMainPageView.swift */; };
+		0F0205C529D2BA3900AC7E04 /* ToDDoMainViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F0205C429D2BA3900AC7E04 /* ToDDoMainViewModelTests.swift */; };
+		0F0205C629D2BAC400AC7E04 /* SharedTestHelpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FB9CB3E299B1CEC00AAA276 /* SharedTestHelpers.swift */; };
 		0F3312A729A34B180032EA92 /* CoreDataFeedStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F3312A629A34B180032EA92 /* CoreDataFeedStoreTests.swift */; };
 		0F3312A929A3512E0032EA92 /* CoreDataFeedStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F3312A829A3512E0032EA92 /* CoreDataFeedStore.swift */; };
 		0F3312AB29A359610032EA92 /* ToDDoItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F3312AA29A359610032EA92 /* ToDDoItem.swift */; };
@@ -86,6 +89,8 @@
 
 /* Begin PBXFileReference section */
 		0F0038AC29BCCA4C00CB0A86 /* ToDDoListMapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDDoListMapper.swift; sourceTree = "<group>"; };
+		0F0205C229D28F2E00AC7E04 /* ToDDoMainPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDDoMainPageView.swift; sourceTree = "<group>"; };
+		0F0205C429D2BA3900AC7E04 /* ToDDoMainViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDDoMainViewModelTests.swift; sourceTree = "<group>"; };
 		0F3312A629A34B180032EA92 /* CoreDataFeedStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataFeedStoreTests.swift; sourceTree = "<group>"; };
 		0F3312A829A3512E0032EA92 /* CoreDataFeedStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataFeedStore.swift; sourceTree = "<group>"; };
 		0F3312AA29A359610032EA92 /* ToDDoItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDDoItem.swift; sourceTree = "<group>"; };
@@ -162,6 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				0FCF4BA429CC4BE300654EEF /* Helper */,
+				0F0205C229D28F2E00AC7E04 /* ToDDoMainPageView.swift */,
 			);
 			path = SwiftUI;
 			sourceTree = "<group>";
@@ -297,6 +303,7 @@
 			isa = PBXGroup;
 			children = (
 				0F8ECE5029CD8FE0001A539D /* SelectableMenuStoreTest.swift */,
+				0F0205C429D2BA3900AC7E04 /* ToDDoMainViewModelTests.swift */,
 			);
 			path = ToDDoiOSPresentationTests;
 			sourceTree = "<group>";
@@ -533,6 +540,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F0205C329D28F2E00AC7E04 /* ToDDoMainPageView.swift in Sources */,
 				0FCF4B8829CC03EC00654EEF /* ToDDoiOSPresentation.docc in Sources */,
 				0F8ECE4B29CC4D3D001A539D /* FeedCellView.swift in Sources */,
 				0F8ECE5E29D19B1F001A539D /* Priority.swift in Sources */,
@@ -548,8 +556,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F0205C629D2BAC400AC7E04 /* SharedTestHelpers.swift in Sources */,
 				0F8ECE5129CD8FE0001A539D /* SelectableMenuStoreTest.swift in Sources */,
 				0FCF4B9B29CC32E300654EEF /* XCTestCase+MemoryLeakTracking.swift in Sources */,
+				0F0205C529D2BA3900AC7E04 /* ToDDoMainViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
