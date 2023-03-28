@@ -20,7 +20,7 @@ struct FeedCellView: View {
                     .fill(colorScheme == .dark ? Color.black : Color.white)
                     .shadow(color: colorScheme == .dark ? Color.white : Color.black, radius: 5)
                 
-                Text(text).font(.body).foregroundColor(.primary)
+                Text(text).font(.subheadline).foregroundColor(.primary)
             }.padding()
         }
     }

@@ -44,7 +44,7 @@ struct ToDDoMainPageView_Previews: PreviewProvider {
     
     struct ToDDoMainTestView: View {
         var body: some View {
-            let viewModel = ToDDoMainViewModel(date: Date(), lists: [FeedListGroup(id: UUID(), listTitle: "A task list", listImage: Data(), items: []), FeedListGroup(id: UUID(), listTitle: "Another task list", listImage: Data(), items: [])])
+            let viewModel = ToDDoMainViewModel(date: Date(), lists: [FeedListGroup(id: UUID(), listTitle: "A task list", listImage: Data(), items: []), FeedListGroup(id: UUID(), listTitle: "Another task list", listImage: Data(), items: []), FeedListGroup(id: UUID(), listTitle: "Yet another task list", listImage: Data(), items: [])])
             let store = SelectableMenuStore(options: ["Recent", "Pending", "Finished"], didSelect: { _ in})
             ToDDoMainPageView(viewModel: viewModel, store: store)
         }
