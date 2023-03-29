@@ -12,12 +12,12 @@ public struct HorizontalMenu: View {
     @Environment(\.colorScheme) var colorScheme
     let selectedColorLight: Color
     let selectedColorDark: Color
-    @StateObject var store: SelectableMenuStore
+    @ObservedObject var store: SelectableMenuStore
     
     public init(selectedColorLight: Color = .black, selectedColorDark: Color = .white, store: SelectableMenuStore) {
         self.selectedColorLight = selectedColorLight
         self.selectedColorDark = selectedColorDark
-        self._store = StateObject(wrappedValue: store)
+        self._store = ObservedObject(wrappedValue: store)
     }
     
     public var body: some View {

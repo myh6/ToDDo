@@ -9,7 +9,7 @@ import SwiftUI
 import ToDDoCore
 
 struct ToDDoMainPageView: View {
-    let viewModel: ToDDoMainViewModel
+    @ObservedObject var viewModel: ToDDoMainViewModel
     
     var body: some View {
         VStack(alignment: .leading) {
