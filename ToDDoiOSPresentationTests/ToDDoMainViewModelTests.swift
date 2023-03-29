@@ -46,8 +46,9 @@ class ToDDoMainViewModelTests: XCTestCase {
     }
     
     //MARK: - Helpers
-    private func makeSUT(date: Date, lists: [FeedListGroup]) -> ToDDoMainViewModel {
+    private func makeSUT(date: Date = Date(), lists: [FeedListGroup], file: StaticString = #file, line: UInt = #line) -> ToDDoMainViewModel {
         let sut = ToDDoMainViewModel(options: [], date: date, lists: lists, timezone: TimeZone(identifier: "UTC")!, locale: Locale(identifier: "en_US_POSIX"), didSelect: {_ in})
+        trackForMemoryLeaks(sut, file: file, line: line)
         return sut
     }
     

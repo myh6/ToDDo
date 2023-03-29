@@ -8,7 +8,7 @@
 import Foundation
 import ToDDoCore
 
-public struct ToDDoMainViewModel {
+public class ToDDoMainViewModel: ObservableObject {
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "EEEE, MMM d, yyyy"
