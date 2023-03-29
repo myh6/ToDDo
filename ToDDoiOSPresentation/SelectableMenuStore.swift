@@ -20,6 +20,7 @@ public class SelectableMenuStore: ObservableObject {
     public init(options: [String], didSelect: @escaping (String) -> Void) {
         self.options = options.map { Option(text: $0) }
         self.didSelect = didSelect
+        guard !options.isEmpty else { return }
         self.options[0].isSelected = true
         
         didSelect(selectedOptionText)

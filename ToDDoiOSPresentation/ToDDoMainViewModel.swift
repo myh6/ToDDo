@@ -36,8 +36,8 @@ public struct ToDDoMainViewModel {
     }
     let lists: [FeedListGroup]
     
-    public init(store: SelectableMenuStore, date: Date, lists: [FeedListGroup], timezone: TimeZone = .current, locale: Locale = .current) {
-        self.store = store
+    public init(options: [String], date: Date, lists: [FeedListGroup], timezone: TimeZone = .current, locale: Locale = .current, didSelect: @escaping (String) -> Void) {
+        self.store = SelectableMenuStore(options: options, didSelect: didSelect)
         self.lists = lists
         self.dateInDate = date
         self.dateFormatter.timeZone = timezone

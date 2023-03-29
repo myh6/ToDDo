@@ -44,8 +44,10 @@ struct ToDDoMainPageView_Previews: PreviewProvider {
     struct ToDDoMainTestView: View {
         @State var lastSelectedMenu = "none"
         var body: some View {
-            let store = SelectableMenuStore(options: ["Recent", "Pending", "Finished"], didSelect: { lastSelectedMenu = $0 })
-            let viewModel = ToDDoMainViewModel(store: store, date: Date(), lists: [FeedListGroup(id: UUID(), listTitle: "A task list", listImage: Data(), items: []), FeedListGroup(id: UUID(), listTitle: "Another task list", listImage: Data(), items: []), FeedListGroup(id: UUID(), listTitle: "Yet another task list", listImage: Data(), items: [])])
+            let options = ["Recent", "Pending", "Finished"]
+            let viewModel = ToDDoMainViewModel(options: options, date: Date(), lists: [FeedListGroup(id: UUID(), listTitle: "A task list", listImage: Data(), items: []), FeedListGroup(id: UUID(), listTitle: "Another task list", listImage: Data(), items: []), FeedListGroup(id: UUID(), listTitle: "Yet another task list", listImage: Data(), items: [])], didSelect: {
+                lastSelectedMenu = $0
+            })
             VStack {
                 ToDDoMainPageView(viewModel: viewModel)
                 Text("Last selected menu: " + lastSelectedMenu)

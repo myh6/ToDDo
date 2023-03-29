@@ -47,8 +47,7 @@ class ToDDoMainViewModelTests: XCTestCase {
     
     //MARK: - Helpers
     private func makeSUT(date: Date, lists: [FeedListGroup]) -> ToDDoMainViewModel {
-        let store = SelectableMenuStore(options: [""], didSelect: { _ in })
-        let sut = ToDDoMainViewModel(store: store, date: date, lists: lists, timezone: TimeZone(identifier: "UTC")!, locale: Locale(identifier: "en_US_POSIX"))
+        let sut = ToDDoMainViewModel(options: [], date: date, lists: lists, timezone: TimeZone(identifier: "UTC")!, locale: Locale(identifier: "en_US_POSIX"), didSelect: {_ in})
         return sut
     }
     
