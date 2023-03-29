@@ -12,10 +12,10 @@ public struct ToDDoMainViewModel {
     private let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "EEEE, MMM d, yyyy"
-        formatter.locale = Locale(identifier: "en_US_POSIX")
+        formatter.calendar = Calendar(identifier: .gregorian)
         return formatter
     }()
-    private let calendar: Calendar = {
+    private var calendar: Calendar = {
         let calendar = Calendar(identifier: .gregorian)
         return calendar
     }()
@@ -36,8 +36,12 @@ public struct ToDDoMainViewModel {
     }
     let lists: [FeedListGroup]
     
-    public init(date: Date, lists: [FeedListGroup]) {
+    public init(date: Date, lists: [FeedListGroup], timezone: TimeZone = .current, locale: Locale = .current) {
         self.lists = lists
         self.dateInDate = date
+        self.dateFormatter.timeZone = timezone
+        self.dateFormatter.locale = locale
+        self.calendar.timeZone = timezone
+        self.calendar.locale = locale
     }
 }

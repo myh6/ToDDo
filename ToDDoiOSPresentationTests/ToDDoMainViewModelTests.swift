@@ -13,7 +13,7 @@ class ToDDoMainViewModelTests: XCTestCase {
     
     func test_init_renderCorrectFormattedDate() {
         let date = renderExactDate()
-        let sut = ToDDoMainViewModel(date: date, lists: uniqueUser().models)
+        let sut = makeSUT(date: date, lists: uniqueUser().models)
         
         XCTAssertEqual(sut.dateText, "Tuesday, Mar 28, 2023")
     }
@@ -22,7 +22,7 @@ class ToDDoMainViewModelTests: XCTestCase {
         let date = renderExactDate()
         let sameDayDate = date.addDay(1).addMinute(-1)
         let lists = uniqueUser(date: date).models
-        let sut = ToDDoMainViewModel(date: sameDayDate, lists: lists)
+        let sut = makeSUT(date: sameDayDate, lists: lists)
         
         XCTAssertEqual(sut.toDoCount, 2)
     }
@@ -31,7 +31,7 @@ class ToDDoMainViewModelTests: XCTestCase {
         let date = renderExactDate()
         let oldDate = date.addMinute(-1)
         let lists = uniqueUser(date: oldDate).models
-        let sut = ToDDoMainViewModel(date: date, lists: lists)
+        let sut = makeSUT(date: date, lists: lists)
         
         XCTAssertEqual(sut.toDoCount, 0)
     }
@@ -40,17 +40,28 @@ class ToDDoMainViewModelTests: XCTestCase {
         let date = renderExactDate()
         let newDate = date.addDay(1)
         let lists = uniqueUser(date: newDate).models
-        let sut = ToDDoMainViewModel(date: date, lists: lists)
+        let sut = makeSUT(date: date, lists: lists)
         
         XCTAssertEqual(sut.toDoCount, 0)
     }
     
     //MARK: - Helpers
+    private func makeSUT(date: Date, lists: [FeedListGroup]) -> ToDDoMainViewModel {
+        let sut = ToDDoMainViewModel(date: date, lists: lists, timezone: TimeZone(identifier: "UTC")!, locale: Locale(identifier: "en_US_POSIX"))
+        return sut
+    }
+    
     /// Render date using unix timestamp
     /// - Returns: 2023-03-28 00:00:00
-    func renderExactDate() -> Date {
-        Date(timeIntervalSince1970: 1679932800)
+    private func renderExactDate() -> Date {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.timeZone = TimeZone(identifier: "UTC")!
+        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let dateString = "2023-03-28 00:00:00"
+        return dateFormatter.date(from: dateString)!
     }
+
     
 }
 
