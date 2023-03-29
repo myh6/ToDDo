@@ -19,7 +19,7 @@ public struct ToDDoMainViewModel {
         let calendar = Calendar(identifier: .gregorian)
         return calendar
     }()
-    
+    let store: SelectableMenuStore
     private let dateInDate: Date
     
     public var dateText: String {
@@ -36,7 +36,8 @@ public struct ToDDoMainViewModel {
     }
     let lists: [FeedListGroup]
     
-    public init(date: Date, lists: [FeedListGroup], timezone: TimeZone = .current, locale: Locale = .current) {
+    public init(store: SelectableMenuStore, date: Date, lists: [FeedListGroup], timezone: TimeZone = .current, locale: Locale = .current) {
+        self.store = store
         self.lists = lists
         self.dateInDate = date
         self.dateFormatter.timeZone = timezone

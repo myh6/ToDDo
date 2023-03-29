@@ -10,7 +10,6 @@ import ToDDoCore
 
 struct ToDDoMainPageView: View {
     let viewModel: ToDDoMainViewModel
-    let store: SelectableMenuStore
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -20,7 +19,7 @@ struct ToDDoMainPageView: View {
             }
             FeedSquareView(width: 120, height: 120, title: "TODAY", number: viewModel.toDoCount).padding(.leading, 20.0)
             
-            HorizontalMenu(store: store).padding(.leading, 20.0)
+            HorizontalMenu(store: viewModel.store).padding(.leading, 20.0)
             
             ForEach(viewModel.lists, id: \.id) { list in
                 FeedCellView(text: list.listTitle) {
@@ -43,10 +42,14 @@ struct ToDDoMainPageView_Previews: PreviewProvider {
     }
     
     struct ToDDoMainTestView: View {
+        @State var lastSelectedMenu = "none"
         var body: some View {
-            let viewModel = ToDDoMainViewModel(date: Date(), lists: [FeedListGroup(id: UUID(), listTitle: "A task list", listImage: Data(), items: []), FeedListGroup(id: UUID(), listTitle: "Another task list", listImage: Data(), items: []), FeedListGroup(id: UUID(), listTitle: "Yet another task list", listImage: Data(), items: [])])
-            let store = SelectableMenuStore(options: ["Recent", "Pending", "Finished"], didSelect: { _ in})
-            ToDDoMainPageView(viewModel: viewModel, store: store)
+            let store = SelectableMenuStore(options: ["Recent", "Pending", "Finished"], didSelect: { lastSelectedMenu = $0 })
+            let viewModel = ToDDoMainViewModel(store: store, date: Date(), lists: [FeedListGroup(id: UUID(), listTitle: "A task list", listImage: Data(), items: []), FeedListGroup(id: UUID(), listTitle: "Another task list", listImage: Data(), items: []), FeedListGroup(id: UUID(), listTitle: "Yet another task list", listImage: Data(), items: [])])
+            VStack {
+                ToDDoMainPageView(viewModel: viewModel)
+                Text("Last selected menu: " + lastSelectedMenu)
+            }
         }
     }
 }
