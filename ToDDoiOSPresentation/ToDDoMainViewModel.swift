@@ -34,15 +34,25 @@ public class ToDDoMainViewModel: ObservableObject {
             }
         }.count
     }
-    let lists: [FeedListGroup]
+    @Published private(set) var lists: [FeedListGroup] = []
     
-    public init(options: [String], date: Date, lists: [FeedListGroup], timezone: TimeZone = .current, locale: Locale = .current, didSelect: @escaping (String) -> Void) {
+    let loader: FeedLoader
+    
+    public init(options: [String], date: Date, loader: FeedLoader, timezone: TimeZone = .current, locale: Locale = .current, didSelect: @escaping (String) -> Void) {
         self.store = SelectableMenuStore(options: options, didSelect: didSelect)
-        self.lists = lists
         self.dateInDate = date
         self.dateFormatter.timeZone = timezone
         self.dateFormatter.locale = locale
         self.calendar.timeZone = timezone
         self.calendar.locale = locale
+        self.loader = loader
+        loader.load { [weak self] result in
+            do {
+                self?.lists = try result.get() ?? []
+            } catch {
+                // TODO: - Error State
+                print("")
+            }
+        }
     }
 }

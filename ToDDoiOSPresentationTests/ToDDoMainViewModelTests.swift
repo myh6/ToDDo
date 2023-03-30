@@ -12,8 +12,10 @@ import ToDDoCore
 class ToDDoMainViewModelTests: XCTestCase {
     
     func test_init_renderCorrectFormattedDate() {
-        let date = renderExactDate()
-        let sut = makeSUT(date: date, lists: uniqueUser().models)
+        let lists = uniqueUser().models
+        let (sut, loader) = makeSUT(date: renderExactDate())
+        
+        loader.completeLoadWithList(lists)
         
         XCTAssertEqual(sut.dateText, "Tuesday, Mar 28, 2023")
     }
@@ -22,7 +24,9 @@ class ToDDoMainViewModelTests: XCTestCase {
         let date = renderExactDate()
         let sameDayDate = date.addDay(1).addMinute(-1)
         let lists = uniqueUser(date: date).models
-        let sut = makeSUT(date: sameDayDate, lists: lists)
+        let (sut, loader) = makeSUT(date: sameDayDate)
+        
+        loader.completeLoadWithList(lists)
         
         XCTAssertEqual(sut.toDoCount, 2)
     }
@@ -31,7 +35,9 @@ class ToDDoMainViewModelTests: XCTestCase {
         let date = renderExactDate()
         let oldDate = date.addMinute(-1)
         let lists = uniqueUser(date: oldDate).models
-        let sut = makeSUT(date: date, lists: lists)
+        let (sut, loader) = makeSUT(date: date)
+        
+        loader.completeLoadWithList(lists)
         
         XCTAssertEqual(sut.toDoCount, 0)
     }
@@ -40,16 +46,20 @@ class ToDDoMainViewModelTests: XCTestCase {
         let date = renderExactDate()
         let newDate = date.addDay(1)
         let lists = uniqueUser(date: newDate).models
-        let sut = makeSUT(date: date, lists: lists)
+        let (sut, loader) = makeSUT(date: date)
+        
+        loader.completeLoadWithList(lists)
         
         XCTAssertEqual(sut.toDoCount, 0)
     }
     
     //MARK: - Helpers
-    private func makeSUT(date: Date = Date(), lists: [FeedListGroup], file: StaticString = #file, line: UInt = #line) -> ToDDoMainViewModel {
-        let sut = ToDDoMainViewModel(options: [], date: date, lists: lists, timezone: TimeZone(identifier: "UTC")!, locale: Locale(identifier: "en_US_POSIX"), didSelect: {_ in})
+    private func makeSUT(date: Date = Date(), file: StaticString = #file, line: UInt = #line) -> (sut: ToDDoMainViewModel, loader: LoaderSpy) {
+        let loader = LoaderSpy()
+        let sut = ToDDoMainViewModel(options: [], date: date, loader: loader, timezone: TimeZone(identifier: "UTC")!, locale: Locale(identifier: "en_US_POSIX"), didSelect: {_ in})
+        trackForMemoryLeaks(loader, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
-        return sut
+        return (sut, loader)
     }
     
     /// Render date using unix timestamp
@@ -61,6 +71,19 @@ class ToDDoMainViewModelTests: XCTestCase {
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
         let dateString = "2023-03-28 00:00:00"
         return dateFormatter.date(from: dateString)!
+    }
+    
+    class LoaderSpy: FeedLoader {
+        private(set) var receivedMessage = [((FeedLoader.Result) -> Void)]()
+        
+        func load(completion: @escaping (FeedLoader.Result) -> Void) {
+            receivedMessage.append(completion)
+        }
+        
+        func completeLoadWithList(_ lists: [FeedListGroup], at index: Int = 0) {
+            receivedMessage[index](.success(lists))
+        }
+        
     }
 
     

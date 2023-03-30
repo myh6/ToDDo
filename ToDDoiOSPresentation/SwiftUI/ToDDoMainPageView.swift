@@ -50,13 +50,20 @@ struct ToDDoMainPageView_Previews: PreviewProvider {
         @State var lastSelectedMenu = "none"
         var body: some View {
             let options = ["Recent", "Pending", "Finished"]
-            let viewModel = ToDDoMainViewModel(options: options, date: Date(), lists: [FeedListGroup(id: UUID(), listTitle: "A task list", listImage: Data(), items: []), FeedListGroup(id: UUID(), listTitle: "Another task list", listImage: Data(), items: []), FeedListGroup(id: UUID(), listTitle: "Yet another task list", listImage: Data(), items: [])], didSelect: {
+            let viewModel = ToDDoMainViewModel(options: options, date: Date(), loader: LoaderFake(), didSelect: {
                 lastSelectedMenu = $0
             })
             VStack {
                 ToDDoMainPageView(viewModel: viewModel)
                 Text("Last selected menu: " + lastSelectedMenu)
             }
+        }
+    }
+    
+    struct LoaderFake: FeedLoader {
+        func load(completion: @escaping (FeedLoader.Result) -> Void) {
+        let lists = [FeedListGroup(id: UUID(), listTitle: "A task list", listImage: Data(), items: []), FeedListGroup(id: UUID(), listTitle: "Another task list", listImage: Data(), items: []), FeedListGroup(id: UUID(), listTitle: "Yet another task list", listImage: Data(), items: [])]
+            completion(.success(lists))
         }
     }
 }
