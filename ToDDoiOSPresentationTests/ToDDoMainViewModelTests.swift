@@ -17,6 +17,14 @@ class ToDDoMainViewModelTests: XCTestCase {
         XCTAssertTrue(loader.receivedMessage.isEmpty)
     }
     
+    func test_load_reqeustFeedFromLoader() {
+        let (sut, loader) = makeSUT()
+        XCTAssertEqual(loader.receivedMessage.count, 0)
+        
+        sut.load { _ in}
+        XCTAssertEqual(loader.receivedMessage.count, 1)
+    }
+    
     func test_init_renderCorrectFormattedDate() {
         let lists = uniqueUser().models
         let (sut, loader) = makeSUT(date: renderExactDate())
