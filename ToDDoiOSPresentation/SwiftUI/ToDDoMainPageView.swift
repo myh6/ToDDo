@@ -14,12 +14,20 @@ struct ToDDoMainPageView: View {
     var body: some View {
         VStack(alignment: .leading) {
             HStack {
-                FeedTitleView(title: "ToDDo", date: viewModel.dateText).padding([.top, .leading, .bottom], 20.0)
+                FeedTitleView(title: "ToDDo", date: viewModel.dateText).padding([.top, .leading], 20.0)
                 Spacer()
             }
+            
+            if viewModel.hasError {
+                ErrorView(message: "Error! Please Retry") {
+                    viewModel.load()
+                }.frame(height: 50)
+            }
+            
             FeedSquareView(width: 120, height: 120, title: "TODAY", number: viewModel.toDoCount).padding(.leading, 20.0)
             
             HorizontalMenu(store: viewModel.store).padding(.leading, 20.0)
+            
             
             List {
                 ForEach(viewModel.lists, id: \.id) { list in
@@ -33,11 +41,7 @@ struct ToDDoMainPageView: View {
                 }
             }
             .listStyle(.plain)
-            .onAppear {
-                viewModel.load { error in
-                    // TODO: - Implement Error Alert
-                }
-            }
+            .onAppear { viewModel.load() }
             
             Spacer()
         }
