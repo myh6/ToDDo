@@ -35,7 +35,7 @@ public class ToDDoMainViewModel: ObservableObject {
         }.count
     }
     @Published public private(set) var lists: [FeedListGroup] = []
-    @Published public private(set) var hasError = false
+    @Published public private(set) var errorStatus: (hasError: Bool, errorText: String) = (false, "")
     let loader: FeedLoader
     
     public init(options: [String], date: Date, loader: FeedLoader, timezone: TimeZone = .current, locale: Locale = .current, didSelect: @escaping (String) -> Void) {
@@ -55,9 +55,9 @@ public extension ToDDoMainViewModel {
         loader.load { [weak self] result in
             do {
                 self?.lists = try result.get() ?? []
-                self?.hasError = false
+                self?.errorStatus = (false, "")
             } catch {
-                self?.hasError = true
+                self?.errorStatus = (true, error.localizedDescription)
             }
         }
     }

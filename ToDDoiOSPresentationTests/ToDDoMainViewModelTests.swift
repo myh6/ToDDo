@@ -74,12 +74,12 @@ class ToDDoMainViewModelTests: XCTestCase {
     func test_load_changeHasErrorToTrueIfLoadOperationFailed() {
         let (sut, loader) = makeSUT()
         let error = NSError(domain: "An error", code: 0)
-        XCTAssertEqual(sut.hasError, false)
+        XCTAssertEqual(sut.errorStatus.hasError, false)
         
         sut.load()
         loader.completeLoadWith(error)
         
-        XCTAssertEqual(sut.hasError, true)
+        XCTAssertEqual(sut.errorStatus.hasError, true)
     }
     
     func test_load_delviersListsFromSuccessfulLoad() {

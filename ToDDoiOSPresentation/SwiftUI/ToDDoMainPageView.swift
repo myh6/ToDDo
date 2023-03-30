@@ -18,8 +18,8 @@ struct ToDDoMainPageView: View {
                 Spacer()
             }
             
-            if viewModel.hasError {
-                ErrorView(message: "Error! Please Retry") {
+            if viewModel.errorStatus.hasError {
+                ErrorView(message: viewModel.errorStatus.errorText) {
                     viewModel.load()
                 }
                 .frame(height: 40)
@@ -65,7 +65,9 @@ struct ToDDoMainPageView_Previews: PreviewProvider {
     
     struct LoaderFake: FeedLoader {
         func load(completion: @escaping (FeedLoader.Result) -> Void) {
-        let lists = [FeedListGroup(id: UUID(), listTitle: "A task list", listImage: Data(), items: []), FeedListGroup(id: UUID(), listTitle: "Another task list", listImage: Data(), items: [FeedToDoItem(id: UUID(), title: "A title", isDone: false, expectedDate: Date(), finishedDate: nil, priority: "high", url: nil, note: nil)]), FeedListGroup(id: UUID(), listTitle: "Yet another task list", listImage: Data(), items: [FeedToDoItem(id: UUID(), title: "A title", isDone: true, expectedDate: Date(), finishedDate: nil, priority: nil, url: nil, note: nil)])]
+        let lists = [FeedListGroup(id: UUID(), listTitle: "A task list", listImage: Data(), items: []),
+                     FeedListGroup(id: UUID(), listTitle: "Another task list", listImage: Data(), items: [FeedToDoItem(id: UUID(), title: "A title", isDone: false, expectedDate: Date(), finishedDate: nil, priority: "high", url: nil, note: nil)]),
+                     FeedListGroup(id: UUID(), listTitle: "Yet another task list", listImage: Data(), items: [FeedToDoItem(id: UUID(), title: "A title", isDone: true, expectedDate: Date(), finishedDate: nil, priority: nil, url: nil, note: nil)])]
             completion(.success(lists))
         }
     }

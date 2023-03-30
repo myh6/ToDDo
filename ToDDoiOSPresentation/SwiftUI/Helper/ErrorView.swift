@@ -20,6 +20,9 @@ struct ErrorView: View {
                 Text(message)
                     .font(.body)
                     .foregroundColor(Color.white)
+                    .frame(maxWidth: .infinity)
+                    .minimumScaleFactor(0.3)
+                    .lineLimit(1)
             }
         }
     }
