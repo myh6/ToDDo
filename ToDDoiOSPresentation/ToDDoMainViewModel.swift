@@ -42,6 +42,9 @@ public class ToDDoMainViewModel: ObservableObject {
     private var pendingList: [FeedListGroup] {
         filterPendingItems(allLists)
     }
+    private var finishedList: [FeedListGroup] {
+        filterFinishedItems(allLists)
+    }
     
     public init(options: [String], date: Date, loader: FeedLoader, timezone: TimeZone = .current, locale: Locale = .current, didSelect: @escaping (String) -> Void) {
         self.store = SelectableMenuStore(options: options, didSelect: didSelect)
@@ -76,7 +79,7 @@ public extension ToDDoMainViewModel {
         case .pending:
             lists = pendingList
         case .finished:
-            break
+            lists = finishedList
         }
     }
 }
@@ -84,12 +87,18 @@ public extension ToDDoMainViewModel {
 // MARK: Helpers
 extension ToDDoMainViewModel {
     
-    func filterPendingItems(_ allLists: [FeedListGroup]) -> [FeedListGroup]{
+    private func filterPendingItems(_ allLists: [FeedListGroup]) -> [FeedListGroup]{
         allLists.map { list in
             let filtered = list.items.filter{ !$0.isDone }
             return FeedListGroup(id: list.id, listTitle: list.listTitle, listImage: list.listImage, items: filtered)
         }
-        
+    }
+    
+    private func filterFinishedItems(_ allLists: [FeedListGroup]) -> [FeedListGroup]{
+        allLists.map { list in
+            let filtered = list.items.filter{ $0.isDone }
+            return FeedListGroup(id: list.id, listTitle: list.listTitle, listImage: list.listImage, items: filtered)
+        }
     }
 }
 

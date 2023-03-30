@@ -94,7 +94,7 @@ class ToDDoMainViewModelTests: XCTestCase {
     
     func test_loadWithOption_whenGivenOptionPendingDeliversUnfinishedItem() {
         let (sut, loader) = makeSUT()
-        let items = [uniqueItem(isDone: true).model, uniqueItem(isDone: false).model, uniqueItem(isDone: false).model, uniqueItem(isDone: true).model]
+        let items = [uniqueItem(isDone: true).model, uniqueItem(isDone: false).model, uniqueItem(isDone: false).model, uniqueItem(isDone: true).model, uniqueItem(isDone: true).model]
         let list = uniqueList(uniqueItems: items).model
         
         sut.load()
@@ -121,6 +121,20 @@ class ToDDoMainViewModelTests: XCTestCase {
         
         sut.loadWith(.recent)
         XCTAssertEqual(sut.lists, [list])
+    }
+    
+    func test_loadWithOption_whenGivenOptionFinishedDeliversFinishedItem() {
+        let (sut, loader) = makeSUT()
+        let items = [uniqueItem(isDone: true).model, uniqueItem(isDone: false).model, uniqueItem(isDone: false).model, uniqueItem(isDone: true).model, uniqueItem(isDone: true).model]
+        let list = uniqueList(uniqueItems: items).model
+        
+        sut.load()
+        loader.completeLoadWithList([list])
+        
+        XCTAssertEqual(sut.lists, [list])
+        
+        sut.loadWith(.finished)
+        XCTAssertEqual(sut.lists[0].items.count, 3)
     }
     
     //MARK: - Helpers
