@@ -46,12 +46,18 @@ public class ToDDoMainViewModel: ObservableObject {
         self.calendar.timeZone = timezone
         self.calendar.locale = locale
         self.loader = loader
+    }
+}
+
+public extension ToDDoMainViewModel {
+    
+    func load(completion: @escaping ((Error)?) -> Void) {
         loader.load { [weak self] result in
             do {
                 self?.lists = try result.get() ?? []
+                completion(.none)
             } catch {
-                // TODO: - Error State
-                print("")
+                completion(error)
             }
         }
     }

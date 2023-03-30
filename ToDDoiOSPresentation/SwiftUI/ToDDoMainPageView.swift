@@ -33,6 +33,11 @@ struct ToDDoMainPageView: View {
                 }
             }
             .listStyle(.plain)
+            .onAppear {
+                viewModel.load { error in
+                    // TODO: - Implement Error Alert
+                }
+            }
             
             Spacer()
         }

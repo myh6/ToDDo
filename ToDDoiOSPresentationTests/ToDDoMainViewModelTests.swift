@@ -11,10 +11,17 @@ import ToDDoCore
 
 class ToDDoMainViewModelTests: XCTestCase {
     
+    func test_init_doesNotRequestFeedFromLoaderUponCreation() {
+        let (_, loader) = makeSUT()
+        
+        XCTAssertTrue(loader.receivedMessage.isEmpty)
+    }
+    
     func test_init_renderCorrectFormattedDate() {
         let lists = uniqueUser().models
         let (sut, loader) = makeSUT(date: renderExactDate())
         
+        sut.load {_ in}
         loader.completeLoadWithList(lists)
         
         XCTAssertEqual(sut.dateText, "Tuesday, Mar 28, 2023")
@@ -26,6 +33,7 @@ class ToDDoMainViewModelTests: XCTestCase {
         let lists = uniqueUser(date: date).models
         let (sut, loader) = makeSUT(date: sameDayDate)
         
+        sut.load {_ in}
         loader.completeLoadWithList(lists)
         
         XCTAssertEqual(sut.toDoCount, 2)
@@ -37,6 +45,7 @@ class ToDDoMainViewModelTests: XCTestCase {
         let lists = uniqueUser(date: oldDate).models
         let (sut, loader) = makeSUT(date: date)
         
+        sut.load {_ in}
         loader.completeLoadWithList(lists)
         
         XCTAssertEqual(sut.toDoCount, 0)
@@ -48,6 +57,7 @@ class ToDDoMainViewModelTests: XCTestCase {
         let lists = uniqueUser(date: newDate).models
         let (sut, loader) = makeSUT(date: date)
         
+        sut.load {_ in}
         loader.completeLoadWithList(lists)
         
         XCTAssertEqual(sut.toDoCount, 0)
