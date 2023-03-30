@@ -38,6 +38,11 @@ public class ToDDoMainViewModel: ObservableObject {
     @Published public private(set) var errorStatus: (hasError: Bool, errorText: String) = (false, "")
     let loader: FeedLoader
     
+    private var allLists: [FeedListGroup] = []
+    private var pendingList: [FeedListGroup] {
+        filterPendingItems(allLists)
+    }
+    
     public init(options: [String], date: Date, loader: FeedLoader, timezone: TimeZone = .current, locale: Locale = .current, didSelect: @escaping (String) -> Void) {
         self.store = SelectableMenuStore(options: options, didSelect: didSelect)
         self.dateInDate = date
@@ -49,16 +54,45 @@ public class ToDDoMainViewModel: ObservableObject {
     }
 }
 
+
 public extension ToDDoMainViewModel {
     
     func load() {
         loader.load { [weak self] result in
             do {
                 self?.lists = try result.get() ?? []
+                self?.allLists = try result.get() ?? []
                 self?.errorStatus = (false, "")
             } catch {
                 self?.errorStatus = (true, error.localizedDescription)
             }
         }
     }
+    
+    func loadWith(_ option: MenuOption) {
+        switch option {
+        case .recent:
+            break
+        case .pending:
+            lists = pendingList
+        case .finished:
+            break
+        }
+    }
+}
+
+// MARK: Helpers
+extension ToDDoMainViewModel {
+    
+    func filterPendingItems(_ allLists: [FeedListGroup]) -> [FeedListGroup]{
+        allLists.map { list in
+            let filtered = list.items.filter{ !$0.isDone }
+            return FeedListGroup(id: list.id, listTitle: list.listTitle, listImage: list.listImage, items: filtered)
+        }
+        
+    }
+}
+
+public enum MenuOption: String {
+    case recent = "Recent", pending = "Pending", finished = "Finished"
 }

@@ -19,15 +19,14 @@ func uniqueUser(date: Date? = nil) -> (models: [FeedListGroup], locals: [LocalFe
     return (models, local)
 }
 
-func uniqueList() -> (model: FeedListGroup, local: LocalFeedListGroup) {
-    let items = [uniqueItem().model]
-    let model = uniqueFeedListGroup(items: items)
-    let local = LocalFeedListGroup(id: model.id, listTitle: model.listTitle, listImage: model.listImage, items: items.toCoreModel())
+func uniqueList(uniqueItems: [FeedToDoItem] = [uniqueItem().model]) -> (model: FeedListGroup, local: LocalFeedListGroup) {
+    let model = uniqueFeedListGroup(items: uniqueItems)
+    let local = LocalFeedListGroup(id: model.id, listTitle: model.listTitle, listImage: model.listImage, items: uniqueItems.toCoreModel())
     return (model, local)
 }
 
-func uniqueItem(date: Date? = nil) -> (model: FeedToDoItem, local: LocalToDoItem) {
-    let model = FeedToDoItem(id: UUID(), title: "a title", isDone: false, expectedDate: date, finishedDate: nil, priority: nil, url: nil, note: nil)
+func uniqueItem(date: Date? = nil, isDone: Bool = false) -> (model: FeedToDoItem, local: LocalToDoItem) {
+    let model = FeedToDoItem(id: UUID(), title: "a title", isDone: isDone, expectedDate: date, finishedDate: nil, priority: nil, url: nil, note: nil)
     let local = LocalToDoItem(id: model.id, title: model.title, isDone: model.isDone, expectedDate: model.expectedDate, finishedDate: model.finishedDate, priority: model.priority, url: model.url, note: model.note)
     return (model, local)
 }

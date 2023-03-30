@@ -92,6 +92,20 @@ class ToDDoMainViewModelTests: XCTestCase {
         XCTAssertEqual(sut.lists, lists)
     }
     
+    func test_loadWithOption_whenGivenOptionPendingDeliversUnfinishedItem() {
+        let (sut, loader) = makeSUT()
+        let items = [uniqueItem(isDone: true).model, uniqueItem(isDone: false).model, uniqueItem(isDone: false).model, uniqueItem(isDone: true).model]
+        let list = uniqueList(uniqueItems: items).model
+        
+        sut.load()
+        loader.completeLoadWithList([list])
+        
+        XCTAssertEqual(sut.lists, [list])
+        
+        sut.loadWith(.pending)
+        XCTAssertEqual(sut.lists[0].items.count, 2)
+    }
+    
     //MARK: - Helpers
     private func makeSUT(date: Date = Date(), file: StaticString = #file, line: UInt = #line) -> (sut: ToDDoMainViewModel, loader: LoaderSpy) {
         let loader = LoaderSpy()
