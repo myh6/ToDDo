@@ -36,6 +36,16 @@ class ToDDoMainViewModelTests: XCTestCase {
         XCTAssertEqual(sut.hasError, true)
     }
     
+    func test_load_delviersListsFromSuccessfulLoad() {
+        let (sut, loader) = makeSUT()
+        let lists = uniqueUser().models
+        
+        sut.load()
+        loader.completeLoadWithList(lists)
+        
+        XCTAssertEqual(sut.lists, lists)
+    }
+    
     func test_init_renderCorrectFormattedDate() {
         let lists = uniqueUser().models
         let (sut, loader) = makeSUT(date: renderExactDate())

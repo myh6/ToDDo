@@ -34,7 +34,7 @@ public class ToDDoMainViewModel: ObservableObject {
             }
         }.count
     }
-    @Published private(set) var lists: [FeedListGroup] = []
+    @Published public private(set) var lists: [FeedListGroup] = []
     @Published public private(set) var hasError = false
     let loader: FeedLoader
     
