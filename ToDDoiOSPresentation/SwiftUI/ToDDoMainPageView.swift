@@ -21,7 +21,9 @@ struct ToDDoMainPageView: View {
             if viewModel.hasError {
                 ErrorView(message: "Error! Please Retry") {
                     viewModel.load()
-                }.frame(height: 50)
+                }
+                .frame(height: 40)
+                .padding([.bottom], 5)
             }
             
             FeedSquareView(width: 120, height: 120, title: "TODAY", number: viewModel.toDoCount).padding(.leading, 20.0)
@@ -52,14 +54,19 @@ struct ToDDoMainPageView: View {
 struct ToDDoMainPageView_Previews: PreviewProvider {
     
     static var previews: some View {
-        ToDDoMainTestView()
+        Group {
+            ToDDoMainTestView(loader: LoaderFake())
+            ToDDoMainTestView(loader: LoaderFailedFake())
+        }
     }
     
     struct ToDDoMainTestView: View {
         @State var lastSelectedMenu = "none"
+        let loader: FeedLoader
+        
         var body: some View {
             let options = ["Recent", "Pending", "Finished"]
-            let viewModel = ToDDoMainViewModel(options: options, date: Date(), loader: LoaderFake(), didSelect: {
+            let viewModel = ToDDoMainViewModel(options: options, date: Date(), loader: loader, didSelect: {
                 lastSelectedMenu = $0
             })
             VStack {
@@ -73,7 +80,12 @@ struct ToDDoMainPageView_Previews: PreviewProvider {
         func load(completion: @escaping (FeedLoader.Result) -> Void) {
         let lists = [FeedListGroup(id: UUID(), listTitle: "A task list", listImage: Data(), items: []), FeedListGroup(id: UUID(), listTitle: "Another task list", listImage: Data(), items: [FeedToDoItem(id: UUID(), title: "A title", isDone: false, expectedDate: Date(), finishedDate: nil, priority: "high", url: nil, note: nil)]), FeedListGroup(id: UUID(), listTitle: "Yet another task list", listImage: Data(), items: [FeedToDoItem(id: UUID(), title: "A title", isDone: true, expectedDate: Date(), finishedDate: nil, priority: nil, url: nil, note: nil)])]
             completion(.success(lists))
-//            completion(.failure(NSError(domain: "", code: 0)))
+        }
+    }
+    
+    struct LoaderFailedFake: FeedLoader {
+        func load(completion: @escaping (FeedLoader.Result) -> Void) {
+            completion(.failure(NSError(domain: "An error", code: 0)))
         }
     }
 }

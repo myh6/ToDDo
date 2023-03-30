@@ -18,6 +18,7 @@ struct ErrorView: View {
                 Rectangle()
                     .foregroundColor(Color(hue: 1.0, saturation: 0.402, brightness: 0.702))
                 Text(message)
+                    .font(.body)
                     .foregroundColor(Color.white)
             }
         }
