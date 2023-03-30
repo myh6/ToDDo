@@ -30,20 +30,7 @@ struct ToDDoMainPageView: View {
             
             HorizontalMenu(store: viewModel.store).padding(.leading, 20.0)
             
-            
-            List {
-                ForEach(viewModel.lists, id: \.id) { list in
-                    Button(action: {}) {
-                        FeedCellView(text: list.listTitle) {
-                            print("Unimplemented operation")
-                        }
-                        .frame(height: 80.0)
-                        .padding(.horizontal, 10.0)
-                    }
-                }
-            }
-            .listStyle(.plain)
-            .onAppear { viewModel.load() }
+            FeedCellListView(viewModel: viewModel)
             
             Spacer()
         }
