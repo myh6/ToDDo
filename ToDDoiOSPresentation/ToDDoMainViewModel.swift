@@ -35,7 +35,7 @@ public class ToDDoMainViewModel: ObservableObject {
         }.count
     }
     @Published private(set) var lists: [FeedListGroup] = []
-    
+    @Published public private(set) var hasError = false
     let loader: FeedLoader
     
     public init(options: [String], date: Date, loader: FeedLoader, timezone: TimeZone = .current, locale: Locale = .current, didSelect: @escaping (String) -> Void) {
@@ -51,13 +51,13 @@ public class ToDDoMainViewModel: ObservableObject {
 
 public extension ToDDoMainViewModel {
     
-    func load(completion: @escaping ((Error)?) -> Void) {
+    func load() {
         loader.load { [weak self] result in
             do {
                 self?.lists = try result.get() ?? []
-                completion(.none)
+                self?.hasError = false
             } catch {
-                completion(error)
+                self?.hasError = true
             }
         }
     }

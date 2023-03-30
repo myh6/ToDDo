@@ -21,15 +21,26 @@ class ToDDoMainViewModelTests: XCTestCase {
         let (sut, loader) = makeSUT()
         XCTAssertEqual(loader.receivedMessage.count, 0)
         
-        sut.load { _ in}
+        sut.load()
         XCTAssertEqual(loader.receivedMessage.count, 1)
+    }
+    
+    func test_load_changeHasErrorToTrueIfLoadOperationFailed() {
+        let (sut, loader) = makeSUT()
+        let error = NSError(domain: "An error", code: 0)
+        XCTAssertEqual(sut.hasError, false)
+        
+        sut.load()
+        loader.completeLoadWith(error)
+        
+        XCTAssertEqual(sut.hasError, true)
     }
     
     func test_init_renderCorrectFormattedDate() {
         let lists = uniqueUser().models
         let (sut, loader) = makeSUT(date: renderExactDate())
         
-        sut.load {_ in}
+        sut.load()
         loader.completeLoadWithList(lists)
         
         XCTAssertEqual(sut.dateText, "Tuesday, Mar 28, 2023")
@@ -41,7 +52,7 @@ class ToDDoMainViewModelTests: XCTestCase {
         let lists = uniqueUser(date: date).models
         let (sut, loader) = makeSUT(date: sameDayDate)
         
-        sut.load {_ in}
+        sut.load()
         loader.completeLoadWithList(lists)
         
         XCTAssertEqual(sut.toDoCount, 2)
@@ -53,7 +64,7 @@ class ToDDoMainViewModelTests: XCTestCase {
         let lists = uniqueUser(date: oldDate).models
         let (sut, loader) = makeSUT(date: date)
         
-        sut.load {_ in}
+        sut.load()
         loader.completeLoadWithList(lists)
         
         XCTAssertEqual(sut.toDoCount, 0)
@@ -65,7 +76,7 @@ class ToDDoMainViewModelTests: XCTestCase {
         let lists = uniqueUser(date: newDate).models
         let (sut, loader) = makeSUT(date: date)
         
-        sut.load {_ in}
+        sut.load()
         loader.completeLoadWithList(lists)
         
         XCTAssertEqual(sut.toDoCount, 0)
@@ -100,6 +111,10 @@ class ToDDoMainViewModelTests: XCTestCase {
         
         func completeLoadWithList(_ lists: [FeedListGroup], at index: Int = 0) {
             receivedMessage[index](.success(lists))
+        }
+        
+        func completeLoadWith(_ error: Error, at index: Int = 0) {
+            receivedMessage[index](.failure(error))
         }
         
     }
