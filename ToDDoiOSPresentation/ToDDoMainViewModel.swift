@@ -72,7 +72,7 @@ public extension ToDDoMainViewModel {
     func loadWith(_ option: MenuOption) {
         switch option {
         case .recent:
-            break
+            lists = allLists
         case .pending:
             lists = pendingList
         case .finished:
