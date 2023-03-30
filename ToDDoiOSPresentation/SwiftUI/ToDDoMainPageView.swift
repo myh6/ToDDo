@@ -9,7 +9,7 @@ import SwiftUI
 import ToDDoCore
 
 struct ToDDoMainPageView: View {
-    @ObservedObject var viewModel: ToDDoMainViewModel
+    @StateObject var viewModel: ToDDoMainViewModel
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -69,6 +69,7 @@ struct ToDDoMainPageView_Previews: PreviewProvider {
         func load(completion: @escaping (FeedLoader.Result) -> Void) {
         let lists = [FeedListGroup(id: UUID(), listTitle: "A task list", listImage: Data(), items: []), FeedListGroup(id: UUID(), listTitle: "Another task list", listImage: Data(), items: []), FeedListGroup(id: UUID(), listTitle: "Yet another task list", listImage: Data(), items: [])]
             completion(.success(lists))
+//            completion(.failure(NSError(domain: "", code: 0)))
         }
     }
 }
