@@ -39,12 +39,6 @@ public class ToDDoMainViewModel: ObservableObject {
     let loader: FeedLoader
     
     private var allLists: [FeedListGroup] = []
-    private var pendingList: [FeedListGroup] {
-        filterItems(allLists, isDone: false)
-    }
-    private var finishedList: [FeedListGroup] {
-        filterItems(allLists, isDone: true)
-    }
     
     public init(options: [String], date: Date, loader: FeedLoader, timezone: TimeZone = .current, locale: Locale = .current, didSelect: @escaping (String) -> Void) {
         self.store = SelectableMenuStore(options: options, didSelect: didSelect)
@@ -77,9 +71,9 @@ public extension ToDDoMainViewModel {
         case .recent:
             lists = allLists
         case .pending:
-            lists = pendingList
+            lists = filterItems(allLists, isDone: false)
         case .finished:
-            lists = finishedList
+            lists = filterItems(allLists, isDone: true)
         }
     }
 }
