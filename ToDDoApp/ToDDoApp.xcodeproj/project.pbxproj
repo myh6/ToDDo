@@ -52,6 +52,7 @@
 		0FA3C9A829D68180008671B5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		0FA3C9AA29D68186008671B5 /* ToDDoCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ToDDoCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FA3C9AE29D68189008671B5 /* ToDDoiOSPresentation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ToDDoiOSPresentation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0FA3C9C829D6D422008671B5 /* ToDDoApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ToDDoApp.entitlements; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +97,7 @@
 		0FA3C97D29D680AC008671B5 /* ToDDoApp */ = {
 			isa = PBXGroup;
 			children = (
+				0FA3C9C829D6D422008671B5 /* ToDDoApp.entitlements */,
 				0FA3C9A829D68180008671B5 /* Info.plist */,
 				0FA3C97E29D680AC008671B5 /* ToDDoAppApp.swift */,
 				0FA3C98229D680AD008671B5 /* Assets.xcassets */,
@@ -372,6 +374,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ToDDoApp/ToDDoApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ToDDoApp/Preview Content\"";
@@ -402,6 +405,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = ToDDoApp/ToDDoApp.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"ToDDoApp/Preview Content\"";

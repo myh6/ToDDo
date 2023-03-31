@@ -9,7 +9,7 @@ import CoreData
 
 @objc(ToDDoList)
 class ToDDoList: NSManagedObject {
-    @NSManaged var id: UUID
+    @NSManaged var id: UUID?
     @NSManaged var title: String
     @NSManaged var image: Data?
     @NSManaged var item: NSSet
@@ -60,7 +60,7 @@ extension ToDDoList {
 
     var localList: LocalFeedListGroup {
         let items = item.compactMap({ $0 as? ToDDoItem }).sorted(by: { $0.modificationTime < $1.modificationTime })
-        return LocalFeedListGroup(id: id, listTitle: title, listImage: image ?? Data(), items: items.map({ $0.localItem }))
+        return LocalFeedListGroup(id: id ?? UUID(), listTitle: title, listImage: image ?? Data(), items: items.map({ $0.localItem }))
     }
     
     

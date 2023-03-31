@@ -6,31 +6,44 @@
 //
 
 import XCTest
-@testable import ToDDoApp
+import CloudKit
+import CoreData
+import ToDDoApp
+import ToDDoCore
 
 final class ToDDoAppTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    func test_init() throws {
+        
+        let _ = try XCTUnwrap(CoreDataFeedStore(contianer: NSPersistentCloudKitContainer.load(identifier: "iCloud.com.toddo.test", modelName: "ToDDoStore", in: Bundle(for: CoreDataFeedStore.self))))
     }
+    
+}
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+private extension NSPersistentCloudKitContainer {
+    enum LoadingError: Swift.Error {
+        case modelNotFound
+        case failedToLoadPersistnetStore(Swift.Error)
     }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
+    
+    static func load(identifier: String, modelName name: String, in bundle: Bundle) throws -> NSPersistentContainer {
+        guard let model = NSManagedObjectModel.with(name: name, in: bundle) else {
+            throw LoadingError.modelNotFound
         }
+        
+        let container = NSPersistentContainer(name: name, managedObjectModel: model)
+        let cloudKitContainerOptions = NSPersistentCloudKitContainerOptions(containerIdentifier: identifier)
+        let description = NSPersistentStoreDescription()
+        description.setOption(true as NSNumber, forKey: NSPersistentHistoryTrackingKey)
+        description.cloudKitContainerOptions = cloudKitContainerOptions
+        container.persistentStoreDescriptions = [description]
+        
+        var loadError: Swift.Error?
+        container.loadPersistentStores {
+            loadError = $1
+        }
+        try loadError.map { throw LoadingError.failedToLoadPersistnetStore($0) }
+        return container
     }
-
 }
