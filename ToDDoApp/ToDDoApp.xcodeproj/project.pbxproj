@@ -49,8 +49,6 @@
 		0FA3C98529D680AD008671B5 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		0FA3C98B29D680AD008671B5 /* ToDDoAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ToDDoAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FA3C98F29D680AD008671B5 /* ToDDoAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDDoAppTests.swift; sourceTree = "<group>"; };
-		0FA3C99929D680AD008671B5 /* ToDDoAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDDoAppUITests.swift; sourceTree = "<group>"; };
-		0FA3C99B29D680AD008671B5 /* ToDDoAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToDDoAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		0FA3C9A829D68180008671B5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		0FA3C9AA29D68186008671B5 /* ToDDoCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ToDDoCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FA3C9AE29D68189008671B5 /* ToDDoiOSPresentation.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = ToDDoiOSPresentation.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -81,7 +79,6 @@
 			children = (
 				0FA3C97D29D680AC008671B5 /* ToDDoApp */,
 				0FA3C98E29D680AD008671B5 /* ToDDoAppTests */,
-				0FA3C99829D680AD008671B5 /* ToDDoAppUITests */,
 				0FA3C97C29D680AC008671B5 /* Products */,
 				0FA3C9A929D68186008671B5 /* Frameworks */,
 			);
@@ -121,15 +118,6 @@
 				0FA3C98F29D680AD008671B5 /* ToDDoAppTests.swift */,
 			);
 			path = ToDDoAppTests;
-			sourceTree = "<group>";
-		};
-		0FA3C99829D680AD008671B5 /* ToDDoAppUITests */ = {
-			isa = PBXGroup;
-			children = (
-				0FA3C99929D680AD008671B5 /* ToDDoAppUITests.swift */,
-				0FA3C99B29D680AD008671B5 /* ToDDoAppUITestsLaunchTests.swift */,
-			);
-			path = ToDDoAppUITests;
 			sourceTree = "<group>";
 		};
 		0FA3C9A929D68186008671B5 /* Frameworks */ = {
