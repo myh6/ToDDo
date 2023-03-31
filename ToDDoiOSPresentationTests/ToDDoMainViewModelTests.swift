@@ -146,17 +146,6 @@ class ToDDoMainViewModelTests: XCTestCase {
         return (sut, loader)
     }
     
-    /// Render date using unix timestamp
-    /// - Returns: 2023-03-28 00:00:00
-    private func renderExactDate() -> Date {
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-        dateFormatter.timeZone = TimeZone(identifier: "UTC")!
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-        let dateString = "2023-03-28 00:00:00"
-        return dateFormatter.date(from: dateString)!
-    }
-    
     class LoaderSpy: FeedLoader {
         private(set) var receivedMessage = [((FeedLoader.Result) -> Void)]()
         
