@@ -30,8 +30,7 @@ struct FeedCellListView: View {
 
 struct FeedCellListView_Previews: PreviewProvider {
     static var previews: some View {
-        let options = ["Recent", "Pending", "Finished"]
-        let viewModel = ToDDoMainViewModel(options: options, date: Date(), loader: LoaderFake())
+        let viewModel = ToDDoMainViewModel(date: Date(), loader: LoaderFake())
         FeedCellListView(viewModel: viewModel)
     }
     

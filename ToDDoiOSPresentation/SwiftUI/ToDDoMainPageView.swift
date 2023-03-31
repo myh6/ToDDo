@@ -8,11 +8,16 @@
 import SwiftUI
 import ToDDoCore
 
-struct ToDDoMainPageView: View {
+public struct ToDDoMainPageView: View {
     @StateObject var viewModel: ToDDoMainViewModel
     @StateObject var store: SelectableMenuStore
     
-    var body: some View {
+    public init(viewModel: ToDDoMainViewModel, store: SelectableMenuStore) {
+        self._viewModel = StateObject(wrappedValue: viewModel)
+        self._store = StateObject(wrappedValue: store)
+    }
+    
+    public var body: some View {
         VStack(alignment: .leading) {
             HStack {
                 FeedTitleView(title: "ToDDo", date: viewModel.dateText).padding([.top, .leading], 20.0)
@@ -60,7 +65,7 @@ struct ToDDoMainPageView_Previews: PreviewProvider {
         
         var body: some View {
             let options = ["Recent", "Pending", "Finished"]
-            let viewModel = ToDDoMainViewModel(options: options, date: Date(), loader: loader)
+            let viewModel = ToDDoMainViewModel(date: Date(), loader: loader)
             let store = SelectableMenuStore(options: options, didSelect: {
                 lastSelectedMenu = $0
                 viewModel.loadWith(MenuOption(rawValue: $0) ?? .recent)

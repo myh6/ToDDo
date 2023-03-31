@@ -39,7 +39,7 @@ public class ToDDoMainViewModel: ObservableObject {
     
     private var allLists: [FeedListGroup] = []
     
-    public init(options: [String], date: Date, loader: FeedLoader, timezone: TimeZone = .current, locale: Locale = .current) {
+    public init(date: Date, loader: FeedLoader, timezone: TimeZone = .current, locale: Locale = .current) {
         self.dateInDate = date
         self.dateFormatter.timeZone = timezone
         self.dateFormatter.locale = locale
