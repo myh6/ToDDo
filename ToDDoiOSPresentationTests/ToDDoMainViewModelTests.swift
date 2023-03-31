@@ -140,7 +140,7 @@ class ToDDoMainViewModelTests: XCTestCase {
     //MARK: - Helpers
     private func makeSUT(date: Date = Date(), file: StaticString = #file, line: UInt = #line) -> (sut: ToDDoMainViewModel, loader: LoaderSpy) {
         let loader = LoaderSpy()
-        let sut = ToDDoMainViewModel(options: [], date: date, loader: loader, timezone: TimeZone(identifier: "UTC")!, locale: Locale(identifier: "en_US_POSIX"), didSelect: {_ in})
+        let sut = ToDDoMainViewModel(options: [], date: date, loader: loader, timezone: TimeZone(identifier: "UTC")!, locale: Locale(identifier: "en_US_POSIX"))
         trackForMemoryLeaks(loader, file: file, line: line)
         trackForMemoryLeaks(sut, file: file, line: line)
         return (sut, loader)
