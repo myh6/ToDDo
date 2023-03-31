@@ -10,6 +10,7 @@ import ToDDoCore
 
 struct ToDDoMainPageView: View {
     @StateObject var viewModel: ToDDoMainViewModel
+    @StateObject var store: SelectableMenuStore
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -28,12 +29,12 @@ struct ToDDoMainPageView: View {
             
             FeedSquareView(width: 120, height: 120, title: "TODAY", number: viewModel.toDoCount).padding(.leading, 20.0)
             
-            HorizontalMenu(store: viewModel.store).padding(.leading, 20.0)
+            HorizontalMenu(store: store).padding(.leading, 20.0)
             
             FeedCellListView(viewModel: viewModel)
             
             Spacer()
-        }
+        }.onAppear { viewModel.load() }
         
     }
 }
@@ -53,11 +54,13 @@ struct ToDDoMainPageView_Previews: PreviewProvider {
         
         var body: some View {
             let options = ["Recent", "Pending", "Finished"]
-            let viewModel = ToDDoMainViewModel(options: options, date: Date(), loader: loader, didSelect: {
+            let viewModel = ToDDoMainViewModel(options: options, date: Date(), loader: loader)
+            let store = SelectableMenuStore(options: options, didSelect: {
                 lastSelectedMenu = $0
+                viewModel.loadWith(MenuOption(rawValue: $0) ?? .recent)
             })
             VStack {
-                ToDDoMainPageView(viewModel: viewModel)
+                ToDDoMainPageView(viewModel: viewModel, store: store)
                 Text("Last selected menu: " + lastSelectedMenu)
             }
         }
@@ -65,9 +68,13 @@ struct ToDDoMainPageView_Previews: PreviewProvider {
     
     struct LoaderFake: FeedLoader {
         func load(completion: @escaping (FeedLoader.Result) -> Void) {
-        let lists = [FeedListGroup(id: UUID(), listTitle: "A task list", listImage: Data(), items: []),
-                     FeedListGroup(id: UUID(), listTitle: "Another task list", listImage: Data(), items: [FeedToDoItem(id: UUID(), title: "A title", isDone: false, expectedDate: Date(), finishedDate: nil, priority: "high", url: nil, note: nil)]),
-                     FeedListGroup(id: UUID(), listTitle: "Yet another task list", listImage: Data(), items: [FeedToDoItem(id: UUID(), title: "A title", isDone: true, expectedDate: Date(), finishedDate: nil, priority: nil, url: nil, note: nil)])]
+        let lists = [
+            FeedListGroup(id: UUID(), listTitle: "A task list", listImage: Data(), items: [
+                FeedToDoItem(id: UUID(), title: "A title", isDone: true, expectedDate: Date(), finishedDate: nil, priority: nil, url: nil, note: nil)]),
+            FeedListGroup(id: UUID(), listTitle: "Another task list", listImage: Data(), items: [
+                FeedToDoItem(id: UUID(), title: "A title", isDone: false, expectedDate: Date(), finishedDate: nil, priority: "high", url: nil, note: nil)]),
+            FeedListGroup(id: UUID(), listTitle: "Yet another task list", listImage: Data(), items: [
+                FeedToDoItem(id: UUID(), title: "A title", isDone: false, expectedDate: Date(), finishedDate: nil, priority: nil, url: nil, note: nil)])]
             completion(.success(lists))
         }
     }

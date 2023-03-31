@@ -19,7 +19,6 @@ public class ToDDoMainViewModel: ObservableObject {
         let calendar = Calendar(identifier: .gregorian)
         return calendar
     }()
-    let store: SelectableMenuStore
     private let dateInDate: Date
     
     public var dateText: String {
@@ -40,8 +39,7 @@ public class ToDDoMainViewModel: ObservableObject {
     
     private var allLists: [FeedListGroup] = []
     
-    public init(options: [String], date: Date, loader: FeedLoader, timezone: TimeZone = .current, locale: Locale = .current, didSelect: @escaping (String) -> Void) {
-        self.store = SelectableMenuStore(options: options, didSelect: didSelect)
+    public init(options: [String], date: Date, loader: FeedLoader, timezone: TimeZone = .current, locale: Locale = .current) {
         self.dateInDate = date
         self.dateFormatter.timeZone = timezone
         self.dateFormatter.locale = locale
