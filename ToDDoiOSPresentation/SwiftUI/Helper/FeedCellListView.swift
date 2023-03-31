@@ -14,13 +14,12 @@ struct FeedCellListView: View {
     var body: some View {
         List {
             ForEach(viewModel.lists, id: \.id) { list in
-                Button(action: {}) {
-                    FeedCellView(text: list.listTitle) {
-                        // TODO: -
-                        print("Unimplemented operation")
+                Section {
+                    ForEach(list.items, id: \.id) { item in
+                        Text(item.title)
                     }
-                    .frame(height: 80.0)
-                    .padding(.horizontal, 10.0)
+                } header: {
+                    Text(list.listTitle)
                 }
             }
         }
@@ -32,7 +31,7 @@ struct FeedCellListView: View {
 struct FeedCellListView_Previews: PreviewProvider {
     static var previews: some View {
         let options = ["Recent", "Pending", "Finished"]
-        let viewModel = ToDDoMainViewModel(options: options, date: Date(), loader: LoaderFake(), didSelect: { _ in })
+        let viewModel = ToDDoMainViewModel(options: options, date: Date(), loader: LoaderFake())
         FeedCellListView(viewModel: viewModel)
     }
     
