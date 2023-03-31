@@ -19,13 +19,7 @@ struct ToDDoMainPageView: View {
                 Spacer()
             }
             
-            if viewModel.errorStatus.hasError {
-                ErrorView(message: viewModel.errorStatus.errorText) {
-                    viewModel.load()
-                }
-                .frame(height: 40)
-                .padding([.bottom], 5)
-            }
+            hasError(viewModel.errorStatus.hasError, show: viewModel.errorStatus.errorText)
             
             FeedSquareView(width: 120, height: 120, title: "TODAY", number: viewModel.toDoCount).padding(.leading, 20.0)
             
@@ -35,7 +29,19 @@ struct ToDDoMainPageView: View {
             
             Spacer()
         }.onAppear { viewModel.load() }
-        
+    }
+}
+
+extension ToDDoMainPageView {
+    @ViewBuilder
+    func hasError(_ value: Bool, show message: String) -> some View {
+        if value {
+            ErrorView(message: message) {
+                viewModel.load()
+            }
+            .frame(height: 40)
+            .padding([.bottom], 5)
+        }
     }
 }
 
