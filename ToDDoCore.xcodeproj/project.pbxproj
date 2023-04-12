@@ -31,6 +31,7 @@
 		0FA3C9BF29D68B52008671B5 /* XCTestCase + Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FA3C9BE29D68B52008671B5 /* XCTestCase + Date.swift */; };
 		0FA3C9C229D68CDA008671B5 /* ERROR_VIEW_dark.png in Resources */ = {isa = PBXBuildFile; fileRef = 0FA3C9C029D68CDA008671B5 /* ERROR_VIEW_dark.png */; };
 		0FA3C9C329D68CDA008671B5 /* ERROR_VIEW_light.png in Resources */ = {isa = PBXBuildFile; fileRef = 0FA3C9C129D68CDA008671B5 /* ERROR_VIEW_light.png */; };
+		0FA3C9CA29E00CDE008671B5 /* AddListPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FA3C9C929E00CDE008671B5 /* AddListPage.swift */; };
 		0FB9CB0C29962ED900AAA276 /* ToDDoCore.docc in Sources */ = {isa = PBXBuildFile; fileRef = 0FB9CB0B29962ED900AAA276 /* ToDDoCore.docc */; };
 		0FB9CB1229962ED900AAA276 /* ToDDoCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0FB9CB0729962ED900AAA276 /* ToDDoCore.framework */; };
 		0FB9CB1829962ED900AAA276 /* ToDDoCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 0FB9CB0A29962ED900AAA276 /* ToDDoCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -121,6 +122,7 @@
 		0FA3C9BE29D68B52008671B5 /* XCTestCase + Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "XCTestCase + Date.swift"; sourceTree = "<group>"; };
 		0FA3C9C029D68CDA008671B5 /* ERROR_VIEW_dark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ERROR_VIEW_dark.png; sourceTree = "<group>"; };
 		0FA3C9C129D68CDA008671B5 /* ERROR_VIEW_light.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ERROR_VIEW_light.png; sourceTree = "<group>"; };
+		0FA3C9C929E00CDE008671B5 /* AddListPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddListPage.swift; sourceTree = "<group>"; };
 		0FB9CB0729962ED900AAA276 /* ToDDoCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ToDDoCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0FB9CB0A29962ED900AAA276 /* ToDDoCore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ToDDoCore.h; sourceTree = "<group>"; };
 		0FB9CB0B29962ED900AAA276 /* ToDDoCore.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = ToDDoCore.docc; sourceTree = "<group>"; };
@@ -188,6 +190,7 @@
 			children = (
 				0FCF4BA429CC4BE300654EEF /* Helper */,
 				0F0205C229D28F2E00AC7E04 /* ToDDoMainPageView.swift */,
+				0FA3C9C929E00CDE008671B5 /* AddListPage.swift */,
 			);
 			path = SwiftUI;
 			sourceTree = "<group>";
@@ -600,6 +603,7 @@
 				0FCF4BA529CC4CCA00654EEF /* FeedTitleView.swift in Sources */,
 				0FA3C96F29D564E9008671B5 /* FeedCellListView.swift in Sources */,
 				0F8ECE5529CDA8EB001A539D /* HorizontalMenu.swift in Sources */,
+				0FA3C9CA29E00CDE008671B5 /* AddListPage.swift in Sources */,
 				0F8ECE6229D28474001A539D /* FeedSquareView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
