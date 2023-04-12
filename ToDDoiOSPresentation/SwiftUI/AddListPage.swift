@@ -30,7 +30,6 @@ struct AddListPage: View {
                     })
                     .frame(minWidth: 300, maxHeight: 60)
                     .shadow(radius: 10)
-                    .padding([.leading, .trailing, .bottom], 10)
             }.padding()
         }
     }
